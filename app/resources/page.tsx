@@ -96,28 +96,67 @@ function ResourcesContent() {
           </div>
         </div>
 
-        {/* Results Count */}
-        <div className="mb-6">
-          <p className="text-sm text-foreground/60">
-            {filteredResources.length} resource{filteredResources.length !== 1 ? "s" : ""} found
-            {selectedCategory && ` in ${selectedCategory}`}
-            {searchQuery && ` matching "${searchQuery}"`}
-          </p>
-        </div>
+        {/* Resources by Category */}
+        {selectedCategory || searchQuery ? (
+          <>
+            {/* Results Count */}
+            <div className="mb-6">
+              <p className="text-sm text-foreground/60">
+                {filteredResources.length} resource{filteredResources.length !== 1 ? "s" : ""} found
+                {selectedCategory && ` in ${selectedCategory}`}
+                {searchQuery && ` matching "${searchQuery}"`}
+              </p>
+            </div>
 
-        {/* Resources Grid */}
-        {filteredResources.length > 0 ? (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredResources.map((resource) => (
-              <ResourceCard key={resource.id} resource={resource} />
-            ))}
-          </div>
+            {/* Filtered Resources Grid */}
+            {filteredResources.length > 0 ? (
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {filteredResources.map((resource) => (
+                  <ResourceCard key={resource.id} resource={resource} />
+                ))}
+              </div>
+            ) : (
+              <div className="rounded-lg bg-card border border-border p-12 text-center">
+                <p className="text-lg text-foreground/70 mb-2">No resources found</p>
+                <p className="text-sm text-foreground/60">
+                  Try adjusting your search or category filter
+                </p>
+              </div>
+            )}
+          </>
         ) : (
-          <div className="rounded-lg bg-card border border-border p-12 text-center">
-            <p className="text-lg text-foreground/70 mb-2">No resources found</p>
-            <p className="text-sm text-foreground/60">
-              Try adjusting your search or category filter
-            </p>
+          <div className="space-y-12">
+            {resourceCategories.map((category) => {
+              const categoryResources = getResourcesByCategory(category);
+              return (
+                <div key={category} className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-2xl font-semibold text-foreground">{category}</h2>
+                    <span className="text-sm text-foreground/60">
+                      {categoryResources.length} resource{categoryResources.length !== 1 ? "s" : ""}
+                    </span>
+                  </div>
+                  
+                  {categoryResources.length > 0 ? (
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                      {categoryResources.map((resource) => (
+                        <ResourceCard key={resource.id} resource={resource} />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="rounded-lg bg-card border border-border p-8 text-center">
+                      <p className="text-sm text-foreground/60">No resources available</p>
+                    </div>
+                  )}
+                  
+                  <div className="rounded-lg bg-card/50 border border-border/50 p-3">
+                    <p className="text-xs text-foreground/50 text-center">
+                      Not available
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         )}
       </div>

@@ -39,11 +39,6 @@ export default function Footer() {
                   About Unity Lab
                 </Link>
               </li>
-              <li>
-                <Link href="/legal" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
-                  Legal & Disclaimer
-                </Link>
-              </li>
             </ul>
           </div>
         </div>

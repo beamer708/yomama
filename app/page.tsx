@@ -94,10 +94,10 @@ export default function Home() {
               </div>
               <div className="flex flex-col">
                 <dt className="text-base font-semibold leading-7 text-foreground mb-2">
-                  Advertising Servers
+                  Misc Servers for ERLC
                 </dt>
                 <dd className="mt-1 text-base leading-7 text-foreground/70">
-                  Growth strategies, advertising techniques, and community expansion resources.
+                  Resources for various ERLC server types and community expansion.
                 </dd>
               </div>
             </dl>

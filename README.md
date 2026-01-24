@@ -55,7 +55,6 @@ npm start
 │   ├── resources/         # Resources Vault page
 │   ├── community-guides/  # Community guides (empty state)
 │   ├── about/             # About page
-│   ├── legal/             # Legal and disclaimer
 │   ├── layout.tsx         # Root layout
 │   └── globals.css        # Global styles
 ├── components/            # Reusable components
@@ -89,4 +88,4 @@ The site uses Tailwind CSS with a custom design system defined in `app/globals.c
 
 ## License
 
-Unity Lab is an independent community resource. See the Legal page for full disclaimers and terms.
+Unity Lab is an independent community resource.

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function ComingSoonBanner() {
   return (
     <div className="bg-primary/10 border-b border-primary/20 py-3">
@@ -10,6 +12,15 @@ export default function ComingSoonBanner() {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
               </span>
               Coming Soon
+              <span className="text-foreground/70">•</span>
+              <Link 
+                href="https://discord.gg/rJECs3rpDh" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-primary transition-colors underline underline-offset-2"
+              >
+                Stay updated through Discord
+              </Link>
             </span>
           </p>
         </div>
