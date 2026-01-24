@@ -34,8 +34,9 @@ function ResourcesContent() {
             Resources Vault
           </h1>
           <p className="text-lg text-foreground/70 mb-6">
-            Curated resources from across the ERLC community. All resources are organized by category 
-            and properly credited to their original creators.
+            Curated YouTube videos and resources from across the ERLC community. Most resources are high-quality 
+            YouTube videos, especially for graphic design, branding, and Discord server presentation. All resources 
+            are organized by category and properly credited to their original creators.
           </p>
           <div className="rounded-lg bg-yellow-500/10 border border-yellow-500/20 p-4 mb-8">
             <p className="text-sm text-foreground/80">

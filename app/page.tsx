@@ -48,8 +48,7 @@ export default function Home() {
                 <h3 className="text-xl font-semibold text-foreground mb-4">A Resource Vault</h3>
                 <p className="text-foreground/70">
                   Unity Lab is a vault of knowledge, not a tutorial creator. We curate the best ERLC resources 
-                  already available on the web, organize them clearly and professionally, and provide Unity Lab 
-                  created guides, frameworks, and references.
+                  already available on the web and organize them clearly and professionally.
                 </p>
               </div>
               <div className="rounded-lg bg-card p-8 border border-border hover:border-primary/20 transition-colors">
@@ -170,17 +169,6 @@ export default function Home() {
                   <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
                     <span className="text-white font-bold">3</span>
                   </div>
-                  Original Frameworks
-                </dt>
-                <dd className="mt-2 text-base leading-7 text-foreground/70">
-                  Unity Lab created guides, frameworks, and checklists to help you apply resources effectively.
-                </dd>
-              </div>
-              <div className="relative pl-16">
-                <dt className="text-base font-semibold leading-7 text-foreground">
-                  <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                    <span className="text-white font-bold">4</span>
-                  </div>
                   Community First
                 </dt>
                 <dd className="mt-2 text-base leading-7 text-foreground/70">
@@ -206,11 +194,11 @@ export default function Home() {
           <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-4">
             {[
               "Server Branding",
-              "Discord Setup",
+              "Graphic Design Fundamentals",
+              "Discord Setup and Visuals",
               "Roleplay Structure",
               "Advertising and Growth",
               "Staff Systems",
-              "ERLC Optimization",
               "Community Management",
               "Automation and Bots",
             ].map((category) => (

@@ -5,7 +5,7 @@ interface ResourceCardProps {
 }
 
 const typeLabels: Record<Resource["type"], string> = {
-  video: "Video",
+  video: "YouTube Video",
   guide: "Guide",
   website: "Website",
   tool: "Tool",

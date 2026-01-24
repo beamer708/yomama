@@ -24,18 +24,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/unity-lab-resources" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
-                  Unity Lab Resources
-                </Link>
-              </li>
-              <li>
                 <Link href="/community-guides" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
                   Community Guides
-                </Link>
-              </li>
-              <li>
-                <Link href="/submit" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
-                  Submit a Resource
                 </Link>
               </li>
             </ul>
@@ -47,11 +37,6 @@ export default function Footer() {
               <li>
                 <Link href="/about" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
                   About Unity Lab
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
-                  Contact
                 </Link>
               </li>
               <li>

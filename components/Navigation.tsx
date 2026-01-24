@@ -9,11 +9,8 @@ export default function Navigation() {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/resources", label: "Resources Vault" },
-    { href: "/unity-lab-resources", label: "Unity Lab Resources" },
     { href: "/community-guides", label: "Community Guides" },
-    { href: "/submit", label: "Submit a Resource" },
     { href: "/about", label: "About" },
-    { href: "/contact", label: "Contact" },
   ];
 
   return (

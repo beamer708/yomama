@@ -8,10 +8,8 @@ Unity Lab exists to remove the intimidation factor around building successful ER
 
 ## Features
 
-- **Resources Vault**: Curated resources organized by category with search and filtering
-- **Unity Lab Resources**: Original frameworks, checklists, and guidance
-- **Community Guides**: High-level guidance for common ERLC community challenges
-- **Resource Submission**: Community-driven resource curation
+- **Resources Vault**: Curated YouTube videos and resources organized by category with search and filtering
+- **Community Guides**: High-level guidance section (coming soon)
 - **Clean Design**: Modern, professional, dark-mode friendly interface
 
 ## Technology Stack
@@ -55,11 +53,8 @@ npm start
 ├── app/                    # Next.js app directory
 │   ├── page.tsx           # Home page
 │   ├── resources/         # Resources Vault page
-│   ├── unity-lab-resources/ # Unity Lab original content
-│   ├── community-guides/  # Community guides
-│   ├── submit/            # Resource submission form
+│   ├── community-guides/  # Community guides (empty state)
 │   ├── about/             # About page
-│   ├── contact/           # Contact page
 │   ├── legal/             # Legal and disclaimer
 │   ├── layout.tsx         # Root layout
 │   └── globals.css        # Global styles
@@ -95,4 +90,3 @@ The site uses Tailwind CSS with a custom design system defined in `app/globals.c
 ## License
 
 Unity Lab is an independent community resource. See the Legal page for full disclaimers and terms.
-# yomama
