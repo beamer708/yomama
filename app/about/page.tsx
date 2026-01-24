@@ -43,6 +43,21 @@ export default function AboutPage() {
               Explore Resources
             </Link>
           </section>
+
+          {/* Creator Credit */}
+          <section className="mt-12 pt-8 border-t border-border">
+            <p className="text-sm text-foreground/70 text-center">
+              Unity Lab is created and owned by{" "}
+              <a
+                href="https://discord.com/users/527166312095678475"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-primary hover:text-primary-hover transition-colors"
+              >
+                b3amerr
+              </a>
+            </p>
+          </section>
         </div>
       </div>
     </div>

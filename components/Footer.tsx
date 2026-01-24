@@ -64,6 +64,17 @@ export default function Footer() {
             <p className="text-xs text-foreground/60 text-center">
               Unity Lab is not affiliated with Roblox or ERLC developers. All external resources belong to their original creators.
             </p>
+            <p className="text-xs text-foreground/60 text-center">
+              Created and owned by{" "}
+              <a
+                href="https://discord.com/users/527166312095678475"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-primary hover:text-primary-hover transition-colors"
+              >
+                b3amerr
+              </a>
+            </p>
           </div>
         </div>
       </div>
