@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Icon from "@/components/Icon";
+import UnityLogo from "@/components/UnityLogo";
 
 export default function Footer() {
   return (
@@ -7,10 +8,10 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <Icon name="book" className="text-lg text-primary" />
+            <Link href="/" className="flex items-center gap-2 mb-4 w-fit" aria-label="Unity Vault – Home">
+              <UnityLogo size="sm" className="h-6 w-6 shrink-0" />
               <h3 className="text-lg font-semibold text-foreground">Unity Vault</h3>
-            </div>
+            </Link>
             <p className="text-sm text-foreground/70 mb-4">
               A curated vault of knowledge for building successful ERLC communities.
             </p>

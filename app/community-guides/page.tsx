@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Icon from "@/components/Icon";
+import UnityLogo from "@/components/UnityLogo";
 
 export default function CommunityGuidesPage() {
   return (
@@ -22,6 +23,11 @@ export default function CommunityGuidesPage() {
         {/* Empty State */}
         <div className="mx-auto max-w-2xl">
           <div className="rounded-lg bg-card border border-border p-12 text-center">
+            <UnityLogo
+              size="lg"
+              className="mx-auto mb-6 block h-14 w-14 shrink-0 opacity-[0.12]"
+              aria-hidden
+            />
             <Icon name="clock" className="mx-auto block text-6xl text-foreground/40 mb-6" />
             <h2 className="text-2xl font-semibold text-foreground mb-3">
               No Guides Available Yet

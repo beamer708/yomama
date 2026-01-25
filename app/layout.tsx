@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "Unity Vault | ERLC Community Resource Vault",
   description: "A curated vault of knowledge for building successful ERLC communities. Resources, frameworks, and guidance organized for growth.",
   keywords: ["ERLC", "Roblox", "roleplay", "community", "resources", "guides"],
+  icons: {
+    icon: "/UnityLogo.svg",
+  },
   openGraph: {
     title: "Unity Vault | ERLC Community Resource Vault",
     description: "A curated vault of knowledge for building successful ERLC communities.",
