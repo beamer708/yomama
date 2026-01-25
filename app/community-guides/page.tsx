@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FileText, BookOpen, Clock } from "lucide-react";
 
 export default function CommunityGuidesPage() {
   return (
@@ -6,9 +7,12 @@ export default function CommunityGuidesPage() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mx-auto max-w-2xl lg:max-w-4xl mb-12">
-          <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl mb-4">
-            Community Guides
-          </h1>
+          <div className="flex items-center gap-3 mb-4">
+            <FileText className="h-10 w-10 text-primary" />
+            <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+              Community Guides
+            </h1>
+          </div>
           <p className="text-lg text-foreground/70 mb-6">
             High level guidance for ERLC communities. These guides provide frameworks and perspectives 
             to help you think through common challenges and opportunities.
@@ -18,17 +22,7 @@ export default function CommunityGuidesPage() {
         {/* Empty State */}
         <div className="mx-auto max-w-2xl">
           <div className="rounded-lg bg-card border border-border p-12 text-center">
-            <svg
-              className="mx-auto h-16 w-16 text-foreground/40 mb-6"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="1.5"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-            </svg>
+            <Clock className="mx-auto h-16 w-16 text-foreground/40 mb-6" />
             <h2 className="text-2xl font-semibold text-foreground mb-3">
               No Guides Available Yet
             </h2>
@@ -42,8 +36,9 @@ export default function CommunityGuidesPage() {
               </p>
               <Link
                 href="/resources"
-                className="inline-flex items-center rounded-md bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-hover transition-colors"
+                className="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-hover transition-colors"
               >
+                <BookOpen className="h-4 w-4" />
                 Explore Resources Vault
               </Link>
             </div>

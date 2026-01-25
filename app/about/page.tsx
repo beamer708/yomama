@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Info, BookOpen, Compass } from "lucide-react";
 
 export default function AboutPage() {
   return (
@@ -6,6 +7,9 @@ export default function AboutPage() {
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-12 text-center">
+          <div className="flex justify-center mb-4">
+            <Compass className="h-12 w-12 text-primary" />
+          </div>
           <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl mb-4">
             About Unity Vault
           </h1>
@@ -38,8 +42,9 @@ export default function AboutPage() {
             </p>
             <Link
               href="/resources"
-              className="inline-flex items-center rounded-md bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-hover transition-colors"
+              className="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-hover transition-colors"
             >
+              <BookOpen className="h-4 w-4" />
               Explore Resources
             </Link>
           </section>

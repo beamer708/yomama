@@ -1,23 +1,28 @@
 import { Resource } from "@/lib/resources";
+import { Video, BookOpen, Globe, Wrench, FileText, ExternalLink } from "lucide-react";
 
 interface ResourceCardProps {
   resource: Resource;
 }
 
-const typeLabels: Record<Resource["type"], string> = {
-  video: "YouTube Video",
-  guide: "Guide",
-  website: "Website",
-  tool: "Tool",
-  document: "Document",
+const typeLabels: Record<Resource["type"], { label: string; icon: typeof Video }> = {
+  video: { label: "YouTube Video", icon: Video },
+  guide: { label: "Guide", icon: BookOpen },
+  website: { label: "Website", icon: Globe },
+  tool: { label: "Tool", icon: Wrench },
+  document: { label: "Document", icon: FileText },
 };
 
 export default function ResourceCard({ resource }: ResourceCardProps) {
+  const typeInfo = typeLabels[resource.type];
+  const TypeIcon = typeInfo.icon;
+
   return (
     <div className="group rounded-lg bg-card border border-border p-6 hover:border-primary/40 hover:bg-card-hover transition-all">
       <div className="flex items-start justify-between mb-3">
-        <span className="inline-flex items-center rounded-md bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
-          {typeLabels[resource.type]}
+        <span className="inline-flex items-center gap-1.5 rounded-md bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
+          <TypeIcon className="h-3 w-3" />
+          {typeInfo.label}
         </span>
         <span className="text-xs text-foreground/60">{resource.category}</span>
       </div>
@@ -47,20 +52,10 @@ export default function ResourceCard({ resource }: ResourceCardProps) {
           href={resource.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:text-primary-hover transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary-hover transition-colors"
         >
           View Resource
-          <svg
-            className="h-4 w-4"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-          </svg>
+          <ExternalLink className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </a>
       </div>
     </div>

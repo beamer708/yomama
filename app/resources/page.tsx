@@ -2,8 +2,20 @@
 
 import { useState, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import { Search, BookOpen, Palette, Layers, MessageSquare, Users2, TrendingUp, Settings, Users, Bot, Grid3x3 } from "lucide-react";
 import ResourceCard from "@/components/ResourceCard";
 import { resources, resourceCategories, getResourcesByCategory, searchResources } from "@/lib/resources";
+
+const categoryIcons: Record<string, typeof BookOpen> = {
+  "Server Branding": Palette,
+  "Graphic Design Fundamentals": Layers,
+  "Discord Setup and Visuals": MessageSquare,
+  "Roleplay Structure": Users2,
+  "Advertising and Growth": TrendingUp,
+  "Staff Systems": Settings,
+  "Community Management": Users,
+  "Automation and Bots": Bot,
+};
 
 function ResourcesContent() {
   const searchParams = useSearchParams();
@@ -30,9 +42,12 @@ function ResourcesContent() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mx-auto max-w-2xl lg:max-w-4xl mb-12">
-          <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl mb-4">
-            Resources Vault
-          </h1>
+          <div className="flex items-center gap-3 mb-4">
+            <BookOpen className="h-10 w-10 text-primary" />
+            <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+              Resources Vault
+            </h1>
+          </div>
           <p className="text-lg text-foreground/70 mb-6">
             Curated YouTube videos and resources from across the ERLC community. Most resources are high-quality 
             YouTube videos, especially for graphic design, branding, and Discord server presentation. All resources 
@@ -56,43 +71,38 @@ function ResourcesContent() {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full rounded-lg border border-border bg-card px-4 py-3 pl-10 text-foreground placeholder:text-foreground/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
             />
-            <svg
-              className="absolute left-3 top-3.5 h-5 w-5 text-foreground/50"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
+            <Search className="absolute left-3 top-3.5 h-5 w-5 text-foreground/50" />
           </div>
 
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setSelectedCategory("")}
-              className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+              className={`inline-flex items-center gap-1.5 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
                 selectedCategory === ""
                   ? "bg-primary text-white"
                   : "bg-card text-foreground/70 hover:bg-card-hover hover:text-foreground border border-border"
               }`}
             >
+              <Grid3x3 className="h-4 w-4" />
               All Categories
             </button>
-            {resourceCategories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
-                  selectedCategory === category
-                    ? "bg-primary text-white"
-                    : "bg-card text-foreground/70 hover:bg-card-hover hover:text-foreground border border-border"
-                }`}
-              >
-                {category}
-              </button>
-            ))}
+            {resourceCategories.map((category) => {
+              const Icon = categoryIcons[category] || BookOpen;
+              return (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`inline-flex items-center gap-1.5 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+                    selectedCategory === category
+                      ? "bg-primary text-white"
+                      : "bg-card text-foreground/70 hover:bg-card-hover hover:text-foreground border border-border"
+                  }`}
+                >
+                  <Icon className="h-4 w-4" />
+                  {category}
+                </button>
+              );
+            })}
           </div>
         </div>
 
@@ -128,10 +138,14 @@ function ResourcesContent() {
           <div className="space-y-12">
             {resourceCategories.map((category) => {
               const categoryResources = getResourcesByCategory(category);
+              const CategoryIcon = categoryIcons[category] || BookOpen;
               return (
                 <div key={category} className="space-y-6">
                   <div className="flex items-center justify-between">
-                    <h2 className="text-2xl font-semibold text-foreground">{category}</h2>
+                    <div className="flex items-center gap-3">
+                      <CategoryIcon className="h-6 w-6 text-primary" />
+                      <h2 className="text-2xl font-semibold text-foreground">{category}</h2>
+                    </div>
                     <span className="text-sm text-foreground/60">
                       {categoryResources.length} resource{categoryResources.length !== 1 ? "s" : ""}
                     </span>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BookOpen, Info, FileText } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -6,7 +7,10 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Unity Vault</h3>
+            <div className="flex items-center gap-2 mb-4">
+              <BookOpen className="h-5 w-5 text-primary" />
+              <h3 className="text-lg font-semibold text-foreground">Unity Vault</h3>
+            </div>
             <p className="text-sm text-foreground/70 mb-4">
               A curated vault of knowledge for building successful ERLC communities.
             </p>
@@ -16,15 +20,20 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-foreground mb-4">Resources</h4>
+            <div className="flex items-center gap-2 mb-4">
+              <BookOpen className="h-4 w-4 text-primary" />
+              <h4 className="text-sm font-semibold text-foreground">Resources</h4>
+            </div>
             <ul className="space-y-2">
               <li>
-                <Link href="/resources" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
+                <Link href="/resources" className="flex items-center gap-2 text-sm text-foreground/70 hover:text-foreground transition-colors">
+                  <BookOpen className="h-3.5 w-3.5" />
                   Resources Vault
                 </Link>
               </li>
               <li>
-                <Link href="/community-guides" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
+                <Link href="/community-guides" className="flex items-center gap-2 text-sm text-foreground/70 hover:text-foreground transition-colors">
+                  <FileText className="h-3.5 w-3.5" />
                   Community Guides
                 </Link>
               </li>
@@ -32,10 +41,14 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-foreground mb-4">About</h4>
+            <div className="flex items-center gap-2 mb-4">
+              <Info className="h-4 w-4 text-primary" />
+              <h4 className="text-sm font-semibold text-foreground">About</h4>
+            </div>
             <ul className="space-y-2">
               <li>
-                <Link href="/about" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
+                <Link href="/about" className="flex items-center gap-2 text-sm text-foreground/70 hover:text-foreground transition-colors">
+                  <Info className="h-3.5 w-3.5" />
                   About Unity Vault
                 </Link>
               </li>
