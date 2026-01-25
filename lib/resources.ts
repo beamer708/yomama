@@ -24,7 +24,36 @@ export const resourceCategories = [
 
 // Resources - in production, this would come from a database or CMS
 // Most resources are YouTube videos, especially from high-quality design channels
-export const resources: Resource[] = [];
+export const resources: Resource[] = [
+  {
+    id: "1",
+    title: "Minimal Logo Design",
+    description: "A comprehensive playlist covering minimal logo design principles and techniques for creating clean, professional logos.",
+    type: "video",
+    url: "https://www.youtube.com/playlist?list=PLa_yy-WEeRrmTZUUK-nkAujtftVMZ8I5g",
+    category: "Graphic Design Fundamentals",
+    creator: "YouTube Creator",
+  },
+  {
+    id: "2",
+    title: "ER:LC Hub - Interactive Map & Vehicle Stats",
+    description: "Interactive map for ERLC with vehicle stats, map layers, custom layers, and comprehensive game location information including spawns, buildings, NPCs, and more.",
+    type: "website",
+    url: "https://erlc-hub.pages.dev/",
+    category: "Roleplay Structure",
+    creator: "Syce Gaming",
+    creatorUrl: "https://discord.gg/7KfgS5M4Jn",
+  },
+  {
+    id: "3",
+    title: "ER:LC Hub Discord Community",
+    description: "Discord community for ER:LC Hub featuring map customizations, ERLC stats, and community resources for roleplay structure and game information.",
+    type: "website",
+    url: "https://discord.gg/7KfgS5M4Jn",
+    category: "Roleplay Structure",
+    creator: "Syce Gaming",
+  },
+];
 
 export function getResourcesByCategory(category?: string): Resource[] {
   if (!category) return resources;
