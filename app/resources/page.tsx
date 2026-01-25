@@ -158,16 +158,12 @@ function ResourcesContent() {
                       ))}
                     </div>
                   ) : (
-                    <div className="rounded-lg bg-card border border-border p-8 text-center">
-                      <p className="text-sm text-foreground/60">No resources available</p>
+                    <div className="rounded-lg bg-card/50 border border-border/50 p-4">
+                      <p className="text-sm text-foreground/50 text-center">
+                        Not available
+                      </p>
                     </div>
                   )}
-                  
-                  <div className="rounded-lg bg-card/50 border border-border/50 p-3">
-                    <p className="text-xs text-foreground/50 text-center">
-                      Not available
-                    </p>
-                  </div>
                 </div>
               );
             })}
