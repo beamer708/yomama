@@ -231,7 +231,7 @@ export default function Home() {
             {[
               { name: "Server Branding", icon: "palette" as const },
               { name: "Graphic Design Fundamentals", icon: "layers" as const },
-              { name: "Discord Setup and Visuals", icon: "message-sms" as const },
+              { name: "Discord Setup and Visuals", icon: "discord" as const },
               { name: "Roleplay Structure", icon: "users-alt" as const },
               { name: "Advertising and Growth", icon: "arrow-trend-up" as const },
               { name: "Staff Systems", icon: "settings" as const },

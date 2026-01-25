@@ -37,8 +37,30 @@ export type IconName =
   | "resources"
   | "text";
 
+/** Flaticon brand icons (Discord, YouTube, etc.) */
+export type BrandIconName =
+  | "discord"
+  | "youtube"
+  | "behance"
+  | "flaticon"
+  | "github"
+  | "twitter"
+  | "instagram"
+  | "facebook"
+  | "linkedin"
+  | "twitch"
+  | "tiktok"
+  | "spotify"
+  | "reddit"
+  | "whatsapp"
+  | "telegram"
+  | "vimeo"
+  | "figma"
+  | "dribbble"
+  | "pinterest";
+
 interface IconProps {
-  name: IconName;
+  name: IconName | BrandIconName;
   className?: string;
   "aria-hidden"?: boolean;
 }
@@ -81,8 +103,35 @@ const iconClassMap: Record<IconName, string> = {
   text: "fi-br-text",
 };
 
+const brandIconClassMap: Record<BrandIconName, string> = {
+  discord: "fi-brands-discord",
+  youtube: "fi-brands-youtube",
+  behance: "fi-brands-behance",
+  flaticon: "fi-brands-flaticon",
+  github: "fi-brands-github",
+  twitter: "fi-brands-twitter",
+  instagram: "fi-brands-instagram",
+  facebook: "fi-brands-facebook",
+  linkedin: "fi-brands-linkedin",
+  twitch: "fi-brands-twitch",
+  tiktok: "fi-brands-tik-tok",
+  spotify: "fi-brands-spotify",
+  reddit: "fi-brands-reddit",
+  whatsapp: "fi-brands-whatsapp",
+  telegram: "fi-brands-telegram",
+  vimeo: "fi-brands-vimeo",
+  figma: "fi-brands-figma",
+  dribbble: "fi-brands-dribbble",
+  pinterest: "fi-brands-pinterest",
+};
+
+const brandNames = new Set<BrandIconName>(Object.keys(brandIconClassMap) as BrandIconName[]);
+
 export default function Icon({ name, className = "", "aria-hidden": ariaHidden = true }: IconProps) {
-  const fiClass = iconClassMap[name] ?? "fi-br-circle";
+  const isBrand = brandNames.has(name as BrandIconName);
+  const fiClass = isBrand
+    ? (brandIconClassMap[name as BrandIconName] ?? "fi-brands-discord")
+    : (iconClassMap[name as IconName] ?? "fi-br-circle");
   return (
     <i
       className={`fi ${fiClass} ${className}`.trim()}

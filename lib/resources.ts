@@ -114,6 +114,16 @@ export const resources: Resource[] = [
     creator: "Syce Gaming",
   },
   {
+    id: "12",
+    title: "Melonly",
+    description: "ERLC roleplay platform and community hub for server discovery, profiles, and roleplay structure resources.",
+    type: "website",
+    url: "https://melonly.xyz",
+    category: "Roleplay Structure",
+    creator: "Melonly",
+    creatorUrl: "https://melonly.xyz",
+  },
+  {
     id: "5",
     title: "Flaticon - Static Interface Icons for Discord",
     description: "Static Discord-style icons and emojis compatible for Discord usage including emojis, role icons, and panel graphics. Perfect for improving visual quality of ERLC server interfaces.",
@@ -132,6 +142,26 @@ export const resources: Resource[] = [
     category: "Discord Setup and Visuals",
     creator: "Flaticon",
     creatorUrl: "https://www.flaticon.com",
+  },
+  {
+    id: "13",
+    title: "Melonly - Servers",
+    description: "Discover and browse ERLC servers on Melonly. Useful for advertising, server discovery, and growth within the ERLC community.",
+    type: "website",
+    url: "https://melonly.xyz/servers",
+    category: "Advertising and Growth",
+    creator: "Melonly",
+    creatorUrl: "https://melonly.xyz",
+  },
+  {
+    id: "14",
+    title: "Melonly - Profiles",
+    description: "User profiles and community directory on Melonly. Helps with advertising, networking, and connecting with the ERLC community.",
+    type: "website",
+    url: "https://melonly.xyz/profiles",
+    category: "Advertising and Growth",
+    creator: "Melonly",
+    creatorUrl: "https://melonly.xyz",
   },
 ];
 

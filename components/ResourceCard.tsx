@@ -1,12 +1,12 @@
 import { Resource } from "@/lib/resources";
-import Icon, { IconName } from "@/components/Icon";
+import Icon, { IconName, BrandIconName } from "@/components/Icon";
 
 interface ResourceCardProps {
   resource: Resource;
 }
 
-const typeLabels: Record<Resource["type"], { label: string; icon: IconName }> = {
-  video: { label: "YouTube Video", icon: "video-camera" },
+const typeLabels: Record<Resource["type"], { label: string; icon: IconName | BrandIconName }> = {
+  video: { label: "YouTube Video", icon: "youtube" },
   guide: { label: "Guide", icon: "book" },
   website: { label: "Website", icon: "globe" },
   tool: { label: "Tool", icon: "wrench" },

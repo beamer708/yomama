@@ -2,14 +2,14 @@
 
 import { useState, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import Icon, { IconName } from "@/components/Icon";
+import Icon, { IconName, BrandIconName } from "@/components/Icon";
 import ResourceCard from "@/components/ResourceCard";
 import { resources, resourceCategories, getResourcesByCategory, searchResources } from "@/lib/resources";
 
-const categoryIcons: Record<string, IconName> = {
+const categoryIcons: Record<string, IconName | BrandIconName> = {
   "Server Branding": "palette",
   "Graphic Design Fundamentals": "layers",
-  "Discord Setup and Visuals": "message-sms",
+  "Discord Setup and Visuals": "discord",
   "Roleplay Structure": "users-alt",
   "Advertising and Growth": "arrow-trend-up",
   "Staff Systems": "settings",

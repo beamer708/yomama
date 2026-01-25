@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Icon from "@/components/Icon";
 
 export default function ComingSoonBanner() {
   return (
@@ -13,12 +14,13 @@ export default function ComingSoonBanner() {
               </span>
               Coming Soon
               <span className="text-foreground/70">•</span>
-              <Link 
-                href="https://discord.gg/rJECs3rpDh" 
-                target="_blank" 
+              <Link
+                href="https://discord.gg/rJECs3rpDh"
+                target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-primary transition-colors underline underline-offset-2"
+                className="inline-flex items-center gap-1.5 hover:text-primary transition-colors underline underline-offset-2"
               >
+                <Icon name="discord" className="text-base" />
                 Stay updated through Discord
               </Link>
             </span>

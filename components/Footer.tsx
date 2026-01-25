@@ -65,7 +65,7 @@ export default function Footer() {
               aria-label="Join the Unity Vault Discord"
               className="inline-flex items-center justify-center w-10 h-10 rounded-lg text-primary hover:text-white hover:bg-primary/20 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background transition-all duration-200 hover:scale-105"
             >
-              <Icon name="message-sms" className="text-xl" />
+              <Icon name="discord" className="text-xl" />
             </a>
             <p className="text-xs text-foreground/60 text-center">
               Unity Vault is not affiliated with Roblox or ERLC developers. All external resources belong to their original creators.
@@ -82,7 +82,7 @@ export default function Footer() {
               </a>
             </p>
             <p className="text-xs text-foreground/50 text-center">
-              Icons by <a href="https://www.flaticon.com/uicons/interface-icons" target="_blank" rel="noopener noreferrer" className="hover:text-foreground/70 transition-colors">Flaticon</a>
+              Icons by <a href="https://www.flaticon.com/uicons" target="_blank" rel="noopener noreferrer" className="hover:text-foreground/70 transition-colors">Flaticon Uicons</a>
             </p>
           </div>
         </div>
