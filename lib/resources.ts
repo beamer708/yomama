@@ -35,6 +35,16 @@ export const resources: Resource[] = [
     creator: "YouTube Creator",
   },
   {
+    id: "4",
+    title: "Flaticon - Interface Icons",
+    description: "High-quality static interface icons for branding, websites, UI elements, panels, and embeds. Perfect for creating professional visual assets for ERLC server branding and Discord visuals.",
+    type: "website",
+    url: "https://www.flaticon.com/uicons/interface-icons",
+    category: "Graphic Design Fundamentals",
+    creator: "Flaticon",
+    creatorUrl: "https://www.flaticon.com",
+  },
+  {
     id: "2",
     title: "ER:LC Hub - Interactive Map & Vehicle Stats",
     description: "Interactive map for ERLC with vehicle stats, map layers, custom layers, and comprehensive game location information including spawns, buildings, NPCs, and more.",
@@ -52,6 +62,26 @@ export const resources: Resource[] = [
     url: "https://discord.gg/7KfgS5M4Jn",
     category: "Roleplay Structure",
     creator: "Syce Gaming",
+  },
+  {
+    id: "5",
+    title: "Flaticon - Static Interface Icons for Discord",
+    description: "Static Discord-style icons and emojis compatible for Discord usage including emojis, role icons, and panel graphics. Perfect for improving visual quality of ERLC server interfaces.",
+    type: "website",
+    url: "https://www.flaticon.com/uicons/interface-icons",
+    category: "Discord Setup and Visuals",
+    creator: "Flaticon",
+    creatorUrl: "https://www.flaticon.com",
+  },
+  {
+    id: "6",
+    title: "Flaticon - Animated Icons for Discord",
+    description: "Animated icons and emojis for Discord usage. Compatible for animated emojis, role icons, and dynamic panel graphics. Enhances visual appeal of ERLC server interfaces with motion.",
+    type: "website",
+    url: "https://www.flaticon.com/animated-icons",
+    category: "Discord Setup and Visuals",
+    creator: "Flaticon",
+    creatorUrl: "https://www.flaticon.com",
   },
 ];
 
