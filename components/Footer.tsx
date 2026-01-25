@@ -75,9 +75,6 @@ export default function Footer() {
                 b3amerr
               </a>
             </p>
-            <p className="text-xs text-foreground/50 text-center">
-              Icons by <a href="https://www.flaticon.com/uicons" target="_blank" rel="noopener noreferrer" className="hover:text-foreground/70 transition-colors">Flaticon Uicons</a>
-            </p>
           </div>
         </div>
       </div>
