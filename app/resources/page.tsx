@@ -38,22 +38,19 @@ function ResourcesContent() {
   }, [selectedCategory, searchQuery]);
 
   return (
-    <div className="py-12 sm:py-16">
+    <div className="py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mx-auto max-w-2xl lg:max-w-4xl mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <Icon name="book" className="text-4xl text-primary" />
-            <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-              Resources Vault
-            </h1>
-          </div>
+        <div className="mx-auto max-w-3xl mb-12">
+          <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl mb-4">
+            Resources Vault
+          </h1>
           <p className="text-lg text-foreground/70 mb-6">
             Curated YouTube videos and resources from across the ERLC community. Most resources are high-quality 
             YouTube videos, especially for graphic design, branding, and Discord server presentation. All resources 
             are organized by category and properly credited to their original creators.
           </p>
-          <div className="rounded-lg bg-yellow-500/10 border border-yellow-500/20 p-4 mb-8">
+          <div className="rounded-lg bg-card border border-border p-4">
             <p className="text-sm text-foreground/80">
               <strong className="font-semibold">Important:</strong> Unity Vault does not create tutorials. 
               We curate, organize, and reference resources. All credit belongs to the original creators.
@@ -62,14 +59,14 @@ function ResourcesContent() {
         </div>
 
         {/* Search and Filters */}
-        <div className="mb-8 space-y-4">
-          <div className="relative">
+        <div className="mb-10 space-y-4">
+          <div className="relative max-w-2xl">
             <input
               type="text"
               placeholder="Search resources..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-lg border border-border bg-card px-4 py-3 pl-10 text-foreground placeholder:text-foreground/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+              className="w-full rounded-lg border border-border bg-card px-4 py-3 pl-10 text-foreground placeholder:text-foreground/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             />
             <Icon name="search" className="absolute left-3 top-3.5 text-xl text-foreground/50" />
           </div>
@@ -77,7 +74,7 @@ function ResourcesContent() {
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setSelectedCategory("")}
-              className={`inline-flex items-center gap-1.5 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+              className={`inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                 selectedCategory === ""
                   ? "bg-primary text-white"
                   : "bg-card text-foreground/70 hover:bg-card-hover hover:text-foreground border border-border"
@@ -92,7 +89,7 @@ function ResourcesContent() {
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`inline-flex items-center gap-1.5 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+                  className={`inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                     selectedCategory === category
                       ? "bg-primary text-white"
                       : "bg-card text-foreground/70 hover:bg-card-hover hover:text-foreground border border-border"
@@ -135,13 +132,13 @@ function ResourcesContent() {
             )}
           </>
         ) : (
-          <div className="space-y-12">
+          <div className="space-y-16">
             {resourceCategories.map((category) => {
               const categoryResources = getResourcesByCategory(category);
               const iconName = categoryIcons[category] || "book";
               return (
                 <div key={category} className="space-y-6">
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between border-b border-border pb-3">
                     <div className="flex items-center gap-3">
                       <Icon name={iconName} className="text-2xl text-primary" />
                       <h2 className="text-2xl font-semibold text-foreground">{category}</h2>
@@ -158,7 +155,7 @@ function ResourcesContent() {
                       ))}
                     </div>
                   ) : (
-                    <div className="rounded-lg bg-card/50 border border-border/50 p-4">
+                    <div className="rounded-lg bg-card/50 border border-border/50 p-6">
                       <p className="text-sm text-foreground/50 text-center">
                         Not available
                       </p>
@@ -177,7 +174,7 @@ function ResourcesContent() {
 export default function ResourcesPage() {
   return (
     <Suspense fallback={
-      <div className="py-12 sm:py-16">
+      <div className="py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="animate-pulse">
             <div className="h-12 bg-card rounded mb-4"></div>

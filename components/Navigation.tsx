@@ -13,6 +13,7 @@ export default function Navigation() {
     { href: "/resources", label: "Resources Vault", icon: "book" as const },
     { href: "/community-guides", label: "Community Guides", icon: "file" as const },
     { href: "/about", label: "About", icon: "info" as const },
+    { href: "/legal", label: "Legal", icon: "document" as const },
   ];
 
   return (
@@ -25,12 +26,12 @@ export default function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:space-x-6">
+          <div className="hidden md:flex md:items-center md:space-x-8">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="flex items-center gap-1.5 text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+                className="flex items-center gap-1.5 text-sm font-medium text-foreground/70 transition-colors hover:text-foreground"
               >
                 <Icon name={link.icon} className="text-base" />
                 {link.label}
@@ -61,7 +62,7 @@ export default function Navigation() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="flex items-center gap-2 px-3 py-2 text-base font-medium text-foreground/80 hover:text-foreground hover:bg-card-hover rounded-md transition-colors"
+                className="flex items-center gap-2 px-3 py-2 text-base font-medium text-foreground/70 hover:text-foreground hover:bg-card-hover rounded-md transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 <Icon name={link.icon} className="text-base" />
