@@ -8,11 +8,11 @@ import Footer from "@/components/Footer";
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
-  title: "Unity Lab | ERLC Community Resource Vault",
+  title: "Unity Vault | ERLC Community Resource Vault",
   description: "A curated vault of knowledge for building successful ERLC communities. Resources, frameworks, and guidance organized for growth.",
   keywords: ["ERLC", "Roblox", "roleplay", "community", "resources", "guides"],
   openGraph: {
-    title: "Unity Lab | ERLC Community Resource Vault",
+    title: "Unity Vault | ERLC Community Resource Vault",
     description: "A curated vault of knowledge for building successful ERLC communities.",
     type: "website",
   },

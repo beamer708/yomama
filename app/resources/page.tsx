@@ -40,7 +40,7 @@ function ResourcesContent() {
           </p>
           <div className="rounded-lg bg-yellow-500/10 border border-yellow-500/20 p-4 mb-8">
             <p className="text-sm text-foreground/80">
-              <strong className="font-semibold">Important:</strong> Unity Lab does not create tutorials. 
+              <strong className="font-semibold">Important:</strong> Unity Vault does not create tutorials. 
               We curate, organize, and reference resources. All credit belongs to the original creators.
             </p>
           </div>

@@ -11,7 +11,7 @@ export default function Home() {
               Your ERLC Community Resource Vault
             </h1>
             <p className="mt-6 text-lg leading-8 text-foreground/70">
-              Unity Lab exists to remove the intimidation factor around building successful ERLC communities. 
+              Unity Vault exists to remove the intimidation factor around building successful ERLC communities. 
               Everything you need to learn, organized in one place.
             </p>
             <p className="mt-4 text-base leading-7 text-foreground/60">
@@ -36,18 +36,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* What Unity Lab Is */}
+      {/* What Unity Vault Is */}
       <section className="py-16 sm:py-24 bg-card/50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:max-w-none">
             <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl text-center mb-12">
-              What Unity Lab Is
+              What Unity Vault Is
             </h2>
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
               <div className="rounded-lg bg-card p-8 border border-border hover:border-primary/20 transition-colors">
                 <h3 className="text-xl font-semibold text-foreground mb-4">A Resource Vault</h3>
                 <p className="text-foreground/70">
-                  Unity Lab is a vault of knowledge, not a tutorial creator. We curate the best ERLC resources 
+                  Unity Vault is a vault of knowledge, not a tutorial creator. We curate the best ERLC resources 
                   already available on the web and organize them clearly and professionally.
                 </p>
               </div>
@@ -71,7 +71,7 @@ export default function Home() {
               Who It Is For
             </h2>
             <p className="text-lg leading-8 text-foreground/70 mb-12">
-              Unity Lab serves the entire ERLC community ecosystem
+              Unity Vault serves the entire ERLC community ecosystem
             </p>
           </div>
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
@@ -117,11 +117,11 @@ export default function Home() {
                 <h3 className="text-xl font-semibold text-foreground mb-4">The Truth About Growth</h3>
                 <p className="text-foreground/70 mb-4">
                   Many ERLC owners overthink growth and believe large servers have secret knowledge. 
-                  Unity Lab reframes that mindset by showing that big servers learned from public resources.
+                  Unity Vault reframes that mindset by showing that big servers learned from public resources.
                 </p>
                 <p className="text-foreground/70">
                   Success comes from organization, consistency, and execution. The resources are already out there. 
-                  Unity Lab helps you find them, understand them, and apply them.
+                  Unity Vault helps you find them, understand them, and apply them.
                 </p>
               </div>
             </div>
@@ -129,12 +129,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* How Unity Lab Helps */}
+      {/* How Unity Vault Helps */}
       <section className="py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center">
             <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-4">
-              How Unity Lab Helps
+              How Unity Vault Helps
             </h2>
             <p className="text-lg leading-8 text-foreground/70 mb-12">
               We remove barriers to learning and growth
@@ -222,7 +222,7 @@ export default function Home() {
               Community Trust
             </h2>
             <p className="text-lg leading-8 text-foreground/70">
-              Unity Lab is built on trust and respect for the ERLC community. We curate resources with care, 
+              Unity Vault is built on trust and respect for the ERLC community. We curate resources with care, 
               always credit original creators, and focus on helping communities grow. This is a resource vault 
               for everyone, by the community.
             </p>

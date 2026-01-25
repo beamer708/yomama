@@ -33,7 +33,7 @@ export default function CommunityGuidesPage() {
               No Guides Available Yet
             </h2>
             <p className="text-foreground/70 mb-6 max-w-md mx-auto">
-              Community guides are coming soon. Unity Lab is focused on curating the best existing resources 
+              Community guides are coming soon. Unity Vault is focused on curating the best existing resources 
               to help ERLC communities grow.
             </p>
             <div className="space-y-4">

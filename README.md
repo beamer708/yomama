@@ -1,10 +1,10 @@
-# Unity Lab Website
+# Unity Vault Website
 
-A modern, resource-driven platform for the ERLC (Emergency Response: Liberty County) community. Unity Lab curates and organizes the best ERLC resources, making them accessible to everyone building successful communities.
+A modern, resource-driven platform for the ERLC (Emergency Response: Liberty County) community. Unity Vault curates and organizes the best ERLC resources, making them accessible to everyone building successful communities.
 
 ## Purpose
 
-Unity Lab exists to remove the intimidation factor around building successful ERLC communities. We show that big servers learned from public resources and anyone can learn the same way through organization, consistency, and execution.
+Unity Vault exists to remove the intimidation factor around building successful ERLC communities. We show that big servers learned from public resources and anyone can learn the same way through organization, consistency, and execution.
 
 ## Features
 
@@ -68,11 +68,11 @@ npm start
 
 ## Key Principles
 
-- **No Tutorials**: Unity Lab curates resources, it does not create tutorials
+- **No Tutorials**: Unity Vault curates resources, it does not create tutorials
 - **Proper Credit**: All resources are credited to their original creators
 - **Community First**: Built for and by the ERLC community
 - **Accessibility**: Free and accessible to everyone
-- **Transparency**: Clear about what Unity Lab is and is not
+- **Transparency**: Clear about what Unity Vault is and is not
 
 ## Development
 
@@ -88,4 +88,4 @@ The site uses Tailwind CSS with a custom design system defined in `app/globals.c
 
 ## License
 
-Unity Lab is an independent community resource.
+Unity Vault is an independent community resource.

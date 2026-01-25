@@ -18,7 +18,7 @@ export default function Navigation() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
-            <span className="text-xl font-semibold text-foreground">Unity Lab</span>
+            <span className="text-xl font-semibold text-foreground">Unity Vault</span>
           </Link>
 
           {/* Desktop Navigation */}

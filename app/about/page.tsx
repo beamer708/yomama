@@ -7,7 +7,7 @@ export default function AboutPage() {
         {/* Header */}
         <div className="mb-12 text-center">
           <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl mb-4">
-            About Unity Lab
+            About Unity Vault
           </h1>
         </div>
 
@@ -15,15 +15,15 @@ export default function AboutPage() {
         <div className="space-y-8">
           <section>
             <p className="text-lg leading-8 text-foreground/70 mb-6">
-              Unity Lab exists to help ERLC communities stop overthinking growth.
+              Unity Vault exists to help ERLC communities stop overthinking growth.
             </p>
             <p className="text-lg leading-8 text-foreground/70 mb-6">
-              Everything successful servers learn comes from public resources. Unity Lab organizes those 
+              Everything successful servers learn comes from public resources. Unity Vault organizes those 
               resources in one place, making it easy to find what you need without spending hours searching.
             </p>
             <p className="text-lg leading-8 text-foreground/70">
               We curate the best ERLC resources already available on the web and organize them clearly 
-              and professionally. Unity Lab does not create tutorials. We are a resource vault, not a 
+              and professionally. Unity Vault does not create tutorials. We are a resource vault, not a 
               tutorial creator.
             </p>
           </section>
@@ -47,7 +47,7 @@ export default function AboutPage() {
           {/* Creator Credit */}
           <section className="mt-12 pt-8 border-t border-border">
             <p className="text-sm text-foreground/70 text-center">
-              Unity Lab is created and owned by{" "}
+              Unity Vault is created and owned by{" "}
               <a
                 href="https://discord.com/users/527166312095678475"
                 target="_blank"

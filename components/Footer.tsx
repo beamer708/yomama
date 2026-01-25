@@ -6,12 +6,12 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Unity Lab</h3>
+            <h3 className="text-lg font-semibold text-foreground mb-4">Unity Vault</h3>
             <p className="text-sm text-foreground/70 mb-4">
               A curated vault of knowledge for building successful ERLC communities.
             </p>
             <p className="text-xs text-foreground/60">
-              Unity Lab curates and organizes resources. All credit belongs to original creators.
+              Unity Vault curates and organizes resources. All credit belongs to original creators.
             </p>
           </div>
 
@@ -36,7 +36,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link href="/about" className="text-sm text-foreground/70 hover:text-foreground transition-colors">
-                  About Unity Lab
+                  About Unity Vault
                 </Link>
               </li>
             </ul>
@@ -49,7 +49,7 @@ export default function Footer() {
               href="https://discord.gg/rJECs3rpDh"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Join the Unity Lab Discord"
+              aria-label="Join the Unity Vault Discord"
               className="inline-flex items-center justify-center w-10 h-10 rounded-lg text-primary hover:text-white hover:bg-primary/20 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background transition-all duration-200 hover:scale-105"
             >
               <svg
@@ -62,7 +62,7 @@ export default function Footer() {
               </svg>
             </a>
             <p className="text-xs text-foreground/60 text-center">
-              Unity Lab is not affiliated with Roblox or ERLC developers. All external resources belong to their original creators.
+              Unity Vault is not affiliated with Roblox or ERLC developers. All external resources belong to their original creators.
             </p>
             <p className="text-xs text-foreground/60 text-center">
               Created and owned by{" "}
