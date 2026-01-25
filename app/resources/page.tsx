@@ -2,19 +2,19 @@
 
 import { useState, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { Search, BookOpen, Palette, Layers, MessageSquare, Users2, TrendingUp, Settings, Users, Bot, Grid3x3 } from "lucide-react";
+import Icon, { IconName } from "@/components/Icon";
 import ResourceCard from "@/components/ResourceCard";
 import { resources, resourceCategories, getResourcesByCategory, searchResources } from "@/lib/resources";
 
-const categoryIcons: Record<string, typeof BookOpen> = {
-  "Server Branding": Palette,
-  "Graphic Design Fundamentals": Layers,
-  "Discord Setup and Visuals": MessageSquare,
-  "Roleplay Structure": Users2,
-  "Advertising and Growth": TrendingUp,
-  "Staff Systems": Settings,
-  "Community Management": Users,
-  "Automation and Bots": Bot,
+const categoryIcons: Record<string, IconName> = {
+  "Server Branding": "palette",
+  "Graphic Design Fundamentals": "layers",
+  "Discord Setup and Visuals": "message-sms",
+  "Roleplay Structure": "users-alt",
+  "Advertising and Growth": "arrow-trend-up",
+  "Staff Systems": "settings",
+  "Community Management": "users",
+  "Automation and Bots": "chatbot",
 };
 
 function ResourcesContent() {
@@ -43,7 +43,7 @@ function ResourcesContent() {
         {/* Header */}
         <div className="mx-auto max-w-2xl lg:max-w-4xl mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <BookOpen className="h-10 w-10 text-primary" />
+            <Icon name="book" className="text-4xl text-primary" />
             <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
               Resources Vault
             </h1>
@@ -71,7 +71,7 @@ function ResourcesContent() {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full rounded-lg border border-border bg-card px-4 py-3 pl-10 text-foreground placeholder:text-foreground/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
             />
-            <Search className="absolute left-3 top-3.5 h-5 w-5 text-foreground/50" />
+            <Icon name="search" className="absolute left-3 top-3.5 text-xl text-foreground/50" />
           </div>
 
           <div className="flex flex-wrap gap-2">
@@ -83,11 +83,11 @@ function ResourcesContent() {
                   : "bg-card text-foreground/70 hover:bg-card-hover hover:text-foreground border border-border"
               }`}
             >
-              <Grid3x3 className="h-4 w-4" />
+              <Icon name="grid" className="text-base" />
               All Categories
             </button>
             {resourceCategories.map((category) => {
-              const Icon = categoryIcons[category] || BookOpen;
+              const iconName = categoryIcons[category] || "book";
               return (
                 <button
                   key={category}
@@ -98,7 +98,7 @@ function ResourcesContent() {
                       : "bg-card text-foreground/70 hover:bg-card-hover hover:text-foreground border border-border"
                   }`}
                 >
-                  <Icon className="h-4 w-4" />
+                  <Icon name={iconName} className="text-base" />
                   {category}
                 </button>
               );
@@ -138,12 +138,12 @@ function ResourcesContent() {
           <div className="space-y-12">
             {resourceCategories.map((category) => {
               const categoryResources = getResourcesByCategory(category);
-              const CategoryIcon = categoryIcons[category] || BookOpen;
+              const iconName = categoryIcons[category] || "book";
               return (
                 <div key={category} className="space-y-6">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <CategoryIcon className="h-6 w-6 text-primary" />
+                      <Icon name={iconName} className="text-2xl text-primary" />
                       <h2 className="text-2xl font-semibold text-foreground">{category}</h2>
                     </div>
                     <span className="text-sm text-foreground/60">

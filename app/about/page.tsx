@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Info, BookOpen, Compass } from "lucide-react";
+import Icon from "@/components/Icon";
 
 export default function AboutPage() {
   return (
@@ -8,7 +8,7 @@ export default function AboutPage() {
         {/* Header */}
         <div className="mb-12 text-center">
           <div className="flex justify-center mb-4">
-            <Compass className="h-12 w-12 text-primary" />
+            <Icon name="compass" className="text-4xl text-primary" />
           </div>
           <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl mb-4">
             About Unity Vault
@@ -44,7 +44,7 @@ export default function AboutPage() {
               href="/resources"
               className="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-hover transition-colors"
             >
-              <BookOpen className="h-4 w-4" />
+              <Icon name="book" className="text-base" />
               Explore Resources
             </Link>
           </section>

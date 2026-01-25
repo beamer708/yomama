@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BookOpen, Library, Users, Lightbulb, CheckSquare, ArrowRight, Layers, Palette, MessageSquare, TrendingUp, Users2, Settings, Bot, Info } from "lucide-react";
+import Icon from "@/components/Icon";
 
 export default function Home() {
   return (
@@ -9,7 +9,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <div className="flex justify-center mb-6">
-              <Library className="h-12 w-12 text-primary" />
+              <Icon name="books" className="text-4xl text-primary" />
             </div>
             <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-6xl">
               Your ERLC Community Resource Vault
@@ -27,7 +27,7 @@ export default function Home() {
                 href="/resources"
                 className="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-hover transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               >
-                <BookOpen className="h-4 w-4" />
+                <Icon name="book" className="text-base" />
                 Explore Resources
               </Link>
               <Link
@@ -35,7 +35,7 @@ export default function Home() {
                 className="inline-flex items-center gap-1.5 text-sm font-semibold leading-6 text-foreground hover:text-primary transition-colors"
               >
                 Learn How Servers Grow
-                <ArrowRight className="h-4 w-4" />
+                <Icon name="arrow-right" className="text-base" />
               </Link>
             </div>
           </div>
@@ -47,7 +47,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:max-w-none">
             <div className="flex items-center justify-center gap-3 mb-12">
-              <Info className="h-8 w-8 text-primary" />
+              <Icon name="info" className="text-3xl text-primary" />
               <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                 What Unity Vault Is
               </h2>
@@ -55,7 +55,7 @@ export default function Home() {
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
               <div className="rounded-lg bg-card p-8 border border-border hover:border-primary/20 transition-colors">
                 <div className="flex items-center gap-3 mb-4">
-                  <Library className="h-6 w-6 text-primary" />
+                  <Icon name="books" className="text-2xl text-primary" />
                   <h3 className="text-xl font-semibold text-foreground">A Resource Vault</h3>
                 </div>
                 <p className="text-foreground/70">
@@ -65,7 +65,7 @@ export default function Home() {
               </div>
               <div className="rounded-lg bg-card p-8 border border-border hover:border-primary/20 transition-colors">
                 <div className="flex items-center gap-3 mb-4">
-                  <BookOpen className="h-6 w-6 text-primary" />
+                  <Icon name="book" className="text-2xl text-primary" />
                   <h3 className="text-xl font-semibold text-foreground">Organized Learning</h3>
                 </div>
                 <p className="text-foreground/70">
@@ -83,7 +83,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center">
             <div className="flex items-center justify-center gap-3 mb-4">
-              <Users className="h-8 w-8 text-primary" />
+              <Icon name="users" className="text-3xl text-primary" />
               <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                 Who It Is For
               </h2>
@@ -96,7 +96,7 @@ export default function Home() {
             <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
               <div className="flex flex-col">
                 <div className="flex items-center gap-2 mb-2">
-                  <Palette className="h-5 w-5 text-primary" />
+                  <Icon name="palette" className="text-xl text-primary" />
                   <dt className="text-base font-semibold leading-7 text-foreground">
                     Design Servers
                   </dt>
@@ -107,7 +107,7 @@ export default function Home() {
               </div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-2 mb-2">
-                  <Users2 className="h-5 w-5 text-primary" />
+                  <Icon name="users-alt" className="text-xl text-primary" />
                   <dt className="text-base font-semibold leading-7 text-foreground">
                     Roleplay Servers
                   </dt>
@@ -118,7 +118,7 @@ export default function Home() {
               </div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-2 mb-2">
-                  <Layers className="h-5 w-5 text-primary" />
+                  <Icon name="layers" className="text-xl text-primary" />
                   <dt className="text-base font-semibold leading-7 text-foreground">
                     Misc Servers for ERLC
                   </dt>
@@ -137,7 +137,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:max-w-4xl">
             <div className="flex items-center justify-center gap-3 mb-12">
-              <Lightbulb className="h-8 w-8 text-primary" />
+              <Icon name="bulb" className="text-3xl text-primary" />
               <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                 Why Big Servers Are Not Different
               </h2>
@@ -145,7 +145,7 @@ export default function Home() {
             <div className="space-y-8">
               <div className="rounded-lg bg-card p-8 border border-border">
                 <div className="flex items-center gap-3 mb-4">
-                  <Lightbulb className="h-6 w-6 text-primary" />
+                  <Icon name="bulb" className="text-2xl text-primary" />
                   <h3 className="text-xl font-semibold text-foreground">The Truth About Growth</h3>
                 </div>
                 <p className="text-foreground/70 mb-4">
@@ -167,7 +167,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center">
             <div className="flex items-center justify-center gap-3 mb-4">
-              <CheckSquare className="h-8 w-8 text-primary" />
+              <Icon name="checkbox" className="text-3xl text-primary" />
               <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                 How Unity Vault Helps
               </h2>
@@ -181,7 +181,7 @@ export default function Home() {
               <div className="relative pl-16">
                 <dt className="text-base font-semibold leading-7 text-foreground">
                   <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                    <BookOpen className="h-5 w-5 text-white" />
+                    <Icon name="book" className="text-xl text-white" />
                   </div>
                   Curated Resources
                 </dt>
@@ -192,7 +192,7 @@ export default function Home() {
               <div className="relative pl-16">
                 <dt className="text-base font-semibold leading-7 text-foreground">
                   <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                    <Layers className="h-5 w-5 text-white" />
+                    <Icon name="layers" className="text-xl text-white" />
                   </div>
                   Clear Organization
                 </dt>
@@ -203,7 +203,7 @@ export default function Home() {
               <div className="relative pl-16">
                 <dt className="text-base font-semibold leading-7 text-foreground">
                   <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                    <Users className="h-5 w-5 text-white" />
+                    <Icon name="users" className="text-xl text-white" />
                   </div>
                   Community First
                 </dt>
@@ -229,22 +229,22 @@ export default function Home() {
           </div>
           <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-4">
             {[
-              { name: "Server Branding", icon: Palette },
-              { name: "Graphic Design Fundamentals", icon: Layers },
-              { name: "Discord Setup and Visuals", icon: MessageSquare },
-              { name: "Roleplay Structure", icon: Users2 },
-              { name: "Advertising and Growth", icon: TrendingUp },
-              { name: "Staff Systems", icon: Settings },
-              { name: "Community Management", icon: Users },
-              { name: "Automation and Bots", icon: Bot },
-            ].map(({ name, icon: Icon }) => (
+              { name: "Server Branding", icon: "palette" as const },
+              { name: "Graphic Design Fundamentals", icon: "layers" as const },
+              { name: "Discord Setup and Visuals", icon: "message-sms" as const },
+              { name: "Roleplay Structure", icon: "users-alt" as const },
+              { name: "Advertising and Growth", icon: "arrow-trend-up" as const },
+              { name: "Staff Systems", icon: "settings" as const },
+              { name: "Community Management", icon: "users" as const },
+              { name: "Automation and Bots", icon: "chatbot" as const },
+            ].map(({ name, icon }) => (
               <Link
                 key={name}
                 href={`/resources?category=${encodeURIComponent(name)}`}
                 className="group rounded-lg bg-card p-6 border border-border hover:border-primary/40 hover:bg-card-hover transition-all"
               >
                 <div className="flex items-center gap-3 mb-2">
-                  <Icon className="h-5 w-5 text-primary group-hover:scale-110 transition-transform" />
+                  <Icon name={icon} className="text-xl text-primary group-hover:scale-110 transition-transform" />
                   <h3 className="text-base font-semibold text-foreground">{name}</h3>
                 </div>
               </Link>
@@ -258,7 +258,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <div className="flex justify-center mb-6">
-              <Users className="h-10 w-10 text-primary" />
+              <Icon name="users" className="text-4xl text-primary" />
             </div>
             <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-6">
               Community Trust
@@ -273,7 +273,7 @@ export default function Home() {
                 href="/resources"
                 className="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-hover transition-colors"
               >
-                <BookOpen className="h-4 w-4" />
+                <Icon name="book" className="text-base" />
                 Start Exploring Resources
               </Link>
             </div>

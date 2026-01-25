@@ -1,30 +1,29 @@
 import { Resource } from "@/lib/resources";
-import { Video, BookOpen, Globe, Wrench, FileText, ExternalLink, Type, Palette, Sparkles } from "lucide-react";
+import Icon, { IconName } from "@/components/Icon";
 
 interface ResourceCardProps {
   resource: Resource;
 }
 
-const typeLabels: Record<Resource["type"], { label: string; icon: typeof Video }> = {
-  video: { label: "YouTube Video", icon: Video },
-  guide: { label: "Guide", icon: BookOpen },
-  website: { label: "Website", icon: Globe },
-  tool: { label: "Tool", icon: Wrench },
-  document: { label: "Document", icon: FileText },
-  "font-library": { label: "Font Library", icon: Type },
-  "color-tool": { label: "Color Tool", icon: Palette },
-  inspiration: { label: "Inspiration Platform", icon: Sparkles },
+const typeLabels: Record<Resource["type"], { label: string; icon: IconName }> = {
+  video: { label: "YouTube Video", icon: "video-camera" },
+  guide: { label: "Guide", icon: "book" },
+  website: { label: "Website", icon: "globe" },
+  tool: { label: "Tool", icon: "wrench" },
+  document: { label: "Document", icon: "document" },
+  "font-library": { label: "Font Library", icon: "text" },
+  "color-tool": { label: "Color Tool", icon: "palette" },
+  inspiration: { label: "Inspiration Platform", icon: "sparkles" },
 };
 
 export default function ResourceCard({ resource }: ResourceCardProps) {
   const typeInfo = typeLabels[resource.type];
-  const TypeIcon = typeInfo.icon;
 
   return (
     <div className="group rounded-lg bg-card border border-border p-6 hover:border-primary/40 hover:bg-card-hover transition-all">
       <div className="flex items-start justify-between mb-3">
         <span className="inline-flex items-center gap-1.5 rounded-md bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
-          <TypeIcon className="h-3 w-3" />
+          <Icon name={typeInfo.icon} className="text-[10px]" />
           {typeInfo.label}
         </span>
         <span className="text-xs text-foreground/60">{resource.category}</span>
@@ -58,7 +57,7 @@ export default function ResourceCard({ resource }: ResourceCardProps) {
           className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary-hover transition-colors"
         >
           View Resource
-          <ExternalLink className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          <Icon name="up-right-from-square" className="text-sm transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </a>
       </div>
     </div>

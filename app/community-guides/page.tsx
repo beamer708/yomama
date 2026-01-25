@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FileText, BookOpen, Clock } from "lucide-react";
+import Icon from "@/components/Icon";
 
 export default function CommunityGuidesPage() {
   return (
@@ -8,7 +8,7 @@ export default function CommunityGuidesPage() {
         {/* Header */}
         <div className="mx-auto max-w-2xl lg:max-w-4xl mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <FileText className="h-10 w-10 text-primary" />
+            <Icon name="file" className="text-4xl text-primary" />
             <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
               Community Guides
             </h1>
@@ -22,7 +22,7 @@ export default function CommunityGuidesPage() {
         {/* Empty State */}
         <div className="mx-auto max-w-2xl">
           <div className="rounded-lg bg-card border border-border p-12 text-center">
-            <Clock className="mx-auto h-16 w-16 text-foreground/40 mb-6" />
+            <Icon name="clock" className="mx-auto block text-6xl text-foreground/40 mb-6" />
             <h2 className="text-2xl font-semibold text-foreground mb-3">
               No Guides Available Yet
             </h2>
@@ -38,7 +38,7 @@ export default function CommunityGuidesPage() {
                 href="/resources"
                 className="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-hover transition-colors"
               >
-                <BookOpen className="h-4 w-4" />
+                <Icon name="book" className="text-base" />
                 Explore Resources Vault
               </Link>
             </div>
