@@ -1,5 +1,5 @@
 import { Resource } from "@/lib/resources";
-import { Video, BookOpen, Globe, Wrench, FileText, ExternalLink } from "lucide-react";
+import { Video, BookOpen, Globe, Wrench, FileText, ExternalLink, Type, Palette, Sparkles } from "lucide-react";
 
 interface ResourceCardProps {
   resource: Resource;
@@ -11,6 +11,9 @@ const typeLabels: Record<Resource["type"], { label: string; icon: typeof Video }
   website: { label: "Website", icon: Globe },
   tool: { label: "Tool", icon: Wrench },
   document: { label: "Document", icon: FileText },
+  "font-library": { label: "Font Library", icon: Type },
+  "color-tool": { label: "Color Tool", icon: Palette },
+  inspiration: { label: "Inspiration Platform", icon: Sparkles },
 };
 
 export default function ResourceCard({ resource }: ResourceCardProps) {

@@ -1,4 +1,4 @@
-export type ResourceType = "video" | "guide" | "website" | "tool" | "document";
+export type ResourceType = "video" | "guide" | "website" | "tool" | "document" | "font-library" | "color-tool" | "inspiration";
 
 export interface Resource {
   id: string;
@@ -43,6 +43,56 @@ export const resources: Resource[] = [
     category: "Graphic Design Fundamentals",
     creator: "Flaticon",
     creatorUrl: "https://www.flaticon.com",
+  },
+  {
+    id: "7",
+    title: "DaFont Free - Fonts and Typography",
+    description: "Font discovery and typography inspiration for logos, branding, and server visuals. External font resource; individual fonts may have separate licenses. Use for ERLC branding and Discord text styling.",
+    type: "font-library",
+    url: "https://www.dafontfree.io",
+    category: "Graphic Design Fundamentals",
+    creator: "DaFont Free",
+    creatorUrl: "https://www.dafontfree.io",
+  },
+  {
+    id: "8",
+    title: "ColorHunt - Color Palettes",
+    description: "Color palette tool for consistent branding, Discord role colors, and embed design. Helps ERLC servers build a cohesive visual identity.",
+    type: "color-tool",
+    url: "https://colorhunt.co",
+    category: "Graphic Design Fundamentals",
+    creator: "ColorHunt",
+    creatorUrl: "https://colorhunt.co",
+  },
+  {
+    id: "9",
+    title: "Picular - Color Tools",
+    description: "Color discovery and palette tools for branding, role colors, and visual identity. Use for ERLC server branding and Discord embed design.",
+    type: "color-tool",
+    url: "https://www.picular.co",
+    category: "Graphic Design Fundamentals",
+    creator: "Picular",
+    creatorUrl: "https://www.picular.co",
+  },
+  {
+    id: "10",
+    title: "Scheme Color - Color Palettes",
+    description: "Color palette generator for branding, Discord role colors, and embed design. Supports consistent visual identity across ERLC server assets.",
+    type: "color-tool",
+    url: "https://www.schemecolor.com",
+    category: "Graphic Design Fundamentals",
+    creator: "Scheme Color",
+    creatorUrl: "https://www.schemecolor.com",
+  },
+  {
+    id: "11",
+    title: "Behance - Design Inspiration",
+    description: "Design inspiration from professional creatives. Use for reference only: logos, layouts, banners, and overall brand direction for ERLC servers.",
+    type: "inspiration",
+    url: "https://www.behance.net",
+    category: "Graphic Design Fundamentals",
+    creator: "Adobe Behance",
+    creatorUrl: "https://www.behance.net",
   },
   {
     id: "2",
