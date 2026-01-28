@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Icon from "@/components/Icon";
 
 export default function AboutPage() {
   return (
@@ -49,8 +50,9 @@ export default function AboutPage() {
             </p>
             <Link
               href="/resources"
-              className="inline-flex items-center rounded-lg bg-primary px-6 py-3 text-sm font-medium text-white hover:bg-primary-hover transition-colors"
+              className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-white hover:bg-primary-hover transition-colors"
             >
+              <Icon name="book" className="text-base" />
               Explore Resources
             </Link>
           </section>

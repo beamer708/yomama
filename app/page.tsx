@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Icon from "@/components/Icon";
 
 export default function Home() {
   return (
@@ -21,8 +22,9 @@ export default function Home() {
             <div className="mt-10 flex items-center justify-center gap-4">
               <Link
                 href="/resources"
-                className="inline-flex items-center rounded-lg bg-primary px-6 py-3 text-sm font-medium text-white hover:bg-primary-hover transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-white hover:bg-primary-hover transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               >
+                <Icon name="book" className="text-base" />
                 Explore Resources
               </Link>
               <Link
@@ -224,8 +226,9 @@ export default function Home() {
             </p>
             <Link
               href="/resources"
-              className="inline-flex items-center rounded-lg bg-primary px-6 py-3 text-sm font-medium text-white hover:bg-primary-hover transition-colors"
+              className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-white hover:bg-primary-hover transition-colors"
             >
+              <Icon name="book" className="text-base" />
               Start Exploring Resources
             </Link>
           </div>
