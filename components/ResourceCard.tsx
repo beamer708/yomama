@@ -22,8 +22,7 @@ export default function ResourceCard({ resource }: ResourceCardProps) {
   return (
     <div className="group rounded-lg bg-card border border-border p-6 hover:border-primary/30 hover:bg-card-hover transition-all">
       <div className="flex items-start justify-between mb-4">
-        <span className="inline-flex items-center gap-1.5 rounded-md bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">
-          <Icon name={typeInfo.icon} className="text-[10px]" />
+        <span className="inline-flex items-center rounded-md bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">
           {typeInfo.label}
         </span>
         <span className="text-xs text-foreground/50">{resource.category}</span>
@@ -54,10 +53,9 @@ export default function ResourceCard({ resource }: ResourceCardProps) {
           href={resource.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary-hover transition-colors"
+          className="inline-flex items-center text-sm font-medium text-primary hover:text-primary-hover transition-colors"
         >
           View Resource
-          <Icon name="up-right-from-square" className="text-sm" />
         </a>
       </div>
     </div>

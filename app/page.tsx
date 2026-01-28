@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Icon from "@/components/Icon";
 
 export default function Home() {
   return (
@@ -22,17 +21,15 @@ export default function Home() {
             <div className="mt-10 flex items-center justify-center gap-4">
               <Link
                 href="/resources"
-                className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-white hover:bg-primary-hover transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                className="inline-flex items-center rounded-lg bg-primary px-6 py-3 text-sm font-medium text-white hover:bg-primary-hover transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               >
-                <Icon name="book" className="text-base" />
                 Explore Resources
               </Link>
               <Link
                 href="/community-guides"
-                className="inline-flex items-center gap-1.5 text-sm font-medium leading-6 text-foreground/80 hover:text-foreground transition-colors"
+                className="inline-flex items-center text-sm font-medium leading-6 text-foreground/80 hover:text-foreground transition-colors"
               >
                 Learn How Servers Grow
-                <Icon name="arrow-right" className="text-base" />
               </Link>
             </div>
           </div>
@@ -53,20 +50,14 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
               <div className="rounded-lg bg-card p-8 border border-border">
-                <div className="flex items-center gap-3 mb-4">
-                  <Icon name="books" className="text-2xl text-primary" />
-                  <h3 className="text-xl font-semibold text-foreground">A Resource Vault</h3>
-                </div>
+                <h3 className="text-xl font-semibold text-foreground mb-4">A Resource Vault</h3>
                 <p className="text-foreground/70 leading-7">
                   Unity Vault is a vault of knowledge, not a tutorial creator. We curate the best ERLC resources 
                   already available on the web and organize them clearly and professionally.
                 </p>
               </div>
               <div className="rounded-lg bg-card p-8 border border-border">
-                <div className="flex items-center gap-3 mb-4">
-                  <Icon name="book" className="text-2xl text-primary" />
-                  <h3 className="text-xl font-semibold text-foreground">Organized Learning</h3>
-                </div>
+                <h3 className="text-xl font-semibold text-foreground mb-4">Organized Learning</h3>
                 <p className="text-foreground/70 leading-7">
                   Visitors should feel like they discovered a gold mine when landing on the site. Everything 
                   needed to learn ERLC success is organized in one place, making growth accessible to everyone.
@@ -91,34 +82,25 @@ export default function Home() {
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
             <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-12 lg:max-w-none lg:grid-cols-3">
               <div className="flex flex-col">
-                <div className="flex items-center gap-2 mb-3">
-                  <Icon name="palette" className="text-xl text-primary" />
-                  <dt className="text-base font-semibold leading-7 text-foreground">
-                    Design Servers
-                  </dt>
-                </div>
+                <dt className="text-base font-semibold leading-7 text-foreground mb-3">
+                  Design Servers
+                </dt>
                 <dd className="mt-1 text-base leading-7 text-foreground/70">
                   Resources for building professional server branding, graphics, and visual identity.
                 </dd>
               </div>
               <div className="flex flex-col">
-                <div className="flex items-center gap-2 mb-3">
-                  <Icon name="users-alt" className="text-xl text-primary" />
-                  <dt className="text-base font-semibold leading-7 text-foreground">
-                    Roleplay Servers
-                  </dt>
-                </div>
+                <dt className="text-base font-semibold leading-7 text-foreground mb-3">
+                  Roleplay Servers
+                </dt>
                 <dd className="mt-1 text-base leading-7 text-foreground/70">
                   Frameworks and guides for structuring roleplay systems, staff management, and community building.
                 </dd>
               </div>
               <div className="flex flex-col">
-                <div className="flex items-center gap-2 mb-3">
-                  <Icon name="layers" className="text-xl text-primary" />
-                  <dt className="text-base font-semibold leading-7 text-foreground">
-                    Misc Servers for ERLC
-                  </dt>
-                </div>
+                <dt className="text-base font-semibold leading-7 text-foreground mb-3">
+                  Misc Servers for ERLC
+                </dt>
                 <dd className="mt-1 text-base leading-7 text-foreground/70">
                   Resources for various ERLC server types and community expansion.
                 </dd>
@@ -138,10 +120,7 @@ export default function Home() {
               </h2>
             </div>
             <div className="rounded-lg bg-card p-8 border border-border">
-              <div className="flex items-center gap-3 mb-6">
-                <Icon name="bulb" className="text-2xl text-primary" />
-                <h3 className="text-xl font-semibold text-foreground">The Truth About Growth</h3>
-              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-6">The Truth About Growth</h3>
               <p className="text-foreground/70 leading-7 mb-4">
                 Many ERLC owners overthink growth and believe large servers have secret knowledge. 
                 Unity Vault reframes that mindset by showing that big servers learned from public resources.
@@ -168,33 +147,24 @@ export default function Home() {
           </div>
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
             <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-12 lg:max-w-none lg:grid-cols-3">
-              <div className="relative pl-12">
+              <div className="flex flex-col">
                 <dt className="text-base font-semibold leading-7 text-foreground mb-2">
-                  <div className="absolute left-0 top-0 flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
-                    <Icon name="book" className="text-lg text-primary" />
-                  </div>
                   Curated Resources
                 </dt>
                 <dd className="mt-2 text-base leading-7 text-foreground/70">
                   We find and organize the best ERLC resources from across the web, saving you time and effort.
                 </dd>
               </div>
-              <div className="relative pl-12">
+              <div className="flex flex-col">
                 <dt className="text-base font-semibold leading-7 text-foreground mb-2">
-                  <div className="absolute left-0 top-0 flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
-                    <Icon name="layers" className="text-lg text-primary" />
-                  </div>
                   Clear Organization
                 </dt>
                 <dd className="mt-2 text-base leading-7 text-foreground/70">
                   Resources are categorized and searchable, making it easy to find exactly what you need.
                 </dd>
               </div>
-              <div className="relative pl-12">
+              <div className="flex flex-col">
                 <dt className="text-base font-semibold leading-7 text-foreground mb-2">
-                  <div className="absolute left-0 top-0 flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
-                    <Icon name="users" className="text-lg text-primary" />
-                  </div>
                   Community First
                 </dt>
                 <dd className="mt-2 text-base leading-7 text-foreground/70">
@@ -227,16 +197,13 @@ export default function Home() {
               { name: "Staff Systems", icon: "settings" as const },
               { name: "Community Management", icon: "users" as const },
               { name: "Automation and Bots", icon: "chatbot" as const },
-            ].map(({ name, icon }) => (
+            ].map(({ name }) => (
               <Link
                 key={name}
                 href={`/resources?category=${encodeURIComponent(name)}`}
                 className="group rounded-lg bg-card p-5 border border-border hover:border-primary/30 hover:bg-card-hover transition-all"
               >
-                <div className="flex items-center gap-3">
-                  <Icon name={icon} className="text-lg text-primary shrink-0" />
-                  <h3 className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">{name}</h3>
-                </div>
+                <h3 className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">{name}</h3>
               </Link>
             ))}
           </div>
@@ -257,9 +224,8 @@ export default function Home() {
             </p>
             <Link
               href="/resources"
-              className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-white hover:bg-primary-hover transition-colors"
+              className="inline-flex items-center rounded-lg bg-primary px-6 py-3 text-sm font-medium text-white hover:bg-primary-hover transition-colors"
             >
-              <Icon name="book" className="text-base" />
               Start Exploring Resources
             </Link>
           </div>

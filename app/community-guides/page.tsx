@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Icon from "@/components/Icon";
 
 export default function CommunityGuidesPage() {
   return (
@@ -18,7 +17,6 @@ export default function CommunityGuidesPage() {
 
         {/* Empty State */}
         <div className="rounded-lg bg-card border border-border p-16 text-center">
-          <Icon name="clock" className="mx-auto block text-5xl text-foreground/30 mb-6" />
           <h2 className="text-2xl font-semibold text-foreground mb-3">
             More Coming Soon
           </h2>
@@ -31,9 +29,8 @@ export default function CommunityGuidesPage() {
           </p>
           <Link
             href="/resources"
-            className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-white hover:bg-primary-hover transition-colors"
+            className="inline-flex items-center rounded-lg bg-primary px-6 py-3 text-sm font-medium text-white hover:bg-primary-hover transition-colors"
           >
-            <Icon name="book" className="text-base" />
             Explore Resources Vault
           </Link>
         </div>

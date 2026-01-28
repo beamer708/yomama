@@ -2,20 +2,9 @@
 
 import { useState, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import Icon, { IconName, BrandIconName } from "@/components/Icon";
+import Icon from "@/components/Icon";
 import ResourceCard from "@/components/ResourceCard";
 import { resources, resourceCategories, getResourcesByCategory, searchResources } from "@/lib/resources";
-
-const categoryIcons: Record<string, IconName | BrandIconName> = {
-  "Server Branding": "palette",
-  "Graphic Design Fundamentals": "layers",
-  "Discord Setup and Visuals": "discord",
-  "Roleplay Structure": "users-alt",
-  "Advertising and Growth": "arrow-trend-up",
-  "Staff Systems": "settings",
-  "Community Management": "users",
-  "Automation and Bots": "chatbot",
-};
 
 function ResourcesContent() {
   const searchParams = useSearchParams();
@@ -74,28 +63,25 @@ function ResourcesContent() {
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setSelectedCategory("")}
-              className={`inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+              className={`inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                 selectedCategory === ""
                   ? "bg-primary text-white"
                   : "bg-card text-foreground/70 hover:bg-card-hover hover:text-foreground border border-border"
               }`}
             >
-              <Icon name="grid" className="text-base" />
               All Categories
             </button>
             {resourceCategories.map((category) => {
-              const iconName = categoryIcons[category] || "book";
               return (
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                  className={`inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                     selectedCategory === category
                       ? "bg-primary text-white"
                       : "bg-card text-foreground/70 hover:bg-card-hover hover:text-foreground border border-border"
                   }`}
                 >
-                  <Icon name={iconName} className="text-base" />
                   {category}
                 </button>
               );
@@ -135,14 +121,10 @@ function ResourcesContent() {
           <div className="space-y-16">
             {resourceCategories.map((category) => {
               const categoryResources = getResourcesByCategory(category);
-              const iconName = categoryIcons[category] || "book";
               return (
                 <div key={category} className="space-y-6">
                   <div className="flex items-center justify-between border-b border-border pb-3">
-                    <div className="flex items-center gap-3">
-                      <Icon name={iconName} className="text-2xl text-primary" />
-                      <h2 className="text-2xl font-semibold text-foreground">{category}</h2>
-                    </div>
+                    <h2 className="text-2xl font-semibold text-foreground">{category}</h2>
                     <span className="text-sm text-foreground/60">
                       {categoryResources.length} resource{categoryResources.length !== 1 ? "s" : ""}
                     </span>
