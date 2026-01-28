@@ -191,14 +191,14 @@ export default function Home() {
           </div>
           <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-4 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-4">
             {[
-              { name: "Server Branding", icon: "palette" as const },
-              { name: "Graphic Design Fundamentals", icon: "layers" as const },
-              { name: "Discord Setup and Visuals", icon: "discord" as const },
-              { name: "Roleplay Structure", icon: "users-alt" as const },
+              { name: "Graphic Design and Branding", icon: "palette" as const },
+              { name: "Discord Server Visuals", icon: "discord" as const },
+              { name: "Community Building", icon: "users" as const },
               { name: "Advertising and Growth", icon: "arrow-trend-up" as const },
-              { name: "Staff Systems", icon: "settings" as const },
-              { name: "Community Management", icon: "users" as const },
-              { name: "Automation and Bots", icon: "chatbot" as const },
+              { name: "Roleplay Structure", icon: "users-alt" as const },
+              { name: "Fonts and Typography", icon: "text" as const },
+              { name: "Color Palette Tools", icon: "palette" as const },
+              { name: "Design Inspiration", icon: "sparkles" as const },
             ].map(({ name }) => (
               <Link
                 key={name}
