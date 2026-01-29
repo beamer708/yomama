@@ -72,17 +72,29 @@ export default function StaffApplicationPage() {
       const data = await response.json();
 
       if (!response.ok) {
+        let errorMessage = "Failed to submit application. Please try again.";
+        
         if (response.status === 429) {
-          setErrors({
-            submit: "Too many requests. Please wait a moment before submitting again.",
-          });
+          errorMessage = "Too many requests. Please wait a moment before submitting again.";
+          if (data.resetTime) {
+            const resetDate = new Date(data.resetTime);
+            const minutesUntilReset = Math.ceil((resetDate.getTime() - Date.now()) / 60000);
+            if (minutesUntilReset > 0) {
+              errorMessage += ` You can try again in approximately ${minutesUntilReset} minute${minutesUntilReset !== 1 ? "s" : ""}.`;
+            }
+          }
         } else if (data.errors && Array.isArray(data.errors)) {
           // Multiple validation errors
-          const errorMessages = data.errors.join(". ");
-          setErrors({ submit: errorMessages });
-        } else {
-          setErrors({ submit: data.error || "Failed to submit application. Please try again." });
+          errorMessage = data.errors.join(". ");
+        } else if (data.error) {
+          errorMessage = data.error;
+          // Add Discord error details if available (for debugging)
+          if (data.discordError && process.env.NODE_ENV === "development") {
+            errorMessage += ` (Discord: ${data.discordError})`;
+          }
         }
+        
+        setErrors({ submit: errorMessage });
         setIsSubmitting(false);
         return;
       }

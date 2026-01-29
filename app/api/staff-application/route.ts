@@ -95,20 +95,55 @@ function sanitizeText(text: string): string {
 }
 
 /**
- * Send application to Discord via webhook
+ * Truncate text to Discord's field value limit (1024 characters)
  */
-async function sendToDiscord(data: StaffApplicationData): Promise<boolean> {
+function truncateForDiscord(text: string, maxLength: number = 1024): string {
+  if (text.length <= maxLength) return text;
+  return text.substring(0, maxLength - 3) + "...";
+}
+
+/**
+ * Send application to Discord via webhook
+ * Returns an object with success status and error details
+ */
+async function sendToDiscord(data: StaffApplicationData): Promise<{
+  success: boolean;
+  error?: string;
+  discordError?: string;
+}> {
   const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
 
+  // Validate webhook URL exists
   if (!webhookUrl) {
-    console.error("DISCORD_WEBHOOK_URL environment variable is not set");
-    return false;
+    const error = "DISCORD_WEBHOOK_URL environment variable is not set. Please check your .env.local file and restart the server.";
+    console.error(`[Staff Application API] ${error}`);
+    return {
+      success: false,
+      error: "Server configuration error: Discord webhook URL not configured.",
+      discordError: "Missing environment variable",
+    };
   }
 
-  // Sanitize inputs
-  const discordUsername = sanitizeText(data.discordUsername);
+  // Validate webhook URL format
+  if (!webhookUrl.startsWith("https://discord.com/api/webhooks/")) {
+    const error = "Invalid Discord webhook URL format. URL must start with https://discord.com/api/webhooks/";
+    console.error(`[Staff Application API] ${error}`);
+    return {
+      success: false,
+      error: "Server configuration error: Invalid webhook URL format.",
+      discordError: "Invalid URL format",
+    };
+  }
+
+  // Sanitize and truncate inputs for Discord
+  const discordUsername = truncateForDiscord(sanitizeText(data.discordUsername), 1024);
   const discordId = sanitizeText(data.discordId);
-  const pastExperience = sanitizeText(data.pastExperience);
+  const pastExperience = truncateForDiscord(sanitizeText(data.pastExperience), 1024);
+
+  // Ensure no field is empty (Discord requirement)
+  const usernameValue = discordUsername || "Not provided";
+  const idValue = discordId || "Not provided";
+  const experienceValue = pastExperience || "Not provided";
 
   // Create Discord embed
   const embed = {
@@ -117,17 +152,17 @@ async function sendToDiscord(data: StaffApplicationData): Promise<boolean> {
     fields: [
       {
         name: "Discord Username",
-        value: discordUsername || "Not provided",
+        value: usernameValue,
         inline: false,
       },
       {
         name: "Discord ID",
-        value: discordId || "Not provided",
+        value: idValue,
         inline: false,
       },
       {
         name: "Past Experience",
-        value: pastExperience || "Not provided",
+        value: experienceValue,
         inline: false,
       },
     ],
@@ -137,39 +172,95 @@ async function sendToDiscord(data: StaffApplicationData): Promise<boolean> {
     },
   };
 
+  const payload = {
+    embeds: [embed],
+  };
+
+  // Log request for debugging (without sensitive data)
+  console.log(`[Staff Application API] Sending application to Discord webhook (ID: ${webhookUrl.split("/")[5]})`);
+
   try {
     const response = await fetch(webhookUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        embeds: [embed],
-      }),
+      body: JSON.stringify(payload),
     });
 
-    if (!response.ok) {
-      console.error(`Discord webhook error: ${response.status} ${response.statusText}`);
-      return false;
+    const responseText = await response.text();
+    let responseData: any = null;
+    
+    try {
+      responseData = JSON.parse(responseText);
+    } catch {
+      // Response is not JSON, use text
     }
 
-    return true;
+    if (!response.ok) {
+      // Handle specific Discord error codes
+      let errorMessage = "Failed to send application to Discord.";
+      let discordError = `HTTP ${response.status}: ${response.statusText}`;
+
+      if (response.status === 401) {
+        errorMessage = "Discord webhook authentication failed. The webhook URL may be invalid or expired.";
+        discordError = "Unauthorized - Invalid or expired webhook token";
+      } else if (response.status === 404) {
+        errorMessage = "Discord webhook not found. The webhook may have been deleted.";
+        discordError = "Not Found - Webhook does not exist";
+      } else if (response.status === 429) {
+        errorMessage = "Discord rate limit exceeded. Please try again in a few moments.";
+        discordError = "Rate Limited - Too many requests to Discord";
+      } else if (response.status === 400) {
+        errorMessage = "Invalid request format sent to Discord.";
+        discordError = `Bad Request: ${responseData?.message || responseText}`;
+      }
+
+      console.error(`[Staff Application API] Discord webhook error:`, {
+        status: response.status,
+        statusText: response.statusText,
+        error: discordError,
+        response: responseData || responseText,
+      });
+
+      return {
+        success: false,
+        error: errorMessage,
+        discordError,
+      };
+    }
+
+    console.log(`[Staff Application API] Successfully sent application to Discord`);
+    return { success: true };
   } catch (error) {
-    console.error("Error sending to Discord:", error);
-    return false;
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    console.error(`[Staff Application API] Error sending to Discord:`, {
+      error: errorMessage,
+      stack: error instanceof Error ? error.stack : undefined,
+    });
+
+    return {
+      success: false,
+      error: "Network error while sending to Discord. Please check your connection and try again.",
+      discordError: errorMessage,
+    };
   }
 }
 
 export async function POST(request: NextRequest) {
+  const startTime = Date.now();
+  
   try {
     // Get client IP for rate limiting
     const clientIP = getClientIP(request);
+    console.log(`[Staff Application API] Received request from IP: ${clientIP}`);
 
     // Check rate limit: max 3 submissions per 15 minutes per IP
     const rateLimit = checkRateLimit(clientIP, 3, 15 * 60 * 1000);
 
     if (!rateLimit.allowed) {
       const resetDate = new Date(rateLimit.resetTime);
+      console.log(`[Staff Application API] Rate limit exceeded for IP: ${clientIP}, resets at: ${resetDate.toISOString()}`);
       return NextResponse.json(
         {
           success: false,
@@ -180,11 +271,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    console.log(`[Staff Application API] Rate limit check passed. Remaining: ${rateLimit.remaining}`);
+
     // Parse request body
     let body: StaffApplicationData;
     try {
       body = await request.json();
+      console.log(`[Staff Application API] Parsed request body:`, {
+        discordUsername: body.discordUsername?.substring(0, 20) + "...",
+        discordId: body.discordId,
+        pastExperienceLength: body.pastExperience?.length || 0,
+      });
     } catch (error) {
+      console.error(`[Staff Application API] Failed to parse request body:`, error);
       return NextResponse.json(
         {
           success: false,
@@ -197,6 +296,7 @@ export async function POST(request: NextRequest) {
     // Validate input
     const validation = validateApplication(body);
     if (!validation.valid) {
+      console.log(`[Staff Application API] Validation failed:`, validation.errors);
       return NextResponse.json(
         {
           success: false,
@@ -207,18 +307,25 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Send to Discord
-    const sent = await sendToDiscord(body);
+    console.log(`[Staff Application API] Validation passed, sending to Discord...`);
 
-    if (!sent) {
+    // Send to Discord
+    const discordResult = await sendToDiscord(body);
+
+    if (!discordResult.success) {
+      console.error(`[Staff Application API] Discord submission failed:`, discordResult);
       return NextResponse.json(
         {
           success: false,
-          error: "Failed to submit application. Please try again later.",
+          error: discordResult.error || "Failed to submit application. Please try again later.",
+          discordError: discordResult.discordError,
         },
         { status: 500 }
       );
     }
+
+    const duration = Date.now() - startTime;
+    console.log(`[Staff Application API] Successfully processed application in ${duration}ms`);
 
     // Success response
     return NextResponse.json(
@@ -229,11 +336,20 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    console.error("Unexpected error in staff application API:", error);
+    const duration = Date.now() - startTime;
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    const errorStack = error instanceof Error ? error.stack : undefined;
+    
+    console.error(`[Staff Application API] Unexpected error after ${duration}ms:`, {
+      error: errorMessage,
+      stack: errorStack,
+    });
+
     return NextResponse.json(
       {
         success: false,
         error: "An unexpected error occurred. Please try again later.",
+        details: process.env.NODE_ENV === "development" ? errorMessage : undefined,
       },
       { status: 500 }
     );
