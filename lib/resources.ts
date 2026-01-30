@@ -102,6 +102,17 @@ export const resources: Resource[] = [
     channelName: "YouTube Creator",
   },
   {
+    id: "21",
+    title: "Graphic Design and Branding",
+    description: "Curated video on graphic design and branding for ERLC communities. Useful for server visuals, logos, and professional presentation.",
+    type: "video",
+    url: "https://youtu.be/hDsqIH6Xai8?si=FGarL0ii4ssoFN5V",
+    category: "Graphic Design and Branding",
+    creator: "YouTube Creator",
+    section: "youtube",
+    channelName: "YouTube Creator",
+  },
+  {
     id: "15",
     title: "Discord Setup Tutorial",
     description: "A comprehensive guide for setting up and configuring Discord servers, including visual customization, channel organization, and server presentation for ERLC communities.",
