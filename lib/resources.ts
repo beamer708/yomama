@@ -13,6 +13,7 @@ export interface Resource {
   section: ResourceSection;
   channelName?: string; // For YouTube videos
   thumbnailUrl?: string; // For YouTube videos
+  isNew?: boolean;
 }
 
 // YouTube Resource Categories
@@ -122,6 +123,7 @@ export const resources: Resource[] = [
     creator: "YouTube Creator",
     section: "youtube",
     channelName: "YouTube Creator",
+    isNew: true,
   },
   // Website Resources
   {
@@ -233,6 +235,7 @@ export const resources: Resource[] = [
     creator: "Iconify",
     creatorUrl: "https://iconify.design",
     section: "website",
+    isNew: true,
   },
   {
     id: "2",
@@ -244,6 +247,7 @@ export const resources: Resource[] = [
     creator: "Syce Gaming",
     creatorUrl: "https://discord.gg/7KfgS5M4Jn",
     section: "website",
+    isNew: true,
   },
   {
     id: "3",
@@ -265,6 +269,7 @@ export const resources: Resource[] = [
     creator: "Melonly",
     creatorUrl: "https://melonly.xyz",
     section: "website",
+    isNew: true,
   },
   {
     id: "13",
@@ -276,6 +281,7 @@ export const resources: Resource[] = [
     creator: "Melonly",
     creatorUrl: "https://melonly.xyz",
     section: "website",
+    isNew: true,
   },
   {
     id: "14",
@@ -287,6 +293,7 @@ export const resources: Resource[] = [
     creator: "Melonly",
     creatorUrl: "https://melonly.xyz",
     section: "website",
+    isNew: true,
   },
 ];
 

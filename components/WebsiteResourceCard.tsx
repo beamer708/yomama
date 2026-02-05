@@ -24,8 +24,13 @@ export default function WebsiteResourceCard({ resource }: WebsiteResourceCardPro
       href={resource.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group block rounded-lg bg-card border border-border p-6 hover:border-primary/30 hover:bg-card-hover transition-all"
+      className="group relative block rounded-lg bg-card border border-border p-6 hover:border-primary/30 hover:bg-card-hover transition-all"
     >
+      {resource.isNew && (
+        <span className="absolute top-3 right-3 rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-primary text-white">
+          New
+        </span>
+      )}
       {/* Type Badge */}
       <div className="flex items-start justify-between mb-4">
         <span className="inline-flex items-center gap-1.5 rounded-md bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">

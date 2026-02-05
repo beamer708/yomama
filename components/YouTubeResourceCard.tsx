@@ -40,6 +40,14 @@ export default function YouTubeResourceCard({ resource }: YouTubeResourceCardPro
             <Icon name="youtube" className="text-4xl text-primary/50" />
           </div>
         )}
+        {/* NEW sticker */}
+        {resource.isNew && (
+          <div className="absolute top-2 left-2 z-10">
+            <span className="rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-primary text-white">
+              New
+            </span>
+          </div>
+        )}
         {/* YouTube overlay icon */}
         <div className="absolute top-2 right-2">
           <div className="bg-black/70 backdrop-blur-sm rounded px-2 py-1 flex items-center gap-1.5">
