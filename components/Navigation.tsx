@@ -11,6 +11,7 @@ export default function Navigation() {
   const navLinks = [
     { href: "/", label: "Home", icon: "home" as const },
     { href: "/resources", label: "Resources Vault", icon: "book" as const },
+    { href: "/resource-matcher", label: "Resource Matcher", icon: "compass" as const },
     { href: "/community-guides", label: "Community Guides", icon: "file" as const },
     { href: "/about", label: "About", icon: "info" as const },
     { href: "/legal", label: "Legal", icon: "document" as const },
