@@ -25,7 +25,7 @@ const youtubeCategoryIcons: Record<string, IconName | BrandIconName> = {
 };
 
 const websiteCategoryIcons: Record<string, IconName | BrandIconName> = {
-  "Graphic Design Tools": "wrench",
+  "Graphic Design Tools": "brush",
   "Fonts and Typography": "text",
   "Color Palette Tools": "palette",
   "Icons and Emojis": "layers",

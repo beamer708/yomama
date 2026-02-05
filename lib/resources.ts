@@ -68,6 +68,7 @@ export const resources: Resource[] = [
     creator: "YouTube Creator",
     section: "youtube",
     channelName: "YouTube Creator",
+    isNew: true,
   },
   {
     id: "16",
