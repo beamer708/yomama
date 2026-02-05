@@ -224,6 +224,17 @@ export const resources: Resource[] = [
     section: "website",
   },
   {
+    id: "iconify",
+    title: "Iconify - Open Source Icon Sets",
+    description: "Massive library of open source icons (100+ icon sets, 200k+ icons) for Discord emojis, bot interfaces, role icons, and server graphics. Includes Material, Lucide, Heroicons, Phosphor, and many more. Copy SVG or use via API/CDN.",
+    type: "website",
+    url: "https://icon-sets.iconify.design",
+    category: "Discord Utilities",
+    creator: "Iconify",
+    creatorUrl: "https://iconify.design",
+    section: "website",
+  },
+  {
     id: "2",
     title: "ER:LC Hub - Interactive Map & Vehicle Stats",
     description: "Interactive map for ERLC with vehicle stats, map layers, custom layers, and comprehensive game location information including spawns, buildings, NPCs, and more.",

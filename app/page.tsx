@@ -199,12 +199,13 @@ export default function Home() {
               { name: "Fonts and Typography", icon: "text" as const },
               { name: "Color Palette Tools", icon: "palette" as const },
               { name: "Design Inspiration", icon: "sparkles" as const },
-            ].map(({ name }) => (
+            ].map(({ name, icon }) => (
               <Link
                 key={name}
                 href={`/resources?category=${encodeURIComponent(name)}`}
-                className="group rounded-lg bg-card p-5 border border-border hover:border-primary/30 hover:bg-card-hover transition-all"
+                className="group flex items-center gap-3 rounded-lg bg-card p-5 border border-border hover:border-primary/30 hover:bg-card-hover transition-all"
               >
+                <Icon name={icon} className="text-xl text-primary shrink-0" />
                 <h3 className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">{name}</h3>
               </Link>
             ))}
