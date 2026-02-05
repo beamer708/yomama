@@ -1,26 +1,25 @@
 import { NextResponse } from "next/server";
 
 /**
- * Health check endpoint for staff application system
- * Verifies webhook configuration without exposing sensitive data
+ * Health check endpoint for staff application system.
+ * Verifies webhook configuration without exposing the URL or token.
+ * Only returns configured: true/false; never the webhook URL or secret.
  */
 export async function GET() {
   const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
 
-  if (!webhookUrl) {
+  if (!webhookUrl || typeof webhookUrl !== "string" || webhookUrl.trim() === "") {
     return NextResponse.json(
       {
         status: "error",
-        message: "DISCORD_WEBHOOK_URL environment variable is not set",
+        message: "Webhook not configured. Add DISCORD_WEBHOOK_URL to .env.local in the project root and restart the server.",
         configured: false,
       },
       { status: 500 }
     );
   }
 
-  // Validate URL format
   const isValidFormat = webhookUrl.startsWith("https://discord.com/api/webhooks/");
-  
   if (!isValidFormat) {
     return NextResponse.json(
       {
@@ -32,16 +31,11 @@ export async function GET() {
     );
   }
 
-  // Extract webhook ID (first part after /webhooks/)
-  const webhookId = webhookUrl.split("/")[5] || "unknown";
-
   return NextResponse.json(
     {
       status: "ok",
       message: "Webhook is configured",
       configured: true,
-      webhookId: webhookId,
-      // Don't expose the full URL or token
     },
     { status: 200 }
   );

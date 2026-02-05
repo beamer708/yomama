@@ -113,13 +113,13 @@ async function sendToDiscord(data: StaffApplicationData): Promise<{
 }> {
   const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
 
-  // Validate webhook URL exists
-  if (!webhookUrl) {
-    const error = "DISCORD_WEBHOOK_URL environment variable is not set. Please check your .env.local file and restart the server.";
+  // Validate webhook URL exists (only ever read server-side; never sent to client)
+  if (!webhookUrl || webhookUrl.trim() === "") {
+    const error = "DISCORD_WEBHOOK_URL is not set. Ensure .env.local exists in the project root (same folder as package.json), contains DISCORD_WEBHOOK_URL=your_url, and restart the dev server (npm run dev). .env.local is gitignored so the URL stays private.";
     console.error(`[Staff Application API] ${error}`);
     return {
       success: false,
-      error: "Server configuration error: Discord webhook URL not configured.",
+      error: "Staff applications are not configured yet. Please try again later.",
       discordError: "Missing environment variable",
     };
   }
@@ -314,11 +314,14 @@ export async function POST(request: NextRequest) {
 
     if (!discordResult.success) {
       console.error(`[Staff Application API] Discord submission failed:`, discordResult);
+      // Never send webhook URL or token to client; only generic error
       return NextResponse.json(
         {
           success: false,
           error: discordResult.error || "Failed to submit application. Please try again later.",
-          discordError: discordResult.discordError,
+          ...(process.env.NODE_ENV === "development" && discordResult.discordError
+            ? { discordError: discordResult.discordError }
+            : {}),
         },
         { status: 500 }
       );
