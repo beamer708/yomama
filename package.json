@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "check:production": "node scripts/check-production.js"
   },
   "dependencies": {
     "@vercel/speed-insights": "^1.3.1",
