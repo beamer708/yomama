@@ -27,7 +27,6 @@ export type IconName =
   | "apps"
   | "globe"
   | "wrench"
-  | "brush"
   | "up-right-from-square"
   | "sparkles"
   | "compass"
@@ -93,7 +92,6 @@ const iconClassMap: Record<IconName, string> = {
   apps: "fi-br-apps",
   globe: "fi-br-globe",
   wrench: "fi-br-wrench",
-  brush: "fi-br-brush",
   "up-right-from-square": "fi-br-up-right-from-square",
   sparkles: "fi-br-sparkles",
   compass: "fi-br-drafting-compass",

@@ -3,10 +3,13 @@ import Icon from "@/components/Icon";
 
 export default function AboutPage() {
   return (
-    <div className="py-16 sm:py-20">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+    <div className="py-12 sm:py-16">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-12 text-center">
+          <div className="flex justify-center mb-4">
+            <Icon name="compass" className="text-4xl text-primary" />
+          </div>
           <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl mb-4">
             About Unity Vault
           </h1>
@@ -29,17 +32,6 @@ export default function AboutPage() {
             </p>
           </section>
 
-          <section>
-            <h2 className="text-xl font-semibold text-foreground mb-4">
-              Community First Mindset
-            </h2>
-            <p className="text-foreground/70 leading-7">
-              Unity Vault is built with the ERLC community in mind. We focus on curating trusted resources, 
-              always giving proper credit to original creators, and helping communities grow through organization 
-              and clarity.
-            </p>
-          </section>
-
           {/* Call to Action */}
           <section className="rounded-lg bg-card border border-border p-8 mt-12">
             <h2 className="text-xl font-semibold text-foreground mb-4">
@@ -50,7 +42,7 @@ export default function AboutPage() {
             </p>
             <Link
               href="/resources"
-              className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-white hover:bg-primary-hover transition-colors"
+              className="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-hover transition-colors"
             >
               <Icon name="book" className="text-base" />
               Explore Resources
@@ -60,7 +52,7 @@ export default function AboutPage() {
           {/* Creator Credit */}
           <section className="mt-12 pt-8 border-t border-border">
             <p className="text-sm text-foreground/70 text-center">
-              Unity Vault was founded January 26th, 2026 and is created and owned by{" "}
+              Unity Vault is created and owned by{" "}
               <a
                 href="https://discord.com/users/527166312095678475"
                 target="_blank"

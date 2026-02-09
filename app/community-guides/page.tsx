@@ -1,38 +1,48 @@
 import Link from "next/link";
+import Icon from "@/components/Icon";
 
 export default function CommunityGuidesPage() {
   return (
-    <div className="py-16 sm:py-20">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+    <div className="py-12 sm:py-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl mb-4">
-            Community Guides
-          </h1>
-          <p className="text-lg text-foreground/70">
+        <div className="mx-auto max-w-2xl lg:max-w-4xl mb-12">
+          <div className="flex items-center gap-3 mb-4">
+            <Icon name="file" className="text-4xl text-primary" />
+            <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+              Community Guides
+            </h1>
+          </div>
+          <p className="text-lg text-foreground/70 mb-6">
             High level guidance for ERLC communities. These guides provide frameworks and perspectives 
             to help you think through common challenges and opportunities.
           </p>
         </div>
 
         {/* Empty State */}
-        <div className="rounded-lg bg-card border border-border p-16 text-center">
-          <h2 className="text-2xl font-semibold text-foreground mb-3">
-            More Coming Soon
-          </h2>
-          <p className="text-foreground/70 mb-8 max-w-md mx-auto">
-            Community guides are coming soon. Unity Vault is focused on curating the best existing resources 
-            to help ERLC communities grow.
-          </p>
-          <p className="text-sm text-foreground/60 mb-6">
-            In the meantime, explore the Resources Vault for curated content that can help you build your community.
-          </p>
-          <Link
-            href="/resources"
-            className="inline-flex items-center rounded-lg bg-primary px-6 py-3 text-sm font-medium text-white hover:bg-primary-hover transition-colors"
-          >
-            Explore Resources Vault
-          </Link>
+        <div className="mx-auto max-w-2xl">
+          <div className="rounded-lg bg-card border border-border p-12 text-center">
+            <Icon name="clock" className="mx-auto block text-6xl text-foreground/40 mb-6" />
+            <h2 className="text-2xl font-semibold text-foreground mb-3">
+              No Guides Available Yet
+            </h2>
+            <p className="text-foreground/70 mb-6 max-w-md mx-auto">
+              Community guides are coming soon. Unity Vault is focused on curating the best existing resources 
+              to help ERLC communities grow.
+            </p>
+            <div className="space-y-4">
+              <p className="text-sm text-foreground/60">
+                In the meantime, explore the Resources Vault for curated content that can help you build your community.
+              </p>
+              <Link
+                href="/resources"
+                className="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-hover transition-colors"
+              >
+                <Icon name="book" className="text-base" />
+                Explore Resources Vault
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>

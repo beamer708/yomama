@@ -20,21 +20,21 @@ export default function ResourceCard({ resource }: ResourceCardProps) {
   const typeInfo = typeLabels[resource.type];
 
   return (
-    <div className="group rounded-lg bg-card border border-border p-6 hover:border-primary/30 hover:bg-card-hover transition-all">
-      <div className="flex items-start justify-between mb-4">
-        <span className="inline-flex items-center gap-1.5 rounded-md bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">
+    <div className="group rounded-lg bg-card border border-border p-6 hover:border-primary/40 hover:bg-card-hover transition-all">
+      <div className="flex items-start justify-between mb-3">
+        <span className="inline-flex items-center gap-1.5 rounded-md bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
           <Icon name={typeInfo.icon} className="text-[10px]" />
           {typeInfo.label}
         </span>
-        <span className="text-xs text-foreground/50">{resource.category}</span>
+        <span className="text-xs text-foreground/60">{resource.category}</span>
       </div>
-      <h3 className="text-lg font-semibold text-foreground mb-3 group-hover:text-primary transition-colors">
+      <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
         {resource.title}
       </h3>
-      <p className="text-sm text-foreground/70 mb-5 line-clamp-2 leading-relaxed">
+      <p className="text-sm text-foreground/70 mb-4 line-clamp-2">
         {resource.description}
       </p>
-      <div className="flex items-center justify-between pt-4 border-t border-border/50">
+      <div className="flex items-center justify-between">
         <div className="text-xs text-foreground/60">
           By{" "}
           {resource.creatorUrl ? (
@@ -57,7 +57,7 @@ export default function ResourceCard({ resource }: ResourceCardProps) {
           className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary-hover transition-colors"
         >
           View Resource
-          <Icon name="up-right-from-square" className="text-sm" />
+          <Icon name="up-right-from-square" className="text-sm transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </a>
       </div>
     </div>
