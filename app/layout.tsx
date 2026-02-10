@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import MainLayout from "@/components/MainLayout";
+import ShutdownNotice from "@/components/ShutdownNotice";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -21,10 +22,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isShutdown = process.env.NEXT_PUBLIC_SITE_SHUTDOWN === "true" || process.env.NEXT_PUBLIC_SITE_SHUTDOWN === "1";
+
   return (
     <html lang="en" className="dark">
       <body className={`${inter.variable} antialiased`}>
-        <MainLayout>{children}</MainLayout>
+        {isShutdown ? <ShutdownNotice /> : <MainLayout>{children}</MainLayout>}
       </body>
     </html>
   );

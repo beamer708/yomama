@@ -1,21 +1,23 @@
-import type { Metadata } from "next";
+import Image from "next/image";
 
-export const metadata: Metadata = {
-  title: "Maintenance in Progress | Unity Vault",
-  robots: { index: false, follow: false },
-};
-
-export default function MaintenancePage() {
+export default function ShutdownNotice() {
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-[#fafafa] flex flex-col items-center justify-center px-4">
       <div className="max-w-md w-full text-center space-y-6">
+        <Image
+          src="/UnityLogo.svg"
+          alt="Unity Vault"
+          width={120}
+          height={120}
+          className="mx-auto"
+          priority
+        />
         <h1 className="text-2xl font-semibold tracking-tight text-white">
-          Maintenance in Progress
+          Website Temporarily Unavailable
         </h1>
         <p className="text-[#a3a3a3] leading-relaxed">
-          Unity Vault is currently undergoing maintenance.
-          The website is temporarily unavailable while internal changes and improvements are made.
-          Access will return once maintenance is complete.
+          Unity Vault is currently shut down while internal maintenance and improvements are in progress.
+          The website will remain unavailable until further notice.
         </p>
         <p className="text-sm">
           <a
@@ -26,11 +28,6 @@ export default function MaintenancePage() {
           >
             View status and updates
             <span aria-hidden>→</span>
-          </a>
-        </p>
-        <p className="text-xs text-[#737373] pt-4">
-          <a href="/maintenance-auth" className="text-[#525252] hover:text-[#a3a3a3] transition-colors">
-            Staff access
           </a>
         </p>
       </div>
