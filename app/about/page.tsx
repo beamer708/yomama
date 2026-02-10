@@ -4,55 +4,38 @@ import Icon from "@/components/Icon";
 export default function AboutPage() {
   return (
     <div className="py-12 sm:py-16">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 text-center">
-          <div className="flex justify-center mb-4">
-            <Icon name="compass" className="text-4xl text-primary" />
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-accent/10">
+            <Icon name="compass" className="text-3xl text-primary" />
           </div>
-          <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl mb-4">
-            About Unity Vault
-          </h1>
+          <h1 className="section-heading">About Unity Vault</h1>
         </div>
 
-        {/* Main Content */}
         <div className="space-y-8">
-          <section>
-            <p className="text-lg leading-8 text-foreground/70 mb-6">
-              Unity Vault exists to help ERLC communities stop overthinking growth.
-            </p>
-            <p className="text-lg leading-8 text-foreground/70 mb-6">
-              Everything successful servers learn comes from public resources. Unity Vault organizes those 
-              resources in one place, making it easy to find what you need without spending hours searching.
-            </p>
-            <p className="text-lg leading-8 text-foreground/70">
-              We curate the best ERLC resources already available on the web and organize them clearly 
-              and professionally. Unity Vault does not create tutorials. We are a resource vault, not a 
-              tutorial creator.
-            </p>
-          </section>
+          <p className="text-lg leading-8 text-foreground/80">
+            Unity Vault exists to help ERLC communities stop overthinking growth. Everything successful servers learn comes from public resources. We organize those resources in one place so you can find what you need without spending hours searching.
+          </p>
+          <p className="text-lg leading-8 text-foreground/80">
+            We curate the best ERLC resources already available on the web and present them clearly and professionally. Unity Vault does not create tutorials. We are a resource vault, not a tutorial creator—all credit stays with the original creators.
+          </p>
 
-          {/* Call to Action */}
-          <section className="rounded-lg bg-card border border-border p-8 mt-12">
-            <h2 className="text-xl font-semibold text-foreground mb-4">
-              Ready to Get Started?
+          <div className="gradient-border rounded-2xl p-8 mt-12">
+            <h2 className="text-xl font-semibold text-foreground mb-3">
+              Ready to get started?
             </h2>
             <p className="text-foreground/70 mb-6">
               Explore the Resources Vault and start building your ERLC community with confidence.
             </p>
-            <Link
-              href="/resources"
-              className="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-hover transition-colors"
-            >
+            <Link href="/resources" className="btn-primary">
               <Icon name="book" className="text-base" />
-              Explore Resources
+              Explore resources
             </Link>
-          </section>
+          </div>
 
-          {/* Creator Credit */}
-          <section className="mt-12 pt-8 border-t border-border">
-            <p className="text-sm text-foreground/70 text-center">
-              Unity Vault is created and owned by{" "}
+          <div className="mt-12 pt-8 border-t border-border/50 text-center">
+            <p className="text-sm text-foreground/70">
+              Created and owned by{" "}
               <a
                 href="https://discord.com/users/527166312095678475"
                 target="_blank"
@@ -62,7 +45,7 @@ export default function AboutPage() {
                 b3amerr
               </a>
             </p>
-          </section>
+          </div>
         </div>
       </div>
     </div>

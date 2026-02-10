@@ -1,40 +1,62 @@
 import Link from "next/link";
+import Image from "next/image";
 import Icon from "@/components/Icon";
+
+const featuredCategories = [
+  { name: "Graphic Design & Branding", href: "/resources?category=Graphic%20Design%20and%20Branding", icon: "palette" as const },
+  { name: "Discord & Visuals", href: "/resources?category=Discord%20Server%20Visuals", icon: "discord" as const },
+  { name: "Advertising & Growth", href: "/resources?category=Advertising%20and%20Growth", icon: "arrow-trend-up" as const },
+  { name: "Community Building", href: "/resources?category=Community%20Building", icon: "users" as const },
+];
+
+const valueCards = [
+  {
+    title: "Curated resources",
+    description: "We find and organize the best ERLC resources from across the web so you can focus on building.",
+    icon: "book" as const,
+  },
+  {
+    title: "Clear organization",
+    description: "Everything is categorized and searchable. Find what you need without the guesswork.",
+    icon: "layers" as const,
+  },
+  {
+    title: "Community first",
+    description: "Built for ERLC server owners and communities. All credit goes to original creators.",
+    icon: "users" as const,
+  },
+];
 
 export default function Home() {
   return (
     <div className="flex flex-col">
-      {/* Hero Section */}
-      <section className="relative py-20 sm:py-32">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      {/* Hero */}
+      <section className="relative overflow-hidden gradient-bg-hero pt-16 pb-28 sm:pt-24 sm:pb-36">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(59,130,246,0.15),transparent)] pointer-events-none" aria-hidden />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
-            <div className="flex justify-center mb-6">
-              <Icon name="books" className="text-4xl text-primary" />
+            <div className="mb-6 flex justify-center">
+              <Image
+                src="/UnityLogo.svg"
+                alt=""
+                width={64}
+                height={64}
+                className="opacity-95"
+              />
             </div>
-            <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-6xl">
-              Your ERLC Community Resource Vault
+            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+              The ERLC community resource vault
             </h1>
-            <p className="mt-6 text-lg leading-8 text-foreground/70">
-              Unity Vault exists to remove the intimidation factor around building successful ERLC communities. 
-              Everything you need to learn, organized in one place.
+            <p className="mt-6 text-lg leading-8 text-white/80 sm:text-xl">
+              Everything you need to build a successful ERLC community, organized in one place. No fluff—just curated resources that scale.
             </p>
-            <p className="mt-4 text-base leading-7 text-foreground/60">
-              Big servers learned from public resources. You can learn the same way through organization, 
-              consistency, and execution.
-            </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6">
-              <Link
-                href="/resources"
-                className="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-hover transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-              >
-                <Icon name="book" className="text-base" />
-                Explore Resources
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+              <Link href="/resources" className="btn-primary">
+                <Icon name="book" className="text-lg" />
+                Explore resources
               </Link>
-              <Link
-                href="/community-guides"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold leading-6 text-foreground hover:text-primary transition-colors"
-              >
-                Learn How Servers Grow
+              <Link href="/community-guides" className="btn-ghost text-white/90 hover:text-white hover:bg-white/10">
+                Community guides
                 <Icon name="arrow-right" className="text-base" />
               </Link>
             </div>
@@ -42,239 +64,118 @@ export default function Home() {
         </div>
       </section>
 
-      {/* What Unity Vault Is */}
-      <section className="py-16 sm:py-24 bg-card/50">
+      {/* What we offer */}
+      <section className="py-20 sm:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:max-w-none">
-            <div className="flex items-center justify-center gap-3 mb-12">
-              <Icon name="info" className="text-3xl text-primary" />
-              <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                What Unity Vault Is
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-              <div className="rounded-lg bg-card p-8 border border-border hover:border-primary/20 transition-colors">
-                <div className="flex items-center gap-3 mb-4">
-                  <Icon name="books" className="text-2xl text-primary" />
-                  <h3 className="text-xl font-semibold text-foreground">A Resource Vault</h3>
-                </div>
-                <p className="text-foreground/70">
-                  Unity Vault is a vault of knowledge, not a tutorial creator. We curate the best ERLC resources 
-                  already available on the web and organize them clearly and professionally.
-                </p>
-              </div>
-              <div className="rounded-lg bg-card p-8 border border-border hover:border-primary/20 transition-colors">
-                <div className="flex items-center gap-3 mb-4">
-                  <Icon name="book" className="text-2xl text-primary" />
-                  <h3 className="text-xl font-semibold text-foreground">Organized Learning</h3>
-                </div>
-                <p className="text-foreground/70">
-                  Visitors should feel like they discovered a gold mine when landing on the site. Everything 
-                  needed to learn ERLC success is organized in one place, making growth accessible to everyone.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Who It Is For */}
-      <section className="py-16 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:text-center">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <Icon name="users" className="text-3xl text-primary" />
-              <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                Who It Is For
-              </h2>
-            </div>
-            <p className="text-lg leading-8 text-foreground/70 mb-12">
-              Unity Vault serves the entire ERLC community ecosystem
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="section-heading">What we offer</h2>
+            <p className="section-subheading mx-auto">
+              Unity Vault curates the best existing resources. We don’t create tutorials—we organize them so you can learn faster.
             </p>
           </div>
-          <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-            <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
-              <div className="flex flex-col">
-                <div className="flex items-center gap-2 mb-2">
-                  <Icon name="palette" className="text-xl text-primary" />
-                  <dt className="text-base font-semibold leading-7 text-foreground">
-                    Design Servers
-                  </dt>
-                </div>
-                <dd className="mt-1 text-base leading-7 text-foreground/70">
-                  Resources for building professional server branding, graphics, and visual identity.
-                </dd>
-              </div>
-              <div className="flex flex-col">
-                <div className="flex items-center gap-2 mb-2">
-                  <Icon name="users-alt" className="text-xl text-primary" />
-                  <dt className="text-base font-semibold leading-7 text-foreground">
-                    Roleplay Servers
-                  </dt>
-                </div>
-                <dd className="mt-1 text-base leading-7 text-foreground/70">
-                  Frameworks and guides for structuring roleplay systems, staff management, and community building.
-                </dd>
-              </div>
-              <div className="flex flex-col">
-                <div className="flex items-center gap-2 mb-2">
-                  <Icon name="layers" className="text-xl text-primary" />
-                  <dt className="text-base font-semibold leading-7 text-foreground">
-                    Misc Servers for ERLC
-                  </dt>
-                </div>
-                <dd className="mt-1 text-base leading-7 text-foreground/70">
-                  Resources for various ERLC server types and community expansion.
-                </dd>
-              </div>
-            </dl>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Big Servers Are Not Different */}
-      <section className="py-16 sm:py-24 bg-card/50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:max-w-4xl">
-            <div className="flex items-center justify-center gap-3 mb-12">
-              <Icon name="bulb" className="text-3xl text-primary" />
-              <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                Why Big Servers Are Not Different
-              </h2>
-            </div>
-            <div className="space-y-8">
-              <div className="rounded-lg bg-card p-8 border border-border">
-                <div className="flex items-center gap-3 mb-4">
-                  <Icon name="bulb" className="text-2xl text-primary" />
-                  <h3 className="text-xl font-semibold text-foreground">The Truth About Growth</h3>
-                </div>
-                <p className="text-foreground/70 mb-4">
-                  Many ERLC owners overthink growth and believe large servers have secret knowledge. 
-                  Unity Vault reframes that mindset by showing that big servers learned from public resources.
-                </p>
-                <p className="text-foreground/70">
-                  Success comes from organization, consistency, and execution. The resources are already out there. 
-                  Unity Vault helps you find them, understand them, and apply them.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* How Unity Vault Helps */}
-      <section className="py-16 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:text-center">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <Icon name="checkbox" className="text-3xl text-primary" />
-              <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                How Unity Vault Helps
-              </h2>
-            </div>
-            <p className="text-lg leading-8 text-foreground/70 mb-12">
-              We remove barriers to learning and growth
-            </p>
-          </div>
-          <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
-            <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
-              <div className="relative pl-16">
-                <dt className="text-base font-semibold leading-7 text-foreground">
-                  <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                    <Icon name="book" className="text-xl text-white" />
-                  </div>
-                  Curated Resources
-                </dt>
-                <dd className="mt-2 text-base leading-7 text-foreground/70">
-                  We find and organize the best ERLC resources from across the web, saving you time and effort.
-                </dd>
-              </div>
-              <div className="relative pl-16">
-                <dt className="text-base font-semibold leading-7 text-foreground">
-                  <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                    <Icon name="layers" className="text-xl text-white" />
-                  </div>
-                  Clear Organization
-                </dt>
-                <dd className="mt-2 text-base leading-7 text-foreground/70">
-                  Resources are categorized and searchable, making it easy to find exactly what you need.
-                </dd>
-              </div>
-              <div className="relative pl-16">
-                <dt className="text-base font-semibold leading-7 text-foreground">
-                  <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                    <Icon name="users" className="text-xl text-white" />
-                  </div>
-                  Community First
-                </dt>
-                <dd className="mt-2 text-base leading-7 text-foreground/70">
-                  Everything is designed to support the ERLC community, with proper credit to original creators.
-                </dd>
-              </div>
-            </dl>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Resource Categories */}
-      <section className="py-16 sm:py-24 bg-card/50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-4">
-              Featured Resource Categories
-            </h2>
-            <p className="text-lg leading-8 text-foreground/70 mb-12">
-              Explore resources organized by topic
-            </p>
-          </div>
-          <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-4">
-            {[
-              { name: "Server Branding", icon: "palette" as const },
-              { name: "Graphic Design Fundamentals", icon: "layers" as const },
-              { name: "Discord Setup and Visuals", icon: "discord" as const },
-              { name: "Roleplay Structure", icon: "users-alt" as const },
-              { name: "Advertising and Growth", icon: "arrow-trend-up" as const },
-              { name: "Staff Systems", icon: "settings" as const },
-              { name: "Community Management", icon: "users" as const },
-              { name: "Automation and Bots", icon: "chatbot" as const },
-            ].map(({ name, icon }) => (
-              <Link
-                key={name}
-                href={`/resources?category=${encodeURIComponent(name)}`}
-                className="group rounded-lg bg-card p-6 border border-border hover:border-primary/40 hover:bg-card-hover transition-all"
+          <div className="mx-auto mt-16 grid max-w-5xl gap-6 sm:grid-cols-3">
+            {valueCards.map((card, i) => (
+              <div
+                key={card.title}
+                className="gradient-border card-hover-lift p-8 animate-in-fade"
+                style={{ animationDelay: `${i * 60}ms` }}
               >
-                <div className="flex items-center gap-3 mb-2">
-                  <Icon name={icon} className="text-xl text-primary group-hover:scale-110 transition-transform" />
-                  <h3 className="text-base font-semibold text-foreground">{name}</h3>
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/15 text-primary">
+                  <Icon name={card.icon} className="text-2xl" />
                 </div>
-              </Link>
+                <h3 className="mt-5 text-xl font-semibold text-foreground">
+                  {card.title}
+                </h3>
+                <p className="mt-3 text-foreground/70 leading-relaxed">
+                  {card.description}
+                </p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Community Trust Statement */}
-      <section className="py-16 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <div className="flex justify-center mb-6">
-              <Icon name="users" className="text-4xl text-primary" />
-            </div>
-            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-6">
-              Community Trust
-            </h2>
-            <p className="text-lg leading-8 text-foreground/70">
-              Unity Vault is built on trust and respect for the ERLC community. We curate resources with care, 
-              always credit original creators, and focus on helping communities grow. This is a resource vault 
-              for everyone, by the community.
+      {/* Resource categories (IA) */}
+      <section className="relative py-20 sm:py-28 bg-card/40">
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,rgba(59,130,246,0.04)_50%,transparent_100%)] pointer-events-none" aria-hidden />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="section-heading">Browse by category</h2>
+            <p className="section-subheading mx-auto">
+              Graphic design, server tools, community building, and more—all in one place.
             </p>
-            <div className="mt-10">
+          </div>
+          <div className="mx-auto mt-14 grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2">
+            {featuredCategories.map((cat) => (
+              <Link
+                key={cat.name}
+                href={cat.href}
+                className="group flex items-center gap-4 rounded-2xl border border-border/50 bg-card/50 p-6 transition-all duration-200 hover:border-primary/30 hover:bg-card-hover"
+              >
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary/20">
+                  <Icon name={cat.icon} className="text-2xl" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <span className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                    {cat.name}
+                  </span>
+                </div>
+                <Icon name="arrow-right" className="shrink-0 text-foreground/50 transition-transform group-hover:translate-x-1 group-hover:text-primary" />
+              </Link>
+            ))}
+          </div>
+          <div className="mt-10 text-center">
+            <Link href="/resources" className="btn-ghost">
+              View all categories
+              <Icon name="arrow-right" className="text-base" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Unity Vault */}
+      <section className="py-20 sm:py-28">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl">
+            <div className="gradient-border overflow-hidden p-8 sm:p-10">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/15">
+                  <Icon name="bulb" className="text-2xl text-primary" />
+                </div>
+                <h2 className="section-heading text-2xl sm:text-3xl">
+                  Why big servers aren’t different
+                </h2>
+              </div>
+              <p className="text-foreground/80 leading-relaxed">
+                Many ERLC owners assume large servers have secret playbooks. The reality: they learned from the same public resources everyone else can use. Success comes from organization, consistency, and execution. Unity Vault puts those resources in one place so you can find them, understand them, and apply them.
+              </p>
               <Link
                 href="/resources"
-                className="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-hover transition-colors"
+                className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-hover transition-colors"
               >
-                <Icon name="book" className="text-base" />
-                Start Exploring Resources
+                Start exploring
+                <Icon name="arrow-right" className="text-base" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-20 sm:py-28">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary/20 via-primary/10 to-transparent p-10 sm:p-16 text-center">
+            <div className="absolute inset-0 border border-primary/20 rounded-3xl pointer-events-none" aria-hidden />
+            <h2 className="relative text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+              Ready to build your community?
+            </h2>
+            <p className="relative mt-3 text-foreground/80 max-w-xl mx-auto">
+              Explore the vault and get the resources that help successful ERLC servers grow.
+            </p>
+            <div className="relative mt-8">
+              <Link href="/resources" className="btn-primary">
+                <Icon name="book" className="text-lg" />
+                Explore resources
               </Link>
             </div>
           </div>

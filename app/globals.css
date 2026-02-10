@@ -19,15 +19,18 @@
 }
 
 .dark {
-  --background: #0a0a0a;
+  --background: #050508;
   --foreground: #fafafa;
   --primary: #3b82f6;
   --primary-hover: #2563eb;
   --accent: #60a5fa;
   --accent-hover: #3b82f6;
-  --border: #1f1f1f;
-  --card: #141414;
-  --card-hover: #1a1a1a;
+  --border: #1f1f24;
+  --card: #0c0c10;
+  --card-hover: #12121a;
+  --gradient-start: #1e3a5f;
+  --gradient-mid: #1e293b;
+  --gradient-end: #0f172a;
 }
 
 * {
@@ -61,10 +64,99 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.02em;
+    font-weight: 600;
+  }
+
+  a {
+    transition: color 0.15s ease;
+  }
+
+  button {
+    transition: all 0.2s ease;
+  }
+}
+
+@layer components {
+  .gradient-bg-hero {
+    background: linear-gradient(180deg, var(--gradient-start, #1e3a5f) 0%, var(--gradient-mid, #1e293b) 40%, var(--background) 100%);
+  }
+
+  .gradient-border {
+    position: relative;
+    background: var(--card);
+    border-radius: 1rem;
+  }
+  .gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(59, 130, 246, 0.05));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .card-hover-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card-hover-lift:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:bg-primary-hover hover:shadow-xl hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-medium transition-all duration-200 hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background;
+    color: color-mix(in srgb, var(--foreground) 80%, transparent);
+  }
+  .btn-ghost:hover {
+    color: var(--foreground);
+  }
+
+  .section-heading {
+    @apply text-3xl font-bold tracking-tight text-foreground sm:text-4xl;
+  }
+
+  .section-subheading {
+    @apply mt-3 text-lg max-w-2xl;
+    color: color-mix(in srgb, var(--foreground) 70%, transparent);
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .animate-in-fade {
+    animation: fadeIn 0.4s ease forwards;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

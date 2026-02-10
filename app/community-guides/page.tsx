@@ -4,45 +4,31 @@ import Icon from "@/components/Icon";
 export default function CommunityGuidesPage() {
   return (
     <div className="py-12 sm:py-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mx-auto max-w-2xl lg:max-w-4xl mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <Icon name="file" className="text-4xl text-primary" />
-            <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-              Community Guides
-            </h1>
+      <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-12 text-center">
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-accent/10">
+            <Icon name="file" className="text-3xl text-primary" />
           </div>
-          <p className="text-lg text-foreground/70 mb-6">
-            High level guidance for ERLC communities. These guides provide frameworks and perspectives 
-            to help you think through common challenges and opportunities.
+          <h1 className="section-heading">Community guides</h1>
+          <p className="section-subheading mt-3 mx-auto">
+            High-level guidance for ERLC communities. Frameworks and perspectives to help you think through common challenges and opportunities.
           </p>
         </div>
 
-        {/* Empty State */}
-        <div className="mx-auto max-w-2xl">
-          <div className="rounded-lg bg-card border border-border p-12 text-center">
-            <Icon name="clock" className="mx-auto block text-6xl text-foreground/40 mb-6" />
-            <h2 className="text-2xl font-semibold text-foreground mb-3">
-              No Guides Available Yet
-            </h2>
-            <p className="text-foreground/70 mb-6 max-w-md mx-auto">
-              Community guides are coming soon. Unity Vault is focused on curating the best existing resources 
-              to help ERLC communities grow.
-            </p>
-            <div className="space-y-4">
-              <p className="text-sm text-foreground/60">
-                In the meantime, explore the Resources Vault for curated content that can help you build your community.
-              </p>
-              <Link
-                href="/resources"
-                className="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-hover transition-colors"
-              >
-                <Icon name="book" className="text-base" />
-                Explore Resources Vault
-              </Link>
-            </div>
+        <div className="gradient-border rounded-2xl p-10 sm:p-12 text-center">
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-card text-foreground/40">
+            <Icon name="clock" className="text-4xl" />
           </div>
+          <h2 className="text-xl font-semibold text-foreground mb-3">
+            Guides coming soon
+          </h2>
+          <p className="text-foreground/70 mb-8 max-w-md mx-auto">
+            Community guides are in the works. In the meantime, explore the Resources Vault for curated content to help you build your community.
+          </p>
+          <Link href="/resources" className="btn-primary">
+            <Icon name="book" className="text-base" />
+            Explore resources vault
+          </Link>
         </div>
       </div>
     </div>
