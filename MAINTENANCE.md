@@ -8,7 +8,7 @@ Temporary lockdown: all routes (including API) are gated behind a maintenance pa
 
    ```env
    MAINTENANCE_MODE=true
-   MAINTENANCE_PASSWORD=your-secret-password
+   MAINTENANCE_PASSWORD=OFFSTAMP
    ```
 
 2. Redeploy or restart the app so the new env is picked up.
@@ -20,7 +20,7 @@ Visitors will see the “Maintenance in Progress” page. Staff can open **Staff
 1. Remove or set to off:
 
    ```env
-   MAINTENANCE_MODE=false
+   MAINTENANCE_MODE=true
    ```
 
    Or delete the `MAINTENANCE_MODE` variable.
