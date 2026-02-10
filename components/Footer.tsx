@@ -68,6 +68,15 @@ export default function Footer() {
               <Icon name="discord" className="text-xl" />
             </a>
             <p className="text-xs text-foreground/60 text-center">
+              <a
+                href="https://unityvaultstatus.betteruptime.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-primary hover:text-primary-hover transition-colors"
+              >
+                Website status
+              </a>
+              {" · "}
               Unity Vault is not affiliated with Roblox or ERLC developers. All external resources belong to their original creators.
             </p>
             <p className="text-xs text-foreground/60 text-center">
