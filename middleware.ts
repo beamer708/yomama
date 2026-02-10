@@ -13,7 +13,8 @@ async function getAuthToken(password: string): Promise<string> {
 }
 
 export async function middleware(request: NextRequest) {
-  const isMaintenance = process.env.MAINTENANCE_MODE === "true" || process.env.MAINTENANCE_MODE === "1";
+  const raw = process.env.NEXT_PUBLIC_MAINTENANCE_MODE ?? process.env.MAINTENANCE_MODE ?? "";
+  const isMaintenance = raw.trim().toLowerCase() === "true" || raw.trim() === "1";
   if (!isMaintenance) {
     return NextResponse.next();
   }
