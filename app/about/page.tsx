@@ -1,15 +1,19 @@
 import Link from "next/link";
 import Icon from "@/components/Icon";
+import { NAV } from "@/lib/site-structure";
 
 export default function AboutPage() {
   return (
     <div className="py-12 sm:py-16">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <div className="page-container max-w-3xl">
         <div className="mb-12 text-center">
           <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-accent/10">
             <Icon name="compass" className="text-3xl text-primary" />
           </div>
           <h1 className="section-heading">About Unity Vault</h1>
+          <p className="section-subheading mt-3 mx-auto">
+            Why we exist and what we do.
+          </p>
         </div>
 
         <div className="space-y-8">
@@ -25,12 +29,18 @@ export default function AboutPage() {
               Ready to get started?
             </h2>
             <p className="text-foreground/70 mb-6">
-              Explore the Resources Vault and start building your ERLC community with confidence.
+              Explore the Resources vault or use the List Creator to build a plan tailored to your project.
             </p>
-            <Link href="/resources" className="btn-primary">
-              <Icon name="book" className="text-base" />
-              Explore resources
-            </Link>
+            <div className="flex flex-wrap gap-3">
+              <Link href={NAV.resources.href} className="btn-primary">
+                <Icon name="book" className="text-base" />
+                Explore resources
+              </Link>
+              <Link href={NAV.listCreator.href} className="btn-secondary">
+                List Creator
+                <Icon name="arrow-right" className="text-base" />
+              </Link>
+            </div>
           </div>
 
           <div className="mt-12 pt-8 border-t border-border/50 text-center">

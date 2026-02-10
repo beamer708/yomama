@@ -1,9 +1,10 @@
 import Link from "next/link";
+import Icon from "@/components/Icon";
 
 export default function LegalPage() {
   return (
     <div className="py-12 sm:py-16">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <div className="page-container max-w-3xl">
         <h1 className="section-heading mb-10">Legal and disclaimer</h1>
 
         <div className="space-y-10">
@@ -56,7 +57,8 @@ export default function LegalPage() {
 
         <div className="mt-14 pt-8 border-t border-border/50">
           <Link href="/" className="btn-ghost">
-            ← Back to home
+            <Icon name="home" className="text-base" />
+            Back to home
           </Link>
         </div>
       </div>

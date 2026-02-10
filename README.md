@@ -9,6 +9,7 @@ Unity Vault exists to remove the intimidation factor around building successful 
 ## Features
 
 - **Resources Vault**: Curated YouTube videos and resources organized by category with search and filtering
+- **Resource List Creator**: Describe your project (name, type, skill level, focus areas) and get a tailored list of resources; save, share (read-only link), and export (JSON)
 - **Community Guides**: High-level guidance section (coming soon)
 - **Clean Design**: Modern, professional, dark-mode friendly interface
 
@@ -81,6 +82,19 @@ The website uses Next.js 14 with the App Router. All pages are server components
 ### Adding Resources
 
 Resources are currently stored in `lib/resources.ts`. In production, this would be replaced with a database or CMS integration.
+
+### Resource List Creator (database setup)
+
+The List Creator uses SQLite (file-based) by default. To set up:
+
+1. From the project root, run:
+   ```bash
+   npm run db:generate
+   npm run db:setup
+   ```
+   (`db:setup` runs `db:push` and `db:seed`; run `db:generate` first to create the Prisma client.)
+
+2. The seed syncs resources from `lib/resources.ts` into the database and seeds scoring weights. For PostgreSQL in production, set `provider = "postgresql"` and `url = env("DATABASE_URL")` in `prisma/schema.prisma`, then run `db:push` and `db:seed`.
 
 ### Styling
 

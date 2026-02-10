@@ -4,7 +4,7 @@ import Icon from "@/components/Icon";
 export default function CommunityGuidesPage() {
   return (
     <div className="py-12 sm:py-16">
-      <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
+      <div className="page-container max-w-2xl">
         <div className="mb-12 text-center">
           <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-accent/10">
             <Icon name="file" className="text-3xl text-primary" />

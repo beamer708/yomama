@@ -1,55 +1,38 @@
 import Link from "next/link";
 import Image from "next/image";
 import Icon from "@/components/Icon";
+import { NAV, SUPPORT_LINKS, STATUS_URL } from "@/lib/site-structure";
 
-const resourceGroups = [
-  {
-    title: "Graphic Design & Branding",
-    links: [
-      { href: "/resources?category=Graphic%20Design%20and%20Branding", label: "Branding & Identity" },
-      { href: "/resources?category=Graphic%20Design%20Tools", label: "Tools & Utilities" },
-      { href: "/resources?category=Fonts%20and%20Typography", label: "Fonts & Typography" },
-      { href: "/resources?category=Design%20Inspiration", label: "Design Inspiration" },
-    ],
-  },
-  {
-    title: "Server & Community",
-    links: [
-      { href: "/resources?category=Discord%20Server%20Visuals", label: "Discord Visuals" },
-      { href: "/resources?category=Discord%20Utilities", label: "Discord Utilities" },
-      { href: "/resources?category=Automation%20and%20Systems", label: "Automation" },
-      { href: "/resource-matcher", label: "Resource Matcher" },
-    ],
-  },
-  {
-    title: "Community & Support",
-    links: [
-      { href: "/community-guides", label: "Community Guides" },
-      { href: "/about", label: "About" },
-      { href: "/staff-application", label: "Staff Application" },
-      { href: "https://discord.gg/rJECs3rpDh", label: "Discord", external: true },
-      { href: "https://unityvaultstatus.betteruptime.com", label: "Status", external: true },
-    ],
-  },
-];
+const footerResourceGroups = NAV.resources.groups.map((g) => ({
+  label: g.label,
+  href: g.href,
+}));
 
 export default function Footer() {
   return (
-    <footer className="relative border-t border-border/50 bg-gradient-to-b from-background to-card/30">
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,rgba(59,130,246,0.03)_50%,transparent_100%)] pointer-events-none" aria-hidden />
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
-          <div className="lg:col-span-1">
-            <Link href="/" className="inline-flex items-center gap-2 mb-4">
+    <footer className="relative border-t border-border/50 bg-gradient-to-b from-background to-card/20">
+      <div
+        className="absolute inset-0 pointer-events-none opacity-50"
+        aria-hidden
+        style={{
+          background: "radial-gradient(ellipse 80% 50% at 50% 100%, rgba(59, 130, 246, 0.06), transparent)",
+        }}
+      />
+      <div className="relative page-container py-16">
+        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="sm:col-span-2 lg:col-span-1">
+            <Link href="/" className="inline-flex items-center gap-2 mb-5">
               <Image
                 src="/UnityLogo.svg"
-                alt="Unity Vault"
+                alt=""
                 width={28}
                 height={28}
               />
-              <span className="text-lg font-semibold text-foreground">Unity Vault</span>
+              <span className="text-lg font-semibold text-foreground">
+                Unity Vault
+              </span>
             </Link>
-            <p className="text-sm text-foreground/70 mb-4 max-w-xs">
+            <p className="text-sm text-foreground/70 max-w-xs mb-1">
               The definitive ERLC resource platform. Curated knowledge for building successful communities.
             </p>
             <p className="text-xs text-foreground/50">
@@ -57,51 +40,107 @@ export default function Footer() {
             </p>
           </div>
 
-          {resourceGroups.map((group) => (
-            <div key={group.title}>
-              <h4 className="text-sm font-semibold text-foreground mb-4">
-                {group.title}
-              </h4>
-              <ul className="space-y-2.5">
-                {group.links.map((link) => (
-                  <li key={link.href + link.label}>
-                    {link.external ? (
-                      <a
-                        href={link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm text-foreground/70 hover:text-primary transition-colors"
-                      >
-                        {link.label}
-                      </a>
-                    ) : (
-                      <Link
-                        href={link.href}
-                        className="text-sm text-foreground/70 hover:text-primary transition-colors"
-                      >
-                        {link.label}
-                      </Link>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div>
+            <h4 className="text-sm font-semibold text-foreground mb-4">
+              Resources
+            </h4>
+            <ul className="space-y-2.5">
+              {footerResourceGroups.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="text-sm text-foreground/70 hover:text-primary transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link
+                  href={NAV.listCreator.href}
+                  className="text-sm text-foreground/70 hover:text-primary transition-colors"
+                >
+                  List Creator
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-sm font-semibold text-foreground mb-4">
+              Support &amp; Status
+            </h4>
+            <ul className="space-y-2.5">
+              {SUPPORT_LINKS.map((link) => (
+                <li key={link.href + link.label}>
+                  {link.external ? (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-foreground/70 hover:text-primary transition-colors"
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className="text-sm text-foreground/70 hover:text-primary transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  )}
+                </li>
+              ))}
+              <li>
+                <a
+                  href={STATUS_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-foreground/70 hover:text-primary transition-colors"
+                >
+                  Status
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-sm font-semibold text-foreground mb-4">
+              Company
+            </h4>
+            <ul className="space-y-2.5">
+              <li>
+                <Link
+                  href={NAV.about.href}
+                  className="text-sm text-foreground/70 hover:text-primary transition-colors"
+                >
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={NAV.partners.href}
+                  className="text-sm text-foreground/70 hover:text-primary transition-colors"
+                >
+                  Partners
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <div className="mt-14 pt-8 border-t border-border/50">
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
-            <div className="flex items-center gap-4">
-              <a
-                href="https://discord.gg/rJECs3rpDh"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Join Unity Vault Discord"
-                className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 text-primary transition-all hover:bg-primary/20 hover:scale-105"
-              >
-                <Icon name="discord" className="text-xl" />
-              </a>
-            </div>
+            <a
+              href="https://discord.gg/rJECs3rpDh"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Join Unity Vault Discord"
+              className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 text-primary transition-all hover:bg-primary/20 hover:scale-105"
+            >
+              <Icon name="discord" className="text-xl" />
+            </a>
             <p className="text-xs text-foreground/60 text-center sm:text-left">
               Unity Vault is not affiliated with Roblox or ERLC. All external resources belong to their creators. Created by{" "}
               <a

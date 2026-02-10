@@ -1,0 +1,77 @@
+// Resource List Creator – Unity Vault
+// For production PostgreSQL: set provider = "postgresql" and url = env("DATABASE_URL")
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./resource-list.db"
+}
+
+model Resource {
+  id              String   @id
+  title           String
+  description     String
+  type            String
+  url             String
+  category        String
+  creator         String
+  creatorUrl      String?
+  section         String   // "youtube" | "website"
+  difficultyLevel String   @default("intermediate") // beginner | intermediate | advanced
+  priorityDefault String   @default("recommended")  // required | recommended | optional
+  focusAreaTags   String   @default("[]")          // JSON array: ["Graphic Design", "Branding", ...]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  listItems ListItem[]
+}
+
+model ProjectPlan {
+  id             String   @id @default(cuid())
+  name           String
+  projectType    String   // ERLC server, branding, redesign, startup, community expansion, etc.
+  skillLevel     String   // beginner | intermediate | advanced
+  budgetRange    String
+  timelineUrgency String
+  focusAreas     String   // JSON array of selected focus areas
+  description    String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  savedList SavedList?
+}
+
+model SavedList {
+  id        String    @id @default(cuid())
+  slug      String    @unique
+  sharedAt  DateTime?
+  createdAt DateTime  @default(now())
+
+  projectPlanId String    @unique
+  projectPlan   ProjectPlan @relation(fields: [projectPlanId], references: [id], onDelete: Cascade)
+  items         ListItem[]
+}
+
+model ListItem {
+  id          String   @id @default(cuid())
+  priority    String   // required | recommended | optional
+  sortOrder   Int      @default(0)
+  removed     Boolean  @default(false)
+  isFavorite  Boolean  @default(false)
+
+  savedListId String
+  savedList   SavedList @relation(fields: [savedListId], references: [id], onDelete: Cascade)
+  resourceId  String
+  resource    Resource  @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+
+  @@unique([savedListId, resourceId])
+}
+
+model ScoringConfig {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String // JSON: weights, thresholds, category mappings
+}

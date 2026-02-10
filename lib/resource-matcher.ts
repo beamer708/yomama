@@ -45,7 +45,7 @@ const MATCH_RULES: Record<
     keywords: ["advertising", "growth", "community", "server", "discord", "melonly"],
   },
   "ERLC Roleplay-Improve realism": {
-    categories: ["Roleplay Structure", "Community Building", "Graphic Design and Branding"],
+    categories: ["Roleplay Structure", "Community Building", "Graphic Design"],
     keywords: ["roleplay", "structure", "guide", "branding", "professional"],
   },
   "ERLC Roleplay-Organize staff": {
@@ -53,7 +53,7 @@ const MATCH_RULES: Record<
     keywords: ["staff", "structure", "management", "organization", "systems"],
   },
   "ERLC Roleplay-Improve branding": {
-    categories: ["Graphic Design and Branding", "Discord Server Visuals", "Design Inspiration"],
+    categories: ["Graphic Design", "Discord Server Visuals", "Design Inspiration"],
     keywords: ["branding", "logo", "design", "visual", "discord", "icon"],
   },
   "Training Server-Grow members": {
@@ -61,7 +61,7 @@ const MATCH_RULES: Record<
     keywords: ["advertising", "community", "growth"],
   },
   "Training Server-Improve realism": {
-    categories: ["Roleplay Structure", "Graphic Design and Branding"],
+    categories: ["Roleplay Structure", "Graphic Design"],
     keywords: ["structure", "professional", "guide"],
   },
   "Training Server-Organize staff": {
@@ -69,7 +69,7 @@ const MATCH_RULES: Record<
     keywords: ["staff", "organization", "systems"],
   },
   "Training Server-Improve branding": {
-    categories: ["Graphic Design and Branding", "Discord Server Visuals", "Icons and Emojis"],
+    categories: ["Graphic Design", "Discord Server Visuals", "Icons and Emojis"],
     keywords: ["branding", "design", "discord", "icon", "visual"],
   },
   "Casual RP-Grow members": {
@@ -85,7 +85,7 @@ const MATCH_RULES: Record<
     keywords: ["staff", "community", "structure"],
   },
   "Casual RP-Improve branding": {
-    categories: ["Graphic Design and Branding", "Icons and Emojis", "Color Palette Tools"],
+    categories: ["Graphic Design", "Icons and Emojis", "Color Palette Tools"],
     keywords: ["branding", "design", "color", "icon"],
   },
   "Realism RP-Grow members": {
@@ -93,7 +93,7 @@ const MATCH_RULES: Record<
     keywords: ["advertising", "community", "growth", "professional"],
   },
   "Realism RP-Improve realism": {
-    categories: ["Roleplay Structure", "Graphic Design and Branding", "Community Building"],
+    categories: ["Roleplay Structure", "Graphic Design", "Community Building"],
     keywords: ["realism", "structure", "branding", "guide", "professional"],
   },
   "Realism RP-Organize staff": {
@@ -101,7 +101,7 @@ const MATCH_RULES: Record<
     keywords: ["staff", "structure", "systems", "organization"],
   },
   "Realism RP-Improve branding": {
-    categories: ["Graphic Design and Branding", "Discord Server Visuals", "Design Inspiration", "Fonts and Typography"],
+    categories: ["Graphic Design", "Discord Server Visuals", "Design Inspiration", "Fonts and Typography"],
     keywords: ["branding", "design", "visual", "logo", "font", "inspiration"],
   },
 };
@@ -116,7 +116,7 @@ export function getRecommendedResources(
 ): RecommendedResource[] {
   const key = `${serverType}-${serverGoal}`;
   const rules = MATCH_RULES[key] ?? {
-    categories: ["Graphic Design and Branding", "Community Building", "Discord Utilities"],
+    categories: ["Graphic Design", "Community Building", "Discord Utilities"],
     keywords: ["guide", "community", "discord"],
   };
 
