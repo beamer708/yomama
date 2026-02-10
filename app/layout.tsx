@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import ComingSoonBanner from "@/components/ComingSoonBanner";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
+import MainLayout from "@/components/MainLayout";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -26,10 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${inter.variable} antialiased`}>
-        <ComingSoonBanner />
-        <Navigation />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
+        <MainLayout>{children}</MainLayout>
       </body>
     </html>
   );
