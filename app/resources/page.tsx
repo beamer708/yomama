@@ -36,23 +36,29 @@ export default function ResourcesPage() {
 
   const submit = async () => {
     if (!canSubmit) return;
+    const selectedText =
+      selected.size > 0
+        ? `Selected focus areas: ${Array.from(selected).join(", ")}`
+        : "";
+    const assistantInput = [query.trim(), selectedText].filter(Boolean).join("\n");
+
     setError(null);
     setLoading(true);
     setResult(null);
     try {
-      const res = await fetch("/api/resource-assistant/suggest", {
+      const res = await fetch("/api/resource-assistant", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          query: query.trim() || undefined,
-          focusAreas: selected.size > 0 ? Array.from(selected) : undefined,
+          query: assistantInput || undefined,
         }),
       });
       const text = await res.text();
       let data: {
         error?: string;
-        grouped?: AssistantGrouped;
-        reasons?: Record<string, string>;
+        recommended?: AssistantGrouped["recommended"];
+        helpful?: AssistantGrouped["helpfulTools"];
+        optional?: AssistantGrouped["optional"];
       };
       try {
         data = text ? JSON.parse(text) : {};
@@ -64,13 +70,17 @@ export default function ResourcesPage() {
         setError(data.error || "Something went wrong");
         return;
       }
-      if (!data.grouped) {
+      if (!data.recommended || !data.helpful || !data.optional) {
         setError("No suggestions returned. Try selecting options or entering a description.");
         return;
       }
       setResult({
-        grouped: data.grouped,
-        reasons: data.reasons ?? {},
+        grouped: {
+          recommended: data.recommended,
+          helpfulTools: data.helpful,
+          optional: data.optional,
+        },
+        reasons: {},
       });
     } catch (e) {
       setError(e instanceof Error ? e.message : "We couldn't load suggestions. Try again.");

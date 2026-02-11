@@ -21,13 +21,18 @@ export default function ResourceListCreatorPage() {
     setLoading(true);
     setResult(null);
     try {
-      const res = await fetch("/api/resource-assistant/suggest", {
+      const res = await fetch("/api/resource-assistant", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: trimmed }),
       });
       const text = await res.text();
-      let data: { error?: string; grouped?: AssistantGrouped; reasons?: Record<string, string> };
+      let data: {
+        error?: string;
+        recommended?: AssistantGrouped["recommended"];
+        helpful?: AssistantGrouped["helpfulTools"];
+        optional?: AssistantGrouped["optional"];
+      };
       try {
         data = text ? JSON.parse(text) : {};
       } catch {
@@ -37,13 +42,17 @@ export default function ResourceListCreatorPage() {
       if (!res.ok) {
         throw new Error(data.error || "Something went wrong");
       }
-      if (!data.grouped) {
+      if (!data.recommended || !data.helpful || !data.optional) {
         setError("No suggestions returned. Try rephrasing your goal.");
         return;
       }
       setResult({
-        grouped: data.grouped,
-        reasons: data.reasons ?? {},
+        grouped: {
+          recommended: data.recommended,
+          helpfulTools: data.helpful,
+          optional: data.optional,
+        },
+        reasons: {},
       });
       setQuery(trimmed);
       setShowRefine(false);
