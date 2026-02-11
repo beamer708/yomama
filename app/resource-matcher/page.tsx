@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, FormEvent } from "react";
+import { useState, FormEvent } from "react";
 import Icon from "@/components/Icon";
 import {
   SERVER_TYPES,
@@ -10,65 +10,6 @@ import {
   type ServerGoal,
   type RecommendedResource,
 } from "@/lib/resource-matcher";
-
-const RESOURCE_MATCHER_PASSWORD = "UNITY26";
-const SESSION_KEY = "resource_matcher_access";
-
-function PasswordGate({
-  onAccessGranted,
-}: {
-  onAccessGranted: () => void;
-}) {
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    setError("");
-    if (password.trim() === RESOURCE_MATCHER_PASSWORD) {
-      if (typeof window !== "undefined") {
-        sessionStorage.setItem(SESSION_KEY, "1");
-      }
-      onAccessGranted();
-    } else {
-      setError("Incorrect password. Please try again.");
-    }
-  };
-
-  return (
-    <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 py-16">
-      <div className="w-full max-w-sm rounded-lg border border-border bg-card p-8">
-        <h2 className="text-xl font-semibold text-foreground mb-2">
-          Access Required
-        </h2>
-        <p className="text-sm text-foreground/70 mb-6">
-          Enter the password to access the Resource Matcher.
-        </p>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            className="w-full rounded-lg border border-border bg-background px-4 py-3 text-foreground placeholder:text-foreground/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-            autoFocus
-          />
-          {error && (
-            <p className="text-sm text-red-500" role="alert">
-              {error}
-            </p>
-          )}
-          <button
-            type="submit"
-            className="w-full rounded-lg bg-primary px-4 py-3 text-sm font-medium text-white hover:bg-primary-hover transition-colors"
-          >
-            Unlock
-          </button>
-        </form>
-      </div>
-    </div>
-  );
-}
 
 function ResourceCard({ resource }: { resource: RecommendedResource }) {
   return (
@@ -102,19 +43,10 @@ function ResourceCard({ resource }: { resource: RecommendedResource }) {
 }
 
 export default function ResourceMatcherPage() {
-  const [hasAccess, setHasAccess] = useState<boolean | null>(null);
   const [serverType, setServerType] = useState<ServerType | "">("");
   const [serverGoal, setServerGoal] = useState<ServerGoal | "">("");
   const [results, setResults] = useState<RecommendedResource[]>([]);
   const [hasSubmitted, setHasSubmitted] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setHasAccess(sessionStorage.getItem(SESSION_KEY) === "1");
-    }
-  }, []);
-
-  const handleAccessGranted = () => setHasAccess(true);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -133,26 +65,6 @@ export default function ResourceMatcherPage() {
       });
     }, 100);
   };
-
-  if (hasAccess === null) {
-    return (
-      <div className="py-16 sm:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="animate-pulse h-64 bg-card rounded-lg" />
-        </div>
-      </div>
-    );
-  }
-
-  if (!hasAccess) {
-    return (
-      <div className="py-16 sm:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <PasswordGate onAccessGranted={handleAccessGranted} />
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="py-16 sm:py-20">
@@ -225,7 +137,7 @@ export default function ResourceMatcherPage() {
 
           <button
             type="submit"
-            className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-white hover:bg-primary-hover transition-colors"
+            className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-white hover:text-primary-hover transition-colors"
           >
             <Icon name="search" className="text-base" />
             Get Recommendations
