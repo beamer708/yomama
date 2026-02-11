@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { requireEnv } from "@/lib/env";
 
 type CanonicalCategory =
   | "server-setup"
@@ -145,10 +146,8 @@ function sanitizeClassification(raw: unknown): ClassificationResult | null {
   return { primaryCategories, secondaryCategories, priority: safePriority };
 }
 
-async function classifyWithOpenAI(input: string): Promise<ClassificationResult | null> {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) return null;
-
+async function classifyWithOpenAI(input: string): Promise<ClassificationResult> {
+  const apiKey = requireEnv("OPENAI_API_KEY");
   const prompt = `You are helping classify a project request for an ERLC resource platform.
 
 User input:
@@ -189,31 +188,49 @@ Only return JSON.`;
       }),
     });
 
-    if (!response.ok) return null;
+    if (!response.ok) {
+      const body = await response.text();
+      throw new Error(`OpenAI request failed (${response.status}): ${body}`);
+    }
 
     const data = (await response.json()) as {
       choices?: Array<{ message?: { content?: string } }>;
     };
     const content = data.choices?.[0]?.message?.content;
-    if (!content) return null;
+    if (!content) {
+      throw new Error("OpenAI returned an empty response");
+    }
 
     const parsed = JSON.parse(content) as unknown;
-    return sanitizeClassification(parsed);
-  } catch {
-    return null;
+    const normalized = sanitizeClassification(parsed);
+    if (!normalized) {
+      throw new Error("OpenAI returned invalid classification JSON");
+    }
+    return normalized;
+  } catch (error) {
+    console.error("[Resource Assistant] OpenAI classification failed", error);
+    throw error;
   }
 }
 
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as { query?: unknown };
-    const query = typeof body.query === "string" ? body.query.trim() : "";
+    console.log("[Resource Assistant] Received request");
+    const body = (await request.json()) as { query?: unknown; input?: unknown };
+    const rawInput = typeof body.input === "string" ? body.input : body.query;
+    const query = typeof rawInput === "string" ? rawInput.trim() : "";
 
     if (!query) {
       return NextResponse.json({ error: "Please describe what you want to build." }, { status: 400 });
     }
 
-    const classification = (await classifyWithOpenAI(query)) ?? keywordFallback(query);
+    let classification: ClassificationResult;
+    try {
+      classification = await classifyWithOpenAI(query);
+    } catch (error) {
+      console.warn("[Resource Assistant] Falling back to keyword classification", error);
+      classification = keywordFallback(query);
+    }
     const resources = await prisma.resource.findMany();
 
     const matchedFocusAreas = new Set<string>();
@@ -286,9 +303,9 @@ export async function POST(request: Request) {
       optional: toAssistantResource(optional, "optional"),
     });
   } catch (error) {
-    console.error("resource-assistant", error);
+    console.error("[Resource Assistant] Unexpected route error", error);
     return NextResponse.json(
-      { error: "Unable to process your request right now. Please try again." },
+      { error: "Resource Assistant is temporarily unavailable. Please try again." },
       { status: 500 }
     );
   }

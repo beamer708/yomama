@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { checkRateLimit, getClientIP } from "@/lib/rateLimit";
+import { isStaffApplicationOpen, requireEnv } from "@/lib/env";
 
 /**
  * DISCORD WEBHOOK SETUP INSTRUCTIONS
@@ -116,8 +117,6 @@ function truncateForDiscord(text: string, maxLength: number = 1024): string {
   return text.substring(0, maxLength - 3) + "...";
 }
 
-const DISCORD_MESSAGE_FLAG_COMPONENTS_V2 = 1 << 15;
-
 /**
  * Send application to Discord via webhook
  * Returns an object with success status and error details
@@ -127,16 +126,15 @@ async function sendToDiscord(data: StaffApplicationData): Promise<{
   error?: string;
   discordError?: string;
 }> {
-  const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
-
-  // Validate webhook URL exists (only ever read server-side; never sent to client)
-  if (!webhookUrl || webhookUrl.trim() === "") {
-    const error = "DISCORD_WEBHOOK_URL is not set. Ensure .env.local exists in the project root (same folder as package.json), contains DISCORD_WEBHOOK_URL=your_url, and restart the dev server (npm run dev). .env.local is gitignored so the URL stays private.";
-    console.error(`[Staff Application API] ${error}`);
+  let webhookUrl: string;
+  try {
+    webhookUrl = requireEnv("DISCORD_WEBHOOK_URL");
+  } catch (error) {
+    console.error("[Staff Application API] Missing env", error);
     return {
       success: false,
       error: "Staff applications are not configured yet. Please try again later.",
-      discordError: "Missing environment variable",
+      discordError: "Missing environment variable: DISCORD_WEBHOOK_URL",
     };
   }
 
@@ -161,9 +159,6 @@ async function sendToDiscord(data: StaffApplicationData): Promise<{
   const submittedRelative = `<t:${submittedUnix}:R>`;
   const canMentionApplicant = /^\d{17,19}$/.test(discordId);
   const applicantMention = canMentionApplicant ? `<@${discordId}>` : "Applicant";
-  const applicantProfile = canMentionApplicant
-    ? `https://discord.com/users/${discordId}`
-    : "https://discord.com/app";
 
   // Ensure no field is empty (Discord requirement)
   const usernameValue = discordUsername || "Not provided";
@@ -171,59 +166,7 @@ async function sendToDiscord(data: StaffApplicationData): Promise<{
   const applicationForValue = applicationFor || "Not provided";
   const experienceValue = pastExperience || "Not provided";
 
-  const buildPayload = (mentionIssue?: string) => ({
-    flags: DISCORD_MESSAGE_FLAG_COMPONENTS_V2,
-    ...(canMentionApplicant
-      ? {
-          allowed_mentions: {
-            users: [discordId],
-            parse: [],
-          },
-        }
-      : {}),
-    components: [
-      {
-        type: 17,
-        accent_color: 0x5865f2,
-        components: [
-          {
-            type: 10,
-            content:
-              `## New Staff Application\n` +
-              `Applicant: ${applicantMention}\n` +
-              `Submitted: ${submittedFull} (${submittedRelative})\n` +
-              (mentionIssue
-                ? `Mention status: ${mentionIssue}\n`
-                : "Mention status: Mention sent (if user is in the server).\n"),
-          },
-          {
-            type: 14,
-          },
-          {
-            type: 10,
-            content:
-              `**Applying For**\n${applicationForValue}\n\n` +
-              `**Discord Username**\n${usernameValue}\n\n` +
-              `**Discord ID**\n${idValue}\n\n` +
-              `**Past Experience**\n${experienceValue}`,
-          },
-        ],
-      },
-      {
-        type: 1,
-        components: [
-          {
-            type: 2,
-            style: 5,
-            label: "Open Discord Profile",
-            url: applicantProfile,
-          },
-        ],
-      },
-    ],
-  });
-
-  const buildLegacyPayload = (mentionIssue?: string) => ({
+  const buildLegacyPayload = (mentionIssue?: string, allowMention: boolean = canMentionApplicant) => ({
     content:
       `New Staff Application\n` +
       `Applicant: ${applicantMention}\n` +
@@ -231,7 +174,7 @@ async function sendToDiscord(data: StaffApplicationData): Promise<{
       (mentionIssue
         ? `Mention status: ${mentionIssue}`
         : "Mention status: Mention sent (if user is in the server)."),
-    ...(canMentionApplicant
+    ...(allowMention
       ? {
           allowed_mentions: {
             users: [discordId],
@@ -262,11 +205,11 @@ async function sendToDiscord(data: StaffApplicationData): Promise<{
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(buildPayload()),
+      body: JSON.stringify(buildLegacyPayload()),
     });
 
     const responseText = await response.text();
-    let responseData: any = null;
+    let responseData: unknown = null;
     
     try {
       responseData = JSON.parse(responseText);
@@ -278,15 +221,10 @@ async function sendToDiscord(data: StaffApplicationData): Promise<{
       // Handle specific Discord error codes
       let errorMessage = "Failed to send application to Discord.";
       let discordError = `HTTP ${response.status}: ${response.statusText}`;
-      const responseDetail = JSON.stringify(responseData || responseText).toLowerCase();
+      const responseDetail = JSON.stringify(responseData ?? responseText).toLowerCase();
       const mentionRelatedError =
         response.status === 400 &&
         (responseDetail.includes("allowed_mentions") || responseDetail.includes("mention"));
-      const emptyMessageError =
-        response.status === 400 &&
-        (responseDetail.includes("cannot send an empty message") ||
-          responseDetail.includes("\"code\":50006") ||
-          responseDetail.includes("50006"));
 
       // If Discord rejects mention formatting, retry without mention allowance but still submit.
       if (mentionRelatedError) {
@@ -295,33 +233,13 @@ async function sendToDiscord(data: StaffApplicationData): Promise<{
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(buildPayload("Could not mention this user, but application was still submitted.")),
+          body: JSON.stringify(
+            buildLegacyPayload("Could not mention this user, but application was still submitted.", false)
+          ),
         });
 
         if (retry.ok) {
           console.warn("[Staff Application API] Mention failed; sent application without mention.");
-          return { success: true };
-        }
-      }
-
-      // If V2 payload is rejected as empty/invalid, fallback to legacy webhook payload.
-      if (emptyMessageError || response.status === 400) {
-        const legacyRetry = await fetch(webhookUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(
-            buildLegacyPayload(
-              emptyMessageError
-                ? "Could not use V2 message format; sent fallback format."
-                : undefined
-            )
-          ),
-        });
-
-        if (legacyRetry.ok) {
-          console.warn("[Staff Application API] V2 payload failed; sent legacy payload.");
           return { success: true };
         }
       }
@@ -337,14 +255,20 @@ async function sendToDiscord(data: StaffApplicationData): Promise<{
         discordError = "Rate Limited - Too many requests to Discord";
       } else if (response.status === 400) {
         errorMessage = "Invalid request format sent to Discord.";
-        discordError = `Bad Request: ${responseData?.message || responseText}`;
+        discordError =
+          typeof responseData === "object" &&
+          responseData !== null &&
+          "message" in responseData &&
+          typeof (responseData as { message: unknown }).message === "string"
+            ? `Bad Request: ${(responseData as { message: string }).message}`
+            : `Bad Request: ${responseText}`;
       }
 
       console.error(`[Staff Application API] Discord webhook error:`, {
         status: response.status,
         statusText: response.statusText,
         error: discordError,
-        response: responseData || responseText,
+        response: responseData ?? responseText,
       });
 
       return {
@@ -371,11 +295,7 @@ async function sendToDiscord(data: StaffApplicationData): Promise<{
   }
 }
 
-const STAFF_APPLICATION_OPEN =
-  process.env.STAFF_APPLICATION_OPEN === "true" ||
-  process.env.STAFF_APPLICATION_OPEN === "1" ||
-  process.env.NEXT_PUBLIC_STAFF_APPLICATION_OPEN === "true" ||
-  process.env.NEXT_PUBLIC_STAFF_APPLICATION_OPEN === "1";
+const STAFF_APPLICATION_OPEN = isStaffApplicationOpen();
 
 export async function POST(request: NextRequest) {
   const startTime = Date.now();

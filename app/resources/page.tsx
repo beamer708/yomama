@@ -50,7 +50,7 @@ export default function ResourcesPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          query: assistantInput || undefined,
+          input: assistantInput || undefined,
         }),
       });
       const text = await res.text();

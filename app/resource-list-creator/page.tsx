@@ -24,7 +24,7 @@ export default function ResourceListCreatorPage() {
       const res = await fetch("/api/resource-assistant", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: trimmed }),
+        body: JSON.stringify({ input: trimmed }),
       });
       const text = await res.text();
       let data: {

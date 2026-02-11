@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { requireEnv } from "@/lib/env";
 
 /**
  * Health check endpoint for staff application system.
@@ -6,9 +7,10 @@ import { NextResponse } from "next/server";
  * Only returns configured: true/false; never the webhook URL or secret.
  */
 export async function GET() {
-  const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
-
-  if (!webhookUrl || typeof webhookUrl !== "string" || webhookUrl.trim() === "") {
+  let webhookUrl: string;
+  try {
+    webhookUrl = requireEnv("DISCORD_WEBHOOK_URL");
+  } catch {
     return NextResponse.json(
       {
         status: "error",
