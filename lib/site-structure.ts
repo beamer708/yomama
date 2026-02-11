@@ -10,6 +10,7 @@ export const NAV = {
   resources: { label: "Resources", href: "/resources" },
   support: { label: "Support", href: "/support" },
   status: { label: "Status", href: "/status" },
+  staffApplication: { label: "Staff Application", href: "/staff-application" },
   about: { label: "About", href: "/about" },
 } as const;
 

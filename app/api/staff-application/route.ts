@@ -27,6 +27,7 @@ import { checkRateLimit, getClientIP } from "@/lib/rateLimit";
 interface StaffApplicationData {
   discordUsername: string;
   discordId: string;
+  applicationFor: string[];
   pastExperience: string;
 }
 
@@ -61,6 +62,19 @@ function validateApplication(data: StaffApplicationData): {
     } else if (!/^\d{17,19}$/.test(trimmed)) {
       // Discord IDs are 17-19 digit numbers
       errors.push("Discord ID must be a valid 17-19 digit number");
+    }
+  }
+
+  // Application type validation (Community Team and/or Beta Tester)
+  if (!Array.isArray(data.applicationFor) || data.applicationFor.length === 0) {
+    errors.push("Please select at least one role: Community Team or Beta Tester");
+  } else {
+    const allowed = new Set(["Community Team", "Beta Tester"]);
+    const valid = data.applicationFor.every(
+      (entry) => typeof entry === "string" && allowed.has(entry)
+    );
+    if (!valid) {
+      errors.push("Invalid application role selection");
     }
   }
 
@@ -102,6 +116,8 @@ function truncateForDiscord(text: string, maxLength: number = 1024): string {
   return text.substring(0, maxLength - 3) + "...";
 }
 
+const DISCORD_MESSAGE_FLAG_COMPONENTS_V2 = 1 << 15;
+
 /**
  * Send application to Discord via webhook
  * Returns an object with success status and error details
@@ -138,43 +154,74 @@ async function sendToDiscord(data: StaffApplicationData): Promise<{
   // Sanitize and truncate inputs for Discord
   const discordUsername = truncateForDiscord(sanitizeText(data.discordUsername), 1024);
   const discordId = sanitizeText(data.discordId);
+  const applicationFor = truncateForDiscord(data.applicationFor.join(", "), 1024);
   const pastExperience = truncateForDiscord(sanitizeText(data.pastExperience), 1024);
+  const submittedUnix = Math.floor(Date.now() / 1000);
+  const submittedFull = `<t:${submittedUnix}:F>`;
+  const submittedRelative = `<t:${submittedUnix}:R>`;
+  const canMentionApplicant = /^\d{17,19}$/.test(discordId);
+  const applicantMention = canMentionApplicant ? `<@${discordId}>` : "Applicant";
+  const applicantProfile = canMentionApplicant
+    ? `https://discord.com/users/${discordId}`
+    : "https://discord.com/app";
 
   // Ensure no field is empty (Discord requirement)
   const usernameValue = discordUsername || "Not provided";
   const idValue = discordId || "Not provided";
+  const applicationForValue = applicationFor || "Not provided";
   const experienceValue = pastExperience || "Not provided";
 
-  // Create Discord embed
-  const embed = {
-    title: "New Unity Vault Staff Application",
-    color: 0x5865f2, // Discord blurple color
-    fields: [
+  const buildPayload = (mentionIssue?: string) => ({
+    flags: DISCORD_MESSAGE_FLAG_COMPONENTS_V2,
+    ...(canMentionApplicant
+      ? {
+          allowed_mentions: {
+            users: [discordId],
+            parse: [],
+          },
+        }
+      : {}),
+    components: [
       {
-        name: "Discord Username",
-        value: usernameValue,
-        inline: false,
+        type: 17,
+        accent_color: 0x5865f2,
+        components: [
+          {
+            type: 10,
+            content:
+              `## New Staff Application\n` +
+              `Applicant: ${applicantMention}\n` +
+              `Submitted: ${submittedFull} (${submittedRelative})\n` +
+              (mentionIssue
+                ? `Mention status: ${mentionIssue}\n`
+                : "Mention status: Mention sent (if user is in the server).\n"),
+          },
+          {
+            type: 14,
+          },
+          {
+            type: 10,
+            content:
+              `**Applying For**\n${applicationForValue}\n\n` +
+              `**Discord Username**\n${usernameValue}\n\n` +
+              `**Discord ID**\n${idValue}\n\n` +
+              `**Past Experience**\n${experienceValue}`,
+          },
+        ],
       },
       {
-        name: "Discord ID",
-        value: idValue,
-        inline: false,
-      },
-      {
-        name: "Past Experience",
-        value: experienceValue,
-        inline: false,
+        type: 1,
+        components: [
+          {
+            type: 2,
+            style: 5,
+            label: "Open Discord Profile",
+            url: applicantProfile,
+          },
+        ],
       },
     ],
-    timestamp: new Date().toISOString(),
-    footer: {
-      text: "Unity Vault • Staff Applications",
-    },
-  };
-
-  const payload = {
-    embeds: [embed],
-  };
+  });
 
   // Log request for debugging (without sensitive data)
   console.log(`[Staff Application API] Sending application to Discord webhook (ID: ${webhookUrl.split("/")[5]})`);
@@ -185,7 +232,7 @@ async function sendToDiscord(data: StaffApplicationData): Promise<{
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(buildPayload()),
     });
 
     const responseText = await response.text();
@@ -201,6 +248,26 @@ async function sendToDiscord(data: StaffApplicationData): Promise<{
       // Handle specific Discord error codes
       let errorMessage = "Failed to send application to Discord.";
       let discordError = `HTTP ${response.status}: ${response.statusText}`;
+      const responseDetail = JSON.stringify(responseData || responseText).toLowerCase();
+      const mentionRelatedError =
+        response.status === 400 &&
+        (responseDetail.includes("allowed_mentions") || responseDetail.includes("mention"));
+
+      // If Discord rejects mention formatting, retry without mention allowance but still submit.
+      if (mentionRelatedError) {
+        const retry = await fetch(webhookUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(buildPayload("Could not mention this user, but application was still submitted.")),
+        });
+
+        if (retry.ok) {
+          console.warn("[Staff Application API] Mention failed; sent application without mention.");
+          return { success: true };
+        }
+      }
 
       if (response.status === 401) {
         errorMessage = "Discord webhook authentication failed. The webhook URL may be invalid or expired.";
@@ -247,13 +314,16 @@ async function sendToDiscord(data: StaffApplicationData): Promise<{
   }
 }
 
-/** Set to false to re-enable staff applications. */
-const STAFF_APPLICATION_MAINTENANCE = true;
+const STAFF_APPLICATION_OPEN =
+  process.env.STAFF_APPLICATION_OPEN === "true" ||
+  process.env.STAFF_APPLICATION_OPEN === "1" ||
+  process.env.NEXT_PUBLIC_STAFF_APPLICATION_OPEN === "true" ||
+  process.env.NEXT_PUBLIC_STAFF_APPLICATION_OPEN === "1";
 
 export async function POST(request: NextRequest) {
   const startTime = Date.now();
 
-  if (STAFF_APPLICATION_MAINTENANCE) {
+  if (!STAFF_APPLICATION_OPEN) {
     return NextResponse.json(
       {
         success: false,
@@ -293,6 +363,7 @@ export async function POST(request: NextRequest) {
       console.log(`[Staff Application API] Parsed request body:`, {
         discordUsername: body.discordUsername?.substring(0, 20) + "...",
         discordId: body.discordId,
+        applicationFor: body.applicationFor,
         pastExperienceLength: body.pastExperience?.length || 0,
       });
     } catch (error) {

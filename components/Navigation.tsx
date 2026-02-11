@@ -8,10 +8,14 @@ import { NAV } from "@/lib/site-structure";
 
 export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const isStaffApplicationOpen =
+    process.env.NEXT_PUBLIC_STAFF_APPLICATION_OPEN === "true" ||
+    process.env.NEXT_PUBLIC_STAFF_APPLICATION_OPEN === "1";
 
   const mainLinks = [
     { ...NAV.support },
     { ...NAV.status },
+    ...(isStaffApplicationOpen ? [{ ...NAV.staffApplication }] : []),
     { ...NAV.about },
   ];
 
