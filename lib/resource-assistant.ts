@@ -38,7 +38,7 @@ const QUERY_KEYWORDS: Record<string, FocusArea[]> = {
   marketing: ["Marketing & Growth"],
   growth: ["Marketing & Growth"],
   advertise: ["Marketing & Growth"],
-  community: ["Community Building", "Staff & Management"],
+  community: ["Staff & Management", "Documentation / SOPs"],
   redesign: ["Branding", "Graphic Design", "Server Setup"],
   improve: ["Documentation / SOPs", "Staff & Management"],
   sop: ["Documentation / SOPs"],

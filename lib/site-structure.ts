@@ -43,11 +43,13 @@ export const RESOURCE_GROUP_LABELS: Record<string, string> = {
   tools: "Tools and Utilities",
 };
 
-export const SUPPORT_LINKS = [
+export type FooterLink = { label: string; href: string; external?: boolean };
+
+export const SUPPORT_LINKS: FooterLink[] = [
   { label: "Discord", href: "https://discord.gg/rJECs3rpDh", external: true },
   { label: "Community Guides", href: "/community-guides" },
   { label: "Staff Application", href: "/staff-application" },
   { label: "Legal", href: "/legal" },
-] as const;
+];
 
 export const STATUS_URL = "https://unityvaultstatus.betteruptime.com";
