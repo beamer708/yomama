@@ -44,7 +44,7 @@ export default function StatusPage() {
             Major product updates and announcements are shared in our Discord and on the homepage. For technical status and downtime, use the status page above.
           </p>
           <Link
-            href="https://discord.gg/rJECs3rpDh"
+            href="https://discord.gg/3qpVpCBwj"
             target="_blank"
             rel="noopener noreferrer"
             className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary-hover"

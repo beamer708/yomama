@@ -126,6 +126,18 @@ export const resources: Resource[] = [
     channelName: "YouTube Creator",
     isNew: true,
   },
+  {
+    id: "22",
+    title: "ERLC Visual Design Walkthrough",
+    description: "Step-by-step video walkthrough for creating cleaner ERLC visuals and server branding assets with practical design tips and layout examples.",
+    type: "video",
+    url: "https://youtu.be/OgNnIn_juPo?si=t9XpKL_2uHHwx3q3",
+    category: "Graphic Design",
+    creator: "YouTube Creator",
+    section: "youtube",
+    channelName: "YouTube Creator",
+    isNew: true,
+  },
   // Website Resources
   {
     id: "4",
@@ -259,6 +271,18 @@ export const resources: Resource[] = [
     category: "Discord Utilities",
     creator: "Syce Gaming",
     section: "website",
+  },
+  {
+    id: "unity-vault-discord",
+    title: "Unity Vault Discord",
+    description: "Official Unity Vault Discord server for support, updates, announcements, and community discussion.",
+    type: "website",
+    url: "https://discord.gg/3qpVpCBwj",
+    category: "Discord Utilities",
+    creator: "Unity Vault",
+    creatorUrl: "https://discord.gg/3qpVpCBwj",
+    section: "website",
+    isNew: true,
   },
   {
     id: "12",

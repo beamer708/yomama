@@ -61,6 +61,11 @@ function ResourceCardRow({
             {resource.title}
             <Icon name="up-right-from-square" className="text-xs shrink-0" />
           </a>
+          {resource.isNew && (
+            <span className="mt-2 inline-block rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-primary text-white">
+              New
+            </span>
+          )}
           <p className="mt-1 text-sm text-foreground/70 line-clamp-2">
             {resource.description}
           </p>

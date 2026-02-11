@@ -111,7 +111,7 @@ export default function Footer() {
         <div className="mt-14 pt-8 border-t border-border/50">
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
             <a
-              href="https://discord.gg/rJECs3rpDh"
+              href="https://discord.gg/3qpVpCBwj"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Join Unity Vault Discord"

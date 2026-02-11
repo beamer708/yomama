@@ -166,7 +166,7 @@ export default function Home() {
                   Status
                 </Link>
                 <a
-                  href="https://discord.gg/rJECs3rpDh"
+                  href="https://discord.gg/3qpVpCBwj"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-primary"

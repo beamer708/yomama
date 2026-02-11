@@ -30,6 +30,7 @@ export interface RecommendedResource {
   description: string;
   url?: string; // Placeholder: real URLs from resources or external links
   type: string;
+  isNew?: boolean;
 }
 
 /**
@@ -138,6 +139,7 @@ export function getRecommendedResources(
         description: r.description,
         url: r.url,
         type: r.section === "youtube" ? "Video" : "Website",
+        isNew: r.isNew,
       });
     }
   }

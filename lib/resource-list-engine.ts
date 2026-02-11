@@ -3,6 +3,7 @@ import {
   getFocusAreasForCategory,
   type FocusArea,
 } from "./resource-list-mapping";
+import { resources as staticResources } from "./resources";
 
 export interface ProjectPlanInput {
   name: string;
@@ -27,6 +28,7 @@ export interface ScoredResource {
   difficultyLevel: string;
   priority: "required" | "recommended" | "optional";
   score: number;
+  isNew?: boolean;
 }
 
 export interface GroupedResourceList {
@@ -38,6 +40,9 @@ export interface GroupedResourceList {
 const WEIGHT_FOCUS = 10;
 const WEIGHT_SKILL = 3;
 const WEIGHT_PRIORITY_DEFAULT = 2;
+const NEW_RESOURCE_IDS = new Set(
+  staticResources.filter((resource) => resource.isNew).map((resource) => resource.id)
+);
 
 const SKILL_ORDER = ["beginner", "intermediate", "advanced"];
 
@@ -131,6 +136,7 @@ export async function generateResourceList(
         priority: "recommended" as const,
         score: rawScore,
         rawScore,
+        isNew: NEW_RESOURCE_IDS.has(r.id),
       };
     }
   );

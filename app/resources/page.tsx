@@ -3,9 +3,15 @@
 import { useState } from "react";
 import Icon from "@/components/Icon";
 import ERLCLogo from "@/components/ERLCLogo";
+import YouTubeResourceCard from "@/components/YouTubeResourceCard";
+import WebsiteResourceCard from "@/components/WebsiteResourceCard";
 import { AssistantResults, type AssistantGrouped } from "@/components/resource-assistant/AssistantResults";
 import { RESOURCE_FOCUS_OPTIONS } from "@/lib/resource-focus-options";
 import type { FocusArea } from "@/lib/resource-list-mapping";
+import { resources } from "@/lib/resources";
+
+const youtubeResources = resources.filter((resource) => resource.section === "youtube");
+const websiteResources = resources.filter((resource) => resource.section === "website");
 
 export default function ResourcesPage() {
   const [query, setQuery] = useState("");
@@ -191,6 +197,48 @@ export default function ResourcesPage() {
           </div>
         )}
 
+        <div className="mt-16 border-t border-border/70 pt-12">
+          <div className="mb-8">
+            <h2 className="text-2xl font-semibold text-foreground">Browse all resources</h2>
+            <p className="mt-2 text-sm text-foreground/70">
+              Videos are shown with previews and organized separately from website tools.
+            </p>
+          </div>
+
+          <section aria-labelledby="youtube-resources-heading" className="mb-12">
+            <div className="mb-5 flex items-center gap-2">
+              <Icon name="youtube" className="text-xl text-primary" />
+              <h3 id="youtube-resources-heading" className="text-xl font-semibold text-foreground">
+                YouTube videos
+              </h3>
+              <span className="rounded-md bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
+                {youtubeResources.length}
+              </span>
+            </div>
+            <div className="grid gap-5 sm:grid-cols-2">
+              {youtubeResources.map((resource) => (
+                <YouTubeResourceCard key={resource.id} resource={resource} />
+              ))}
+            </div>
+          </section>
+
+          <section aria-labelledby="website-resources-heading">
+            <div className="mb-5 flex items-center gap-2">
+              <Icon name="globe" className="text-xl text-primary" />
+              <h3 id="website-resources-heading" className="text-xl font-semibold text-foreground">
+                Website resources
+              </h3>
+              <span className="rounded-md bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
+                {websiteResources.length}
+              </span>
+            </div>
+            <div className="grid gap-5 sm:grid-cols-2">
+              {websiteResources.map((resource) => (
+                <WebsiteResourceCard key={resource.id} resource={resource} />
+              ))}
+            </div>
+          </section>
+        </div>
       </div>
     </div>
   );

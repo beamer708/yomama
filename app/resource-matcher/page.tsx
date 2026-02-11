@@ -19,6 +19,11 @@ function ResourceCard({ resource }: { resource: RecommendedResource }) {
           <h3 className="text-base font-semibold text-foreground mb-2 line-clamp-2">
             {resource.title}
           </h3>
+          {resource.isNew && (
+            <span className="mb-2 inline-block rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-primary text-white">
+              New
+            </span>
+          )}
           <p className="text-sm text-foreground/70 line-clamp-2 leading-relaxed">
             {resource.description}
           </p>

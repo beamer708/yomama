@@ -21,7 +21,7 @@ export default function StaffApplicationPage() {
               Back to Support
             </Link>
             <a
-              href="https://discord.gg/rJECs3rpDh"
+              href="https://discord.gg/3qpVpCBwj"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"

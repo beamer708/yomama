@@ -46,7 +46,7 @@ export const RESOURCE_GROUP_LABELS: Record<string, string> = {
 export type FooterLink = { label: string; href: string; external?: boolean };
 
 export const SUPPORT_LINKS: FooterLink[] = [
-  { label: "Discord", href: "https://discord.gg/rJECs3rpDh", external: true },
+  { label: "Discord", href: "https://discord.gg/3qpVpCBwj", external: true },
   { label: "Community Guides", href: "/community-guides" },
   { label: "Staff Application", href: "/staff-application" },
   { label: "Legal", href: "/legal" },

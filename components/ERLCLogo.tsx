@@ -1,4 +1,5 @@
 import Image from "next/image";
+import erlcLogo from "@/Media/ERLCLogo.png";
 
 interface ERLCLogoProps {
   /** Size in pixels (width and height). Default 32. */
@@ -10,7 +11,7 @@ interface ERLCLogoProps {
 }
 
 /**
- * ERLC logo used wherever ERLC is mentioned. Place ERLCLogo.png in public/Media/.
+ * ERLC logo used wherever ERLC is mentioned.
  */
 export default function ERLCLogo({
   size = 32,
@@ -21,7 +22,7 @@ export default function ERLCLogo({
   const style = inline ? { display: "inline-block", verticalAlign: "middle" } : undefined;
   return (
     <Image
-      src="/Media/ERLCLogo.png"
+      src={erlcLogo}
       alt={alt}
       width={size}
       height={size}

@@ -23,7 +23,7 @@ export default function PartnersPage() {
             We’re open to partnerships with ERLC communities, tool providers, and creators who align with our mission: making quality resources accessible to everyone building ERLC servers.
           </p>
           <a
-            href="https://discord.gg/rJECs3rpDh"
+            href="https://discord.gg/3qpVpCBwj"
             target="_blank"
             rel="noopener noreferrer"
             className="mt-6 inline-flex items-center gap-2 btn-primary"
