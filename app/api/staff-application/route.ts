@@ -223,6 +223,36 @@ async function sendToDiscord(data: StaffApplicationData): Promise<{
     ],
   });
 
+  const buildLegacyPayload = (mentionIssue?: string) => ({
+    content:
+      `New Staff Application\n` +
+      `Applicant: ${applicantMention}\n` +
+      `Submitted: ${submittedFull} (${submittedRelative})\n` +
+      (mentionIssue
+        ? `Mention status: ${mentionIssue}`
+        : "Mention status: Mention sent (if user is in the server)."),
+    ...(canMentionApplicant
+      ? {
+          allowed_mentions: {
+            users: [discordId],
+            parse: [],
+          },
+        }
+      : {}),
+    embeds: [
+      {
+        title: "Application Details",
+        color: 0x5865f2,
+        fields: [
+          { name: "Applying For", value: applicationForValue, inline: false },
+          { name: "Discord Username", value: usernameValue, inline: false },
+          { name: "Discord ID", value: idValue, inline: false },
+          { name: "Past Experience", value: experienceValue, inline: false },
+        ],
+      },
+    ],
+  });
+
   // Log request for debugging (without sensitive data)
   console.log(`[Staff Application API] Sending application to Discord webhook (ID: ${webhookUrl.split("/")[5]})`);
 
@@ -252,6 +282,11 @@ async function sendToDiscord(data: StaffApplicationData): Promise<{
       const mentionRelatedError =
         response.status === 400 &&
         (responseDetail.includes("allowed_mentions") || responseDetail.includes("mention"));
+      const emptyMessageError =
+        response.status === 400 &&
+        (responseDetail.includes("cannot send an empty message") ||
+          responseDetail.includes("\"code\":50006") ||
+          responseDetail.includes("50006"));
 
       // If Discord rejects mention formatting, retry without mention allowance but still submit.
       if (mentionRelatedError) {
@@ -265,6 +300,28 @@ async function sendToDiscord(data: StaffApplicationData): Promise<{
 
         if (retry.ok) {
           console.warn("[Staff Application API] Mention failed; sent application without mention.");
+          return { success: true };
+        }
+      }
+
+      // If V2 payload is rejected as empty/invalid, fallback to legacy webhook payload.
+      if (emptyMessageError || response.status === 400) {
+        const legacyRetry = await fetch(webhookUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(
+            buildLegacyPayload(
+              emptyMessageError
+                ? "Could not use V2 message format; sent fallback format."
+                : undefined
+            )
+          ),
+        });
+
+        if (legacyRetry.ok) {
+          console.warn("[Staff Application API] V2 payload failed; sent legacy payload.");
           return { success: true };
         }
       }
