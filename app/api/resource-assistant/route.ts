@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { requireEnv } from "@/lib/env";
+import { resources as staticResources } from "@/lib/resources";
+import { getFocusAreasForCategory } from "@/lib/resource-list-mapping";
 
 type CanonicalCategory =
   | "server-setup"
@@ -35,6 +37,20 @@ interface AssistantResource {
   isNew?: boolean;
 }
 
+interface ScorableResource {
+  id: string;
+  title: string;
+  description: string;
+  type: string;
+  url: string;
+  category: string;
+  creator: string;
+  creatorUrl: string | null;
+  section: string;
+  difficultyLevel: string;
+  focusAreaTags: string;
+}
+
 const VALID_CATEGORIES: CanonicalCategory[] = [
   "server-setup",
   "branding",
@@ -66,6 +82,9 @@ const CATEGORY_TO_DB_CATEGORIES: Record<CanonicalCategory, string[]> = {
 };
 
 const PRIORITY_ORDER: SkillPriority[] = ["beginner", "intermediate", "advanced"];
+const OPENAI_TIMEOUT_MS = 7000;
+const OPENAI_QUOTA_COOLDOWN_MS = 30 * 60 * 1000;
+let openAIUnavailableUntil = 0;
 
 function parseFocusTags(raw: string): string[] {
   try {
@@ -74,6 +93,56 @@ function parseFocusTags(raw: string): string[] {
   } catch {
     return [];
   }
+}
+
+function inferDifficultyFromResource(resource: { title: string; description: string }): string {
+  const text = `${resource.title} ${resource.description}`.toLowerCase();
+  if (text.includes("advanced") || text.includes("expert")) return "advanced";
+  if (text.includes("beginner") || text.includes("fundamentals") || text.includes("from scratch")) return "beginner";
+  return "intermediate";
+}
+
+async function loadAssistantResources(): Promise<{ source: "database" | "static"; items: ScorableResource[] }> {
+  try {
+    const dbResources = await prisma.resource.findMany();
+    if (dbResources.length > 0) {
+      return {
+        source: "database",
+        items: dbResources.map((r) => ({
+          id: r.id,
+          title: r.title,
+          description: r.description,
+          type: r.type,
+          url: r.url,
+          category: r.category,
+          creator: r.creator,
+          creatorUrl: r.creatorUrl,
+          section: r.section,
+          difficultyLevel: r.difficultyLevel,
+          focusAreaTags: typeof r.focusAreaTags === "string" ? r.focusAreaTags : JSON.stringify(r.focusAreaTags),
+        })),
+      };
+    }
+  } catch (error) {
+    console.warn("[Resource Assistant] Database unavailable, using static resources", error);
+  }
+
+  return {
+    source: "static",
+    items: staticResources.map((r) => ({
+      id: r.id,
+      title: r.title,
+      description: r.description,
+      type: r.type,
+      url: r.url,
+      category: r.category,
+      creator: r.creator,
+      creatorUrl: r.creatorUrl ?? null,
+      section: r.section,
+      difficultyLevel: inferDifficultyFromResource(r),
+      focusAreaTags: JSON.stringify(getFocusAreasForCategory(r.category)),
+    })),
+  };
 }
 
 function difficultyDistance(user: SkillPriority, resource: string): number {
@@ -147,6 +216,10 @@ function sanitizeClassification(raw: unknown): ClassificationResult | null {
 }
 
 async function classifyWithOpenAI(input: string): Promise<ClassificationResult> {
+  if (Date.now() < openAIUnavailableUntil) {
+    throw new Error("OpenAI temporarily unavailable due to prior quota/rate-limit failure.");
+  }
+
   const apiKey = requireEnv("OPENAI_API_KEY");
   const prompt = `You are helping classify a project request for an ERLC resource platform.
 
@@ -174,12 +247,15 @@ Do not include resources.
 Only return JSON.`;
 
   try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), OPENAI_TIMEOUT_MS);
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`,
       },
+      signal: controller.signal,
       body: JSON.stringify({
         model: "gpt-4.1-mini",
         temperature: 0,
@@ -187,10 +263,19 @@ Only return JSON.`;
         messages: [{ role: "user", content: prompt }],
       }),
     });
+    clearTimeout(timeout);
 
     if (!response.ok) {
       const body = await response.text();
-      throw new Error(`OpenAI request failed (${response.status}): ${body}`);
+      const normalizedBody = body.toLowerCase();
+      if (response.status === 429 && normalizedBody.includes("insufficient_quota")) {
+        openAIUnavailableUntil = Date.now() + OPENAI_QUOTA_COOLDOWN_MS;
+        throw new Error("OpenAI quota exceeded (insufficient_quota).");
+      }
+      if (response.status === 429) {
+        throw new Error("OpenAI rate limit reached.");
+      }
+      throw new Error(`OpenAI request failed (${response.status}).`);
     }
 
     const data = (await response.json()) as {
@@ -207,9 +292,11 @@ Only return JSON.`;
       throw new Error("OpenAI returned invalid classification JSON");
     }
     return normalized;
-  } catch (error) {
-    console.error("[Resource Assistant] OpenAI classification failed", error);
-    throw error;
+  } catch (error: unknown) {
+    if (error instanceof Error && error.name === "AbortError") {
+      throw new Error(`OpenAI timed out after ${OPENAI_TIMEOUT_MS}ms.`);
+    }
+    throw error instanceof Error ? error : new Error("Unknown OpenAI error");
   }
 }
 
@@ -228,10 +315,12 @@ export async function POST(request: Request) {
     try {
       classification = await classifyWithOpenAI(query);
     } catch (error) {
-      console.warn("[Resource Assistant] Falling back to keyword classification", error);
+      const msg = error instanceof Error ? error.message : "Unknown classification error";
+      console.warn(`[Resource Assistant] Falling back to keyword classification: ${msg}`);
       classification = keywordFallback(query);
     }
-    const resources = await prisma.resource.findMany();
+    const { source, items: resources } = await loadAssistantResources();
+    console.log(`[Resource Assistant] Using ${source} resources (${resources.length})`);
 
     const matchedFocusAreas = new Set<string>();
     const matchedDbCategories = new Set<string>();
@@ -278,7 +367,7 @@ export async function POST(request: Request) {
     const optional = top.slice(14, 24);
 
     const toAssistantResource = (
-      entries: Array<{ resource: (typeof resources)[number]; score: number }>,
+      entries: Array<{ resource: ScorableResource; score: number }>,
       priority: "required" | "recommended" | "optional"
     ): AssistantResource[] =>
       entries.map(({ resource, score }) => ({

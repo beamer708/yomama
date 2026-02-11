@@ -12,10 +12,12 @@ import { resources } from "@/lib/resources";
 
 const youtubeResources = resources.filter((resource) => resource.section === "youtube");
 const websiteResources = resources.filter((resource) => resource.section === "website");
+const newResources = resources.filter((resource) => resource.isNew);
 
 export default function ResourcesPage() {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<Set<FocusArea>>(new Set());
+  const [browseTab, setBrowseTab] = useState<"all" | "new">("all");
   const [result, setResult] = useState<{
     grouped: AssistantGrouped;
     reasons: Record<string, string>;
@@ -213,41 +215,90 @@ export default function ResourcesPage() {
             <p className="mt-2 text-sm text-foreground/70">
               Videos are shown with previews and organized separately from website tools.
             </p>
+            <div className="mt-4 inline-flex rounded-xl border border-border bg-card/40 p-1">
+              <button
+                type="button"
+                onClick={() => setBrowseTab("all")}
+                className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
+                  browseTab === "all"
+                    ? "bg-primary text-white"
+                    : "text-foreground/80 hover:bg-white/5 hover:text-foreground"
+                }`}
+              >
+                All resources
+              </button>
+              <button
+                type="button"
+                onClick={() => setBrowseTab("new")}
+                className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
+                  browseTab === "new"
+                    ? "bg-primary text-white"
+                    : "text-foreground/80 hover:bg-white/5 hover:text-foreground"
+                }`}
+              >
+                NEW
+              </button>
+            </div>
           </div>
 
-          <section aria-labelledby="youtube-resources-heading" className="mb-12">
-            <div className="mb-5 flex items-center gap-2">
-              <Icon name="youtube" className="text-xl text-primary" />
-              <h3 id="youtube-resources-heading" className="text-xl font-semibold text-foreground">
-                YouTube videos
-              </h3>
-              <span className="rounded-md bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
-                {youtubeResources.length}
-              </span>
-            </div>
-            <div className="grid gap-5 sm:grid-cols-2">
-              {youtubeResources.map((resource) => (
-                <YouTubeResourceCard key={resource.id} resource={resource} />
-              ))}
-            </div>
-          </section>
+          {browseTab === "all" ? (
+            <>
+              <section aria-labelledby="youtube-resources-heading" className="mb-12">
+                <div className="mb-5 flex items-center gap-2">
+                  <Icon name="youtube" className="text-xl text-primary" />
+                  <h3 id="youtube-resources-heading" className="text-xl font-semibold text-foreground">
+                    YouTube videos
+                  </h3>
+                  <span className="rounded-md bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
+                    {youtubeResources.length}
+                  </span>
+                </div>
+                <div className="grid gap-5 sm:grid-cols-2">
+                  {youtubeResources.map((resource) => (
+                    <YouTubeResourceCard key={resource.id} resource={resource} />
+                  ))}
+                </div>
+              </section>
 
-          <section aria-labelledby="website-resources-heading">
-            <div className="mb-5 flex items-center gap-2">
-              <Icon name="globe" className="text-xl text-primary" />
-              <h3 id="website-resources-heading" className="text-xl font-semibold text-foreground">
-                Website resources
-              </h3>
-              <span className="rounded-md bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
-                {websiteResources.length}
-              </span>
-            </div>
-            <div className="grid gap-5 sm:grid-cols-2">
-              {websiteResources.map((resource) => (
-                <WebsiteResourceCard key={resource.id} resource={resource} />
-              ))}
-            </div>
-          </section>
+              <section aria-labelledby="website-resources-heading">
+                <div className="mb-5 flex items-center gap-2">
+                  <Icon name="globe" className="text-xl text-primary" />
+                  <h3 id="website-resources-heading" className="text-xl font-semibold text-foreground">
+                    Website resources
+                  </h3>
+                  <span className="rounded-md bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
+                    {websiteResources.length}
+                  </span>
+                </div>
+                <div className="grid gap-5 sm:grid-cols-2">
+                  {websiteResources.map((resource) => (
+                    <WebsiteResourceCard key={resource.id} resource={resource} />
+                  ))}
+                </div>
+              </section>
+            </>
+          ) : (
+            <section aria-labelledby="new-resources-heading">
+              <div className="mb-5 flex items-center gap-2">
+                <Icon name="sparkles" className="text-xl text-primary" />
+                <h3 id="new-resources-heading" className="text-xl font-semibold text-foreground">
+                  NEW resources
+                </h3>
+                <span className="rounded-md bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
+                  {newResources.length}
+                </span>
+              </div>
+              <div className="grid gap-5 sm:grid-cols-2">
+                {newResources.map((resource) =>
+                  resource.section === "youtube" ? (
+                    <YouTubeResourceCard key={resource.id} resource={resource} />
+                  ) : (
+                    <WebsiteResourceCard key={resource.id} resource={resource} />
+                  )
+                )}
+              </div>
+            </section>
+          )}
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Icon from "@/components/Icon";
 import type { ScoredResource } from "@/lib/resource-list-engine";
+import { getYouTubeThumbnail } from "@/lib/resources";
 
 export interface AssistantGrouped {
   recommended: ScoredResource[];
@@ -45,6 +46,9 @@ function ResourceCard({
   reason: string;
   onRemove: () => void;
 }) {
+  const isYouTube = resource.section === "youtube" || resource.type.toLowerCase() === "video";
+  const thumbnailUrl = isYouTube ? getYouTubeThumbnail(resource.url) : "";
+
   return (
     <div className="group rounded-xl border border-border bg-card/50 p-4 transition-all hover:border-primary/30 hover:bg-card">
       <div className="flex flex-wrap items-start justify-between gap-2">
@@ -58,6 +62,16 @@ function ResourceCard({
             {resource.title}
             <Icon name="up-right-from-square" className="text-xs shrink-0" />
           </a>
+          {thumbnailUrl && (
+            <div className="mt-2 overflow-hidden rounded-lg border border-border/60 bg-black/20">
+              <img
+                src={thumbnailUrl}
+                alt={`${resource.title} preview`}
+                className="h-auto w-full max-w-sm object-cover"
+                loading="lazy"
+              />
+            </div>
+          )}
           {resource.isNew && (
             <span className="mt-2 inline-block rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-primary text-white">
               New
