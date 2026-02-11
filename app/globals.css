@@ -135,8 +135,11 @@ body {
   }
 
   .btn-secondary {
-    @apply inline-flex items-center gap-2 rounded-xl border border-border bg-card px-5 py-2.5 text-sm font-medium transition-all duration-200 hover:bg-card-hover hover:border-primary/30 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background;
+    @apply inline-flex items-center gap-2 rounded-xl border border-border bg-card px-5 py-2.5 text-sm font-medium transition-all duration-200 hover:bg-card-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background;
     color: var(--foreground);
+  }
+  .btn-secondary:hover {
+    border-color: color-mix(in srgb, var(--primary) 30%, transparent);
   }
 
   .section-heading {

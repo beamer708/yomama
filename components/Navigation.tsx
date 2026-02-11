@@ -8,13 +8,10 @@ import { NAV } from "@/lib/site-structure";
 
 export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [resourcesOpen, setResourcesOpen] = useState(false);
 
   const mainLinks = [
-    { ...NAV.listCreator },
     { ...NAV.support },
     { ...NAV.status },
-    { ...NAV.partners },
     { ...NAV.about },
   ];
 
@@ -39,47 +36,12 @@ export default function Navigation() {
           </Link>
 
           <div className="hidden lg:flex lg:items-center lg:gap-1">
-            <div
-              className="relative"
-              onMouseEnter={() => setResourcesOpen(true)}
-              onMouseLeave={() => setResourcesOpen(false)}
+            <Link
+              href={NAV.resources.href}
+              className="btn-ghost rounded-lg py-2"
             >
-              <Link
-                href={NAV.resources.href}
-                className="btn-ghost rounded-lg py-2"
-              >
-                {NAV.resources.label}
-                <Icon
-                  name="arrow-right"
-                  className={`text-base transition-transform ${resourcesOpen ? "rotate-90" : ""}`}
-                />
-              </Link>
-              {resourcesOpen && (
-                <div className="absolute left-0 top-full pt-1 animate-in-fade">
-                  <div className="min-w-[260px] rounded-xl border border-border bg-card/95 shadow-xl backdrop-blur-xl py-2">
-                    {NAV.resources.groups.map((g) => (
-                      <Link
-                        key={g.href}
-                        href={g.href}
-                        className="block px-4 py-3 text-sm text-foreground/90 hover:bg-white/5 hover:text-foreground transition-colors"
-                      >
-                        <span className="font-medium">{g.label}</span>
-                        <span className="mt-0.5 block text-xs text-foreground/60">
-                          {g.description}
-                        </span>
-                      </Link>
-                    ))}
-                    <Link
-                      href={NAV.resources.href}
-                      className="mx-2 mt-1 flex items-center justify-center gap-2 rounded-lg bg-primary/10 py-2.5 text-sm font-medium text-primary hover:bg-primary/20"
-                    >
-                      View all
-                      <Icon name="arrow-right" className="text-sm" />
-                    </Link>
-                  </div>
-                </div>
-              )}
-            </div>
+              {NAV.resources.label}
+            </Link>
             {mainLinks.map((link) => (
               <Link
                 key={link.href}
@@ -116,28 +78,13 @@ export default function Navigation() {
       {mobileOpen && (
         <div className="lg:hidden border-t border-border/50 bg-background/98 backdrop-blur-xl animate-in-fade">
           <div className="page-container space-y-1 py-4">
-            <div className="rounded-lg border border-border/50 bg-card/50 p-2">
-              <p className="px-3 py-1.5 text-xs font-semibold text-foreground/60 uppercase tracking-wider">
-                Resources
-              </p>
-              {NAV.resources.groups.map((g) => (
-                <Link
-                  key={g.href}
-                  href={g.href}
-                  className="block rounded-lg px-3 py-2.5 text-sm font-medium text-foreground hover:bg-white/5"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {g.label}
-                </Link>
-              ))}
-              <Link
-                href={NAV.resources.href}
-                className="mt-1 block rounded-lg px-3 py-2.5 text-sm font-medium text-primary"
-                onClick={() => setMobileOpen(false)}
-              >
-                View all resources
-              </Link>
-            </div>
+            <Link
+              href={NAV.resources.href}
+              className="block rounded-lg px-4 py-3 text-base font-medium text-foreground hover:bg-white/5"
+              onClick={() => setMobileOpen(false)}
+            >
+              {NAV.resources.label}
+            </Link>
             {mainLinks.map((link) => (
               <Link
                 key={link.href}

@@ -5,33 +5,11 @@
 
 export const SITE_NAME = "Unity Vault";
 
-/** Top-level nav: Resources, Resource List Creator, Support, Updates & Status, Partners, About */
+/** Top-level nav: Resources, Support, Status, About. Resources = single page (assistant). */
 export const NAV = {
-  resources: {
-    label: "Resources",
-    href: "/resources",
-    groups: [
-      {
-        label: "Server Resources",
-        href: "/resources?group=server",
-        description: "Discord, community, automation, roleplay structure",
-      },
-      {
-        label: "Graphic Design and Branding",
-        href: "/resources?group=design",
-        description: "Visual identity, logos, assets",
-      },
-      {
-        label: "Tools and Utilities",
-        href: "/resources?group=tools",
-        description: "Fonts, color tools, Discord utilities",
-      },
-    ] as const,
-  },
-  listCreator: { label: "List Creator", href: "/resource-list-creator" },
+  resources: { label: "Resources", href: "/resources" },
   support: { label: "Support", href: "/support" },
-  status: { label: "Updates & Status", href: "/status" },
-  partners: { label: "Partners", href: "/partners" },
+  status: { label: "Status", href: "/status" },
   about: { label: "About", href: "/about" },
 } as const;
 

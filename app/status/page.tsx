@@ -7,9 +7,9 @@ export default function StatusPage() {
     <div className="py-12 sm:py-16">
       <div className="page-container max-w-3xl">
         <div className="mb-12">
-          <h1 className="section-heading">Updates &amp; Status</h1>
+          <h1 className="section-heading">Status</h1>
           <p className="section-subheading mt-3">
-            Service status, maintenance windows, and product updates.
+            Service status and maintenance.
           </p>
         </div>
 

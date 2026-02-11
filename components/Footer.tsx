@@ -1,12 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import Icon from "@/components/Icon";
+import ERLCLogo from "@/components/ERLCLogo";
 import { NAV, SUPPORT_LINKS, STATUS_URL } from "@/lib/site-structure";
-
-const footerResourceGroups = NAV.resources.groups.map((g) => ({
-  label: g.label,
-  href: g.href,
-}));
 
 export default function Footer() {
   return (
@@ -32,8 +28,8 @@ export default function Footer() {
                 Unity Vault
               </span>
             </Link>
-            <p className="text-sm text-foreground/70 max-w-xs mb-1">
-              The definitive ERLC resource platform. Curated knowledge for building successful communities.
+            <p className="text-sm text-foreground/70 max-w-xs mb-1 flex items-center gap-1.5 flex-wrap">
+              The definitive <ERLCLogo size={18} inline alt="ERLC" /> resource platform. Curated knowledge for building successful communities.
             </p>
             <p className="text-xs text-foreground/50">
               We curate and organize. All credit belongs to original creators.
@@ -45,22 +41,12 @@ export default function Footer() {
               Resources
             </h4>
             <ul className="space-y-2.5">
-              {footerResourceGroups.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-sm text-foreground/70 hover:text-primary transition-colors"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
               <li>
                 <Link
-                  href={NAV.listCreator.href}
+                  href={NAV.resources.href}
                   className="text-sm text-foreground/70 hover:text-primary transition-colors"
                 >
-                  List Creator
+                  {NAV.resources.label}
                 </Link>
               </li>
             </ul>
@@ -116,14 +102,6 @@ export default function Footer() {
                   className="text-sm text-foreground/70 hover:text-primary transition-colors"
                 >
                   About
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={NAV.partners.href}
-                  className="text-sm text-foreground/70 hover:text-primary transition-colors"
-                >
-                  Partners
                 </Link>
               </li>
             </ul>

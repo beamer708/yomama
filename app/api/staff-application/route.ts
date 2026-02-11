@@ -247,9 +247,22 @@ async function sendToDiscord(data: StaffApplicationData): Promise<{
   }
 }
 
+/** Set to false to re-enable staff applications. */
+const STAFF_APPLICATION_MAINTENANCE = true;
+
 export async function POST(request: NextRequest) {
   const startTime = Date.now();
-  
+
+  if (STAFF_APPLICATION_MAINTENANCE) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: "The staff application is currently unavailable for maintenance. Please check back later.",
+      },
+      { status: 503 }
+    );
+  }
+
   try {
     // Get client IP for rate limiting
     const clientIP = getClientIP(request);
