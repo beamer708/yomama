@@ -16,7 +16,7 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-border/50 bg-background/90 backdrop-blur-xl">
+    <nav className="sticky top-0 z-50 bg-background/35 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/25">
       <div className="page-container">
         <div className="flex h-16 items-center justify-between">
           <Link
@@ -76,7 +76,7 @@ export default function Navigation() {
       </div>
 
       {mobileOpen && (
-        <div className="lg:hidden border-t border-border/50 bg-background/98 backdrop-blur-xl animate-in-fade">
+        <div className="lg:hidden bg-background/55 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/45 animate-in-fade">
           <div className="page-container space-y-1 py-4">
             <Link
               href={NAV.resources.href}
