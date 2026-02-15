@@ -50,6 +50,7 @@ export const SUPPORT_LINKS: FooterLink[] = [
   { label: "Discord", href: "https://discord.gg/3qpVpCBwj", external: true },
   { label: "Community Guides", href: "/community-guides" },
   { label: "Staff Application", href: "/staff-application" },
+  { label: "Suggest a Resource", href: "/resource-suggestion" },
   { label: "Legal", href: "/legal" },
 ];
 

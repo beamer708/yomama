@@ -74,6 +74,25 @@ export default function SupportPage() {
           </Link>
 
           <Link
+            href="/resource-suggestion"
+            className="group flex items-start gap-4 rounded-2xl border border-border bg-card/50 p-6 transition-all hover:border-primary/30 hover:bg-card-hover block"
+          >
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
+              <Icon name="sparkles" className="text-2xl" />
+            </div>
+            <div>
+              <h2 className="font-semibold text-foreground">Suggest a Resource</h2>
+              <p className="mt-1 text-sm text-foreground/70">
+                Recommend a resource to add to Unity Vault. Suggestions go to Discord for discussion and approval.
+              </p>
+              <span className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-primary">
+                Submit suggestion
+                <Icon name="arrow-right" className="text-xs" />
+              </span>
+            </div>
+          </Link>
+
+          <Link
             href="/legal"
             className="group flex items-start gap-4 rounded-2xl border border-border bg-card/50 p-6 transition-all hover:border-primary/30 hover:bg-card-hover block"
           >

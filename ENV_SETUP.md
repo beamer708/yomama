@@ -8,6 +8,7 @@ The staff application form sends submissions to Discord via a webhook. The webho
 2. Add these variables (no quotes):
    ```env
    DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/YOUR_ID/YOUR_TOKEN
+   RESOURCE_SUGGESTION_WEBHOOK_URL=https://discord.com/api/webhooks/YOUR_ID/YOUR_TOKEN
    STAFF_APPLICATION_OPEN=false
    NEXT_PUBLIC_STAFF_APPLICATION_OPEN=false
    OPENAI_API_KEY=your_openai_api_key
@@ -29,6 +30,7 @@ The staff application form sends submissions to Discord via a webhook. The webho
 On the host, set environment variables in the dashboard (e.g. Vercel → Project → Settings → Environment Variables). Do **not** rely on `.env.local` in production; it is not deployed.
 
 - `DISCORD_WEBHOOK_URL`: required for delivering applications to Discord
+- `RESOURCE_SUGGESTION_WEBHOOK_URL`: required for delivering resource suggestions to Discord
 - `STAFF_APPLICATION_OPEN`: server-side gate for API submissions (`true`/`false`)
 - `NEXT_PUBLIC_STAFF_APPLICATION_OPEN`: client-side gate for page/header visibility (`true`/`false`)
 - `OPENAI_API_KEY`: enables AI intent classification in the Resource Assistant
