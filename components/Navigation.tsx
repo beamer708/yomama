@@ -8,6 +8,7 @@ import { NAV } from "@/lib/site-structure";
 
 export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [resourcesOpen, setResourcesOpen] = useState(false);
   const isStaffApplicationOpen =
     process.env.NEXT_PUBLIC_STAFF_APPLICATION_OPEN === "true" ||
     process.env.NEXT_PUBLIC_STAFF_APPLICATION_OPEN === "1";
@@ -40,12 +41,44 @@ export default function Navigation() {
           </Link>
 
           <div className="hidden lg:flex lg:items-center lg:gap-1">
-            <Link
-              href={NAV.resources.href}
-              className="btn-ghost rounded-lg py-2"
-            >
-              {NAV.resources.label}
-            </Link>
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setResourcesOpen((open) => !open)}
+                className="btn-ghost rounded-lg py-2"
+                aria-expanded={resourcesOpen}
+                aria-haspopup="menu"
+              >
+                {NAV.resources.label}
+                <Icon
+                  name="arrow-right"
+                  className={`text-xs transition-transform ${resourcesOpen ? "rotate-90" : ""}`}
+                />
+              </button>
+              {resourcesOpen && (
+                <div
+                  className="absolute left-0 top-full mt-2 w-56 rounded-xl border border-border bg-card p-2 shadow-xl"
+                  role="menu"
+                >
+                  <Link
+                    href="/resources"
+                    className="block rounded-lg px-3 py-2 text-sm text-foreground hover:bg-card-hover"
+                    role="menuitem"
+                    onClick={() => setResourcesOpen(false)}
+                  >
+                    Resource Vault
+                  </Link>
+                  <Link
+                    href="/community-guides"
+                    className="block rounded-lg px-3 py-2 text-sm text-foreground hover:bg-card-hover"
+                    role="menuitem"
+                    onClick={() => setResourcesOpen(false)}
+                  >
+                    Helpful Guides
+                  </Link>
+                </div>
+              )}
+            </div>
             {mainLinks.map((link) => (
               <Link
                 key={link.href}
@@ -83,11 +116,18 @@ export default function Navigation() {
         <div className="lg:hidden bg-background/55 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/45 animate-in-fade">
           <div className="page-container space-y-1 py-4">
             <Link
-              href={NAV.resources.href}
+              href="/resources"
               className="block rounded-lg px-4 py-3 text-base font-medium text-foreground hover:bg-white/5"
               onClick={() => setMobileOpen(false)}
             >
-              {NAV.resources.label}
+              Resource Vault
+            </Link>
+            <Link
+              href="/community-guides"
+              className="block rounded-lg px-4 py-3 text-base font-medium text-foreground hover:bg-white/5"
+              onClick={() => setMobileOpen(false)}
+            >
+              Helpful Guides
             </Link>
             {mainLinks.map((link) => (
               <Link

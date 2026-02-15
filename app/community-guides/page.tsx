@@ -4,31 +4,62 @@ import Icon from "@/components/Icon";
 export default function CommunityGuidesPage() {
   return (
     <div className="py-12 sm:py-16">
-      <div className="page-container max-w-2xl">
-        <div className="mb-12 text-center">
-          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-accent/10">
-            <Icon name="file" className="text-3xl text-primary" />
+      <div className="page-container max-w-4xl">
+        <div className="mb-10 rounded-3xl border border-border bg-gradient-to-br from-primary/15 via-primary/5 to-transparent p-6 sm:p-8">
+          <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/20 text-primary">
+            <Icon name="books" className="text-2xl" />
           </div>
-          <h1 className="section-heading">Community guides</h1>
-          <p className="section-subheading mt-3 mx-auto">
-            High-level guidance for ERLC communities. Frameworks and perspectives to help you think through common challenges and opportunities.
+          <h1 className="section-heading">Helpful Guides</h1>
+          <p className="mt-3 text-base text-foreground/80 sm:text-lg">
+            Pick a guide topic and follow step-by-step instructions. More guides will be added over time.
           </p>
         </div>
 
-        <div className="gradient-border rounded-2xl p-10 sm:p-12 text-center">
-          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-card text-foreground/40">
-            <Icon name="clock" className="text-4xl" />
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Link
+            href="/community-guides/emojis"
+            className="group rounded-2xl border border-border bg-card/50 p-6 transition-all hover:border-primary/40 hover:bg-card-hover"
+          >
+            <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary/15 text-primary">
+              <Icon name="sparkles" className="text-xl" />
+            </div>
+            <h2 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+              Create Discord Emojis
+            </h2>
+            <p className="mt-2 text-sm text-foreground/70">
+              Learn how to use icon sites, download SVG, recolor in an editor, size to 32x32, and upload to Discord.
+            </p>
+            <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary">
+              Open guide
+              <Icon name="arrow-right" className="text-xs" />
+            </span>
+          </Link>
+
+          <div className="rounded-2xl border border-border bg-card/40 p-6">
+            <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-foreground/70">
+              <Icon name="clock" className="text-xl" />
+            </div>
+            <h2 className="text-lg font-semibold text-foreground">More guides coming soon</h2>
+            <p className="mt-2 text-sm text-foreground/70">
+              We’ll continue adding practical guides for branding, visual systems, and community operations.
+            </p>
           </div>
-          <h2 className="text-xl font-semibold text-foreground mb-3">
-            Guides coming soon
-          </h2>
-          <p className="text-foreground/70 mb-8 max-w-md mx-auto">
-            Community guides are in the works. In the meantime, explore the Resources Vault for curated content to help you build your community.
-          </p>
+        </div>
+
+        <div className="mt-8 flex flex-wrap gap-3">
           <Link href="/resources" className="btn-primary">
             <Icon name="book" className="text-base" />
-            Explore resources vault
+            Open Resource Vault
           </Link>
+          <a
+            href="https://discord.gg/3qpVpCBwj"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-ghost"
+          >
+            <Icon name="discord" className="text-base" />
+            Join Discord
+          </a>
         </div>
       </div>
     </div>
