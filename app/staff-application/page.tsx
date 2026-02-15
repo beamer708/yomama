@@ -187,7 +187,10 @@ export default function StaffApplicationPage() {
             <div className="mb-2 inline-flex h-9 w-9 items-center justify-center rounded-xl bg-primary/15 text-primary">
               <Icon name="wrench" className="text-base" />
             </div>
-            <h3 className="text-sm font-semibold text-foreground">Beta Tester</h3>
+            <h3 className="inline-flex items-center gap-2 text-sm font-semibold text-foreground">
+              <Icon name="wrench" className="text-sm text-primary" />
+              Beta Tester
+            </h3>
             <p className="mt-1 text-xs text-foreground/70">
               Test upcoming features, report bugs clearly, and help improve user experience before release.
             </p>
