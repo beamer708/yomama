@@ -8,6 +8,24 @@ const staffApplicationOpen =
   process.env.NEXT_PUBLIC_STAFF_APPLICATION_OPEN === "true" ||
   process.env.NEXT_PUBLIC_STAFF_APPLICATION_OPEN === "1";
 
+const IMPACT_POINTS = [
+  {
+    icon: "arrow-trend-up" as const,
+    title: "Grow partnerships",
+    detail: "Find quality servers for regular and paid partnership opportunities.",
+  },
+  {
+    icon: "message-sms" as const,
+    title: "Support the community",
+    detail: "Answer support tickets and help members quickly and clearly.",
+  },
+  {
+    icon: "settings" as const,
+    title: "Keep standards high",
+    detail: "Help moderate the server and enforce TOS consistently.",
+  },
+];
+
 export default function StaffApplicationPage() {
   const [discordUsername, setDiscordUsername] = useState("");
   const [discordId, setDiscordId] = useState("");
@@ -119,24 +137,69 @@ export default function StaffApplicationPage() {
   return (
     <div className="py-12 sm:py-16">
       <div className="page-container max-w-3xl">
-        <div className="mb-10">
+        <div className="mb-10 rounded-3xl border border-border bg-gradient-to-br from-primary/15 via-primary/5 to-transparent p-6 sm:p-8">
+          <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/20 text-primary">
+            <Icon name="users-alt" className="text-2xl" />
+          </div>
           <h1 className="section-heading">Community Team &amp; Beta Tester Application</h1>
-          <p className="section-subheading mt-3">
-            Apply for Community Team, Beta Tester, or both. Use the form below.
+          <p className="mt-3 text-base text-foreground/80 sm:text-lg">
+            Your work helps keep Unity Vault organized, responsive, and growing. Apply for one role or both in under 2 minutes.
           </p>
+          <div className="mt-5 flex flex-wrap gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/5 px-3 py-1 text-xs text-foreground/80">
+              <Icon name="clock" className="text-xs" />
+              Quick process
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/5 px-3 py-1 text-xs text-foreground/80">
+              <Icon name="users" className="text-xs" />
+              Community impact
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/5 px-3 py-1 text-xs text-foreground/80">
+              <Icon name="check" className="text-xs" />
+              Clear expectations
+            </span>
+          </div>
         </div>
 
-        <div className="mb-8 rounded-2xl border border-border bg-card/50 p-6 sm:p-8">
-          <h2 className="text-lg font-semibold text-foreground">What the Community Team does</h2>
-          <ul className="mt-3 space-y-2 text-sm text-foreground/80">
-            <li>- Find strong servers for regular and paid partnership opportunities.</li>
-            <li>- Help source giveaway/ad opportunities funded by b3amer.</li>
-            <li>- Answer support tickets in the Discord server.</li>
-            <li>- Help manage the Discord and enforce TOS.</li>
-          </ul>
+        <div className="mb-8 grid gap-3 sm:grid-cols-3">
+          {IMPACT_POINTS.map((item) => (
+            <div key={item.title} className="rounded-2xl border border-border bg-card/50 p-4">
+              <div className="mb-2 inline-flex h-9 w-9 items-center justify-center rounded-xl bg-primary/15 text-primary">
+                <Icon name={item.icon} className="text-base" />
+              </div>
+              <h2 className="text-sm font-semibold text-foreground">{item.title}</h2>
+              <p className="mt-1 text-xs text-foreground/70">{item.detail}</p>
+            </div>
+          ))}
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6 rounded-2xl border border-border bg-card/50 p-6 sm:p-8">
+        <div className="mb-8 grid gap-3 sm:grid-cols-2">
+          <div className="rounded-2xl border border-border bg-card/40 p-4">
+            <div className="mb-2 inline-flex h-9 w-9 items-center justify-center rounded-xl bg-primary/15 text-primary">
+              <Icon name="users" className="text-base" />
+            </div>
+            <h3 className="text-sm font-semibold text-foreground">Community Team</h3>
+            <p className="mt-1 text-xs text-foreground/70">
+              Partnerships, giveaways/ads sourcing, support tickets, moderation, and TOS enforcement.
+            </p>
+          </div>
+          <div className="rounded-2xl border border-border bg-card/40 p-4">
+            <div className="mb-2 inline-flex h-9 w-9 items-center justify-center rounded-xl bg-primary/15 text-primary">
+              <Icon name="wrench" className="text-base" />
+            </div>
+            <h3 className="text-sm font-semibold text-foreground">Beta Tester</h3>
+            <p className="mt-1 text-xs text-foreground/70">
+              Test upcoming features, report bugs clearly, and help improve user experience before release.
+            </p>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6 rounded-3xl border border-border bg-card/50 p-6 sm:p-8">
+          <div className="rounded-2xl border border-border/70 bg-card/40 p-4">
+            <p className="text-xs text-foreground/70">
+              <span className="font-semibold text-foreground">Simple process:</span> fill Discord details, select roles, share experience, submit.
+            </p>
+          </div>
           <div>
             <label htmlFor="discord-username" className="mb-2 block text-sm font-medium text-foreground">
               Discord Username
@@ -171,23 +234,29 @@ export default function StaffApplicationPage() {
           <fieldset>
             <legend className="mb-2 block text-sm font-medium text-foreground">Apply for</legend>
             <div className="space-y-2">
-              <label className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground/90">
+              <label className="flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground/90">
+                <span className="inline-flex items-center gap-2">
+                  <Icon name="users" className="text-sm text-primary" />
+                  Community Team
+                </span>
                 <input
                   type="checkbox"
                   checked={communityTeam}
                   onChange={(e) => setCommunityTeam(e.target.checked)}
                   className="h-4 w-4 rounded border-border bg-card text-primary focus:ring-primary/30"
                 />
-                Community Team
               </label>
-              <label className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground/90">
+              <label className="flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground/90">
+                <span className="inline-flex items-center gap-2">
+                  <Icon name="wrench" className="text-sm text-primary" />
+                  Beta Tester
+                </span>
                 <input
                   type="checkbox"
                   checked={betaTester}
                   onChange={(e) => setBetaTester(e.target.checked)}
                   className="h-4 w-4 rounded border-border bg-card text-primary focus:ring-primary/30"
                 />
-                Beta Tester
               </label>
             </div>
             <p className="mt-2 text-xs text-foreground/60">
