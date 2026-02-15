@@ -185,10 +185,10 @@ export default function StaffApplicationPage() {
           </div>
           <div className="rounded-2xl border border-border bg-card/40 p-4">
             <div className="mb-2 inline-flex h-9 w-9 items-center justify-center rounded-xl bg-primary/15 text-primary">
-              <Icon name="wrench" className="text-base" />
+              <Icon name="computer" className="text-base" />
             </div>
             <h3 className="inline-flex items-center gap-2 text-sm font-semibold text-foreground">
-              <Icon name="wrench" className="text-sm text-primary" />
+              <Icon name="computer" className="text-sm text-primary" />
               Beta Tester
             </h3>
             <p className="mt-1 text-xs text-foreground/70">
@@ -251,7 +251,7 @@ export default function StaffApplicationPage() {
               </label>
               <label className="flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground/90">
                 <span className="inline-flex items-center gap-2">
-                  <Icon name="wrench" className="text-sm text-primary" />
+                  <Icon name="computer" className="text-sm text-primary" />
                   Beta Tester
                 </span>
                 <input

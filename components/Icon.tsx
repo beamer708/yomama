@@ -25,6 +25,7 @@ export type IconName =
   | "chatbot"
   | "grid"
   | "apps"
+  | "computer"
   | "globe"
   | "wrench"
   | "up-right-from-square"
@@ -90,6 +91,7 @@ const iconClassMap: Record<IconName, string> = {
   chatbot: "fi-br-chatbot",
   grid: "fi-br-grid",
   apps: "fi-br-apps",
+  computer: "fi-br-computer",
   globe: "fi-br-globe",
   wrench: "fi-br-wrench",
   "up-right-from-square": "fi-br-up-right-from-square",
