@@ -68,7 +68,6 @@ export const resources: Resource[] = [
     creator: "YouTube Creator",
     section: "youtube",
     channelName: "YouTube Creator",
-    isNew: true,
   },
   {
     id: "16",
@@ -124,7 +123,6 @@ export const resources: Resource[] = [
     creator: "YouTube Creator",
     section: "youtube",
     channelName: "YouTube Creator",
-    isNew: true,
   },
   {
     id: "22",
@@ -136,7 +134,6 @@ export const resources: Resource[] = [
     creator: "YouTube Creator",
     section: "youtube",
     channelName: "YouTube Creator",
-    isNew: true,
   },
   {
     id: "23",
@@ -148,7 +145,6 @@ export const resources: Resource[] = [
     creator: "YouTube Creator",
     section: "youtube",
     channelName: "YouTube Creator",
-    isNew: true,
   },
   {
     id: "24",
@@ -160,7 +156,6 @@ export const resources: Resource[] = [
     creator: "YouTube Creator",
     section: "youtube",
     channelName: "YouTube Creator",
-    isNew: true,
   },
   {
     id: "25",
@@ -172,7 +167,6 @@ export const resources: Resource[] = [
     creator: "YouTube Creator",
     section: "youtube",
     channelName: "YouTube Creator",
-    isNew: true,
   },
   {
     id: "26",
@@ -184,7 +178,6 @@ export const resources: Resource[] = [
     creator: "YouTube Creator",
     section: "youtube",
     channelName: "YouTube Creator",
-    isNew: true,
   },
   {
     id: "27",
@@ -196,7 +189,6 @@ export const resources: Resource[] = [
     creator: "YouTube Creator",
     section: "youtube",
     channelName: "YouTube Creator",
-    isNew: true,
   },
   {
     id: "28",
@@ -205,6 +197,29 @@ export const resources: Resource[] = [
     type: "video",
     url: "https://youtu.be/XeElcU9vs7s?si=CiPfUfo1XmtRo33F",
     category: "Graphic Design",
+    creator: "YouTube Creator",
+    section: "youtube",
+    channelName: "YouTube Creator",
+  },
+  {
+    id: "29",
+    title: "AI Tools for Beginners Playlist",
+    description: "Beginner-friendly playlist covering practical AI workflows and tool usage to speed up content creation and project setup.",
+    type: "video",
+    url: "https://youtube.com/playlist?list=PLQXitECZ-yRN0gWhOFozR9qcXpjs4rSaE&si=B_no7WZ1q4ftsS-o",
+    category: "Automation and Systems",
+    creator: "YouTube Creator",
+    section: "youtube",
+    channelName: "YouTube Creator",
+    isNew: true,
+  },
+  {
+    id: "30",
+    title: "AI Workflow Tutorial",
+    description: "Video walkthrough of using AI tools effectively for faster workflows, idea generation, and productivity.",
+    type: "video",
+    url: "https://youtu.be/p6aF5ma7BiM?si=JoLd5Op4smTWJ2iA",
+    category: "Automation and Systems",
     creator: "YouTube Creator",
     section: "youtube",
     channelName: "YouTube Creator",
@@ -320,7 +335,6 @@ export const resources: Resource[] = [
     creator: "Iconify",
     creatorUrl: "https://iconify.design",
     section: "website",
-    isNew: true,
   },
   {
     id: "2",
@@ -332,7 +346,6 @@ export const resources: Resource[] = [
     creator: "Syce Gaming",
     creatorUrl: "https://discord.gg/7KfgS5M4Jn",
     section: "website",
-    isNew: true,
   },
   {
     id: "3",
@@ -354,7 +367,6 @@ export const resources: Resource[] = [
     creator: "Northline Entertainment",
     creatorUrl: "https://discord.gg/3qpVpCBwj",
     section: "website",
-    isNew: true,
   },
   {
     id: "12",
@@ -366,7 +378,6 @@ export const resources: Resource[] = [
     creator: "Melonly",
     creatorUrl: "https://melonly.xyz",
     section: "website",
-    isNew: true,
   },
   {
     id: "13",
@@ -378,7 +389,6 @@ export const resources: Resource[] = [
     creator: "Melonly",
     creatorUrl: "https://melonly.xyz",
     section: "website",
-    isNew: true,
   },
   {
     id: "14",
@@ -389,6 +399,29 @@ export const resources: Resource[] = [
     category: "Discord Utilities",
     creator: "Melonly",
     creatorUrl: "https://melonly.xyz",
+    section: "website",
+  },
+  {
+    id: "chatgpt",
+    title: "ChatGPT",
+    description: "AI assistant for brainstorming, writing, planning, and accelerating creative workflows for server projects and resource planning.",
+    type: "website",
+    url: "https://chatgpt.com/",
+    category: "Discord Utilities",
+    creator: "OpenAI",
+    creatorUrl: "https://chatgpt.com/",
+    section: "website",
+    isNew: true,
+  },
+  {
+    id: "cursor",
+    title: "Cursor",
+    description: "AI-powered code editor for faster building, editing, and automation workflows. Helpful for custom tools and development tasks.",
+    type: "website",
+    url: "https://cursor.com",
+    category: "Discord Utilities",
+    creator: "Cursor",
+    creatorUrl: "https://cursor.com",
     section: "website",
     isNew: true,
   },
