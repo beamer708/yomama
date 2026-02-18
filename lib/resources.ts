@@ -203,7 +203,7 @@ export const resources: Resource[] = [
   },
   {
     id: "29",
-    title: "AI Tools for Beginners Playlist",
+    title: "Adobe Illustrator Tools for Beginners Playlist",
     description: "Beginner-friendly playlist covering practical AI workflows and tool usage to speed up content creation and project setup.",
     type: "video",
     url: "https://youtube.com/playlist?list=PLQXitECZ-yRN0gWhOFozR9qcXpjs4rSaE&si=B_no7WZ1q4ftsS-o",
