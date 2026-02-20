@@ -75,3 +75,14 @@ model ScoringConfig {
   key   String @unique
   value String // JSON: weights, thresholds, category mappings
 }
+
+model AnalyticsEvent {
+  id            String   @id @default(cuid())
+  createdAt     DateTime @default(now())
+  path          String
+  referrerHost  String?
+  country       String?
+  deviceType    String
+  ipHash        String?
+  isBot         Boolean  @default(false)
+}

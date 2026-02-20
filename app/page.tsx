@@ -111,7 +111,7 @@ export default function Home() {
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="section-heading">Find what you need</h2>
             <p className="section-subheading mx-auto">
-              Tell us what you're working on and get tailored resource suggestions. One page, no forms.
+              Tell us what you&apos;re working on and get tailored resource suggestions. One page, no forms.
             </p>
           </div>
           <div className="mt-10 text-center">

@@ -12,6 +12,9 @@ The staff application form sends submissions to Discord via a webhook. The webho
    STAFF_APPLICATION_OPEN=false
    NEXT_PUBLIC_STAFF_APPLICATION_OPEN=false
    OPENAI_API_KEY=your_openai_api_key
+   ADMIN_DASHBOARD_USERNAME=change_me
+   ADMIN_DASHBOARD_PASSWORD=change_me
+   ANALYTICS_SALT=change_me
    ```
 3. **Restart the dev server** after creating or editing `.env.local`:
    - Stop the server (Ctrl+C or Cmd+C).
@@ -34,6 +37,9 @@ On the host, set environment variables in the dashboard (e.g. Vercel → Project
 - `STAFF_APPLICATION_OPEN`: server-side gate for API submissions (`true`/`false`)
 - `NEXT_PUBLIC_STAFF_APPLICATION_OPEN`: client-side gate for page/header visibility (`true`/`false`)
 - `OPENAI_API_KEY`: enables AI intent classification in the Resource Assistant
+- `ADMIN_DASHBOARD_USERNAME`: HTTP Basic username for `/admin/*` and `/api/admin/*`
+- `ADMIN_DASHBOARD_PASSWORD`: HTTP Basic password for `/admin/*` and `/api/admin/*`
+- `ANALYTICS_SALT`: salt used to hash IP addresses for anonymous unique-visitor counts
 
 Formatting note:
 - Do not add leading spaces before variable names in `.env.local`

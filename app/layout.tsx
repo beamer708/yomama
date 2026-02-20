@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 import MainLayout from "@/components/MainLayout";
 import ShutdownNotice from "@/components/ShutdownNotice";
+import AnalyticsTracker from "@/components/AnalyticsTracker";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -28,6 +30,11 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${inter.variable} antialiased`}>
         {isShutdown ? <ShutdownNotice /> : <MainLayout>{children}</MainLayout>}
+        {!isShutdown ? (
+          <Suspense fallback={null}>
+            <AnalyticsTracker />
+          </Suspense>
+        ) : null}
       </body>
     </html>
   );

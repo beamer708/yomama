@@ -112,7 +112,7 @@ export default function ResourcesPage() {
           </div>
           <h1 className="section-heading">Resources</h1>
           <p className="section-subheading mx-auto">
-            Find and get suggestions for ERLC server resources. Type what you're working on or pick from the options below.
+            Find and get suggestions for ERLC server resources. Type what you&apos;re working on or pick from the options below.
           </p>
         </div>
 
