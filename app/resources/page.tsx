@@ -1,106 +1,133 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Icon from "@/components/Icon";
 import ERLCLogo from "@/components/ERLCLogo";
 import YouTubeResourceCard from "@/components/YouTubeResourceCard";
 import WebsiteResourceCard from "@/components/WebsiteResourceCard";
-import { AssistantResults, type AssistantGrouped } from "@/components/resource-assistant/AssistantResults";
-import { RESOURCE_FOCUS_OPTIONS } from "@/lib/resource-focus-options";
-import type { FocusArea } from "@/lib/resource-list-mapping";
+import { getFocusAreasForCategory, type FocusArea } from "@/lib/resource-list-mapping";
 import { resources } from "@/lib/resources";
 
-const youtubeResources = resources.filter((resource) => resource.section === "youtube");
-const websiteResources = resources.filter((resource) => resource.section === "website");
 const newResources = resources.filter((resource) => resource.isNew);
 
+type PresetGoal = {
+  id: string;
+  title: string;
+  subtitle: string;
+  icon: Parameters<typeof Icon>[0]["name"];
+  focusAreas: FocusArea[];
+};
+
+const PRESET_GOALS: PresetGoal[] = [
+  {
+    id: "logo-design",
+    title: "I want to design a logo",
+    subtitle: "Identity, mark, and visual direction",
+    icon: "palette",
+    focusAreas: ["Graphic Design", "Branding"],
+  },
+  {
+    id: "emoji-design",
+    title: "I want to design emojis",
+    subtitle: "Clean iconography for Discord use",
+    icon: "sparkles",
+    focusAreas: ["Graphic Design", "Branding"],
+  },
+  {
+    id: "roleplay-logo",
+    title: "I want to design a roleplay logo",
+    subtitle: "Roleplay-oriented identity assets",
+    icon: "compass",
+    focusAreas: ["Graphic Design", "Branding"],
+  },
+  {
+    id: "icon-logo",
+    title: "I want to design an icon logo",
+    subtitle: "Simple icon-focused brand marks",
+    icon: "apps",
+    focusAreas: ["Graphic Design", "Branding"],
+  },
+  {
+    id: "server-visuals",
+    title: "I want to improve my Discord server visuals",
+    subtitle: "Channels, roles, and layout clarity",
+    icon: "wrench",
+    focusAreas: ["Server Setup", "Branding"],
+  },
+  {
+    id: "server-growth",
+    title: "I want to grow my server",
+    subtitle: "Promotion and growth systems",
+    icon: "arrow-trend-up",
+    focusAreas: ["Marketing & Growth"],
+  },
+  {
+    id: "staff-organization",
+    title: "I want to organize my staff team",
+    subtitle: "Staff structure and workflows",
+    icon: "users",
+    focusAreas: ["Staff & Management", "Documentation / SOPs"],
+  },
+  {
+    id: "better-branding",
+    title: "I want better branding for my server",
+    subtitle: "Consistency and stronger identity",
+    icon: "layers",
+    focusAreas: ["Branding", "Graphic Design"],
+  },
+  {
+    id: "roleplay-structure",
+    title: "I want to improve roleplay structure",
+    subtitle: "Systems and docs for roleplay quality",
+    icon: "document",
+    focusAreas: ["Staff & Management", "Documentation / SOPs"],
+  },
+];
+
 export default function ResourcesPage() {
-  const [query, setQuery] = useState("");
-  const [selected, setSelected] = useState<Set<FocusArea>>(new Set());
+  const [selectedGoal, setSelectedGoal] = useState<string | null>(null);
   const [browseTab, setBrowseTab] = useState<"all" | "new">("all");
-  const [result, setResult] = useState<{
-    grouped: AssistantGrouped;
-    reasons: Record<string, string>;
-  } | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const resultsRef = useRef<HTMLDivElement | null>(null);
 
-  const toggleOption = (id: FocusArea) => {
-    setSelected((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
+  const activePreset = useMemo(
+    () => PRESET_GOALS.find((goal) => goal.id === selectedGoal) ?? null,
+    [selectedGoal]
+  );
 
-  const canSubmit = query.trim().length > 0 || selected.size > 0;
+  const goalFilteredResources = useMemo(() => {
+    if (!activePreset) return resources;
+    const focusSet = new Set<FocusArea>(activePreset.focusAreas);
+    return resources.filter((resource) =>
+      getFocusAreasForCategory(resource.category).some((area) => focusSet.has(area))
+    );
+  }, [activePreset]);
 
-  const submit = async () => {
-    if (!canSubmit) return;
-    const selectedText =
-      selected.size > 0
-        ? `Selected focus areas: ${Array.from(selected).join(", ")}`
-        : "";
-    const assistantInput = [query.trim(), selectedText].filter(Boolean).join("\n");
+  const youtubeResources = useMemo(
+    () => goalFilteredResources.filter((resource) => resource.section === "youtube"),
+    [goalFilteredResources]
+  );
+  const websiteResources = useMemo(
+    () => goalFilteredResources.filter((resource) => resource.section === "website"),
+    [goalFilteredResources]
+  );
+  const goalFilteredNewResources = useMemo(
+    () => newResources.filter((resource) => goalFilteredResources.some((r) => r.id === resource.id)),
+    [goalFilteredResources]
+  );
+  const newYoutubeResources = useMemo(
+    () => goalFilteredNewResources.filter((resource) => resource.section === "youtube"),
+    [goalFilteredNewResources]
+  );
+  const newWebsiteResources = useMemo(
+    () => goalFilteredNewResources.filter((resource) => resource.section === "website"),
+    [goalFilteredNewResources]
+  );
 
-    setError(null);
-    setLoading(true);
-    setResult(null);
-    try {
-      const res = await fetch("/api/resource-assistant", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          input: assistantInput || undefined,
-        }),
-      });
-      const text = await res.text();
-      let data: {
-        error?: string;
-        recommended?: AssistantGrouped["recommended"];
-        helpful?: AssistantGrouped["helpfulTools"];
-        optional?: AssistantGrouped["optional"];
-      };
-      try {
-        data = text ? JSON.parse(text) : {};
-      } catch {
-        setError(res.ok ? "Invalid response. Try again." : "Something went wrong. Try again.");
-        return;
-      }
-      if (!res.ok) {
-        setError(data.error || "Something went wrong");
-        return;
-      }
-      if (!data.recommended || !data.helpful || !data.optional) {
-        setError("No suggestions returned. Try selecting options or entering a description.");
-        return;
-      }
-      setResult({
-        grouped: {
-          recommended: data.recommended,
-          helpfulTools: data.helpful,
-          optional: data.optional,
-        },
-        reasons: {},
-      });
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "We couldn't load suggestions. Try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleRestart = () => {
-    setResult(null);
-    setQuery("");
-    setSelected(new Set());
-    setError(null);
-  };
-
-  const handleRefine = () => {
-    setResult(null);
-    setError(null);
+  const handleGoalSelect = (goalId: string) => {
+    setSelectedGoal((prev) => (prev === goalId ? null : goalId));
+    setTimeout(() => {
+      resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 80);
   };
 
   return (
@@ -112,108 +139,56 @@ export default function ResourcesPage() {
           </div>
           <h1 className="section-heading">Resources</h1>
           <p className="section-subheading mx-auto">
-            Find and get suggestions for ERLC server resources. Type what you&apos;re working on or pick from the options below.
+            A structured vault of ERLC resources organized by practical goals.
           </p>
         </div>
 
-        {!result ? (
-          <div className="space-y-8 animate-in-fade">
-            <div className="gradient-border rounded-2xl p-6 sm:p-8">
-              <label htmlFor="resources-query" className="mb-3 block text-sm font-medium text-foreground">
-                What are you working on?
-              </label>
-              <textarea
-                id="resources-query"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="e.g. Setting up a new ERLC server and need branding help"
-                rows={2}
-                className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground placeholder:text-foreground/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 resize-y"
-                disabled={loading}
-              />
-            </div>
-
-            <div>
-              <p className="mb-3 text-sm font-medium text-foreground">
-                Or select one or more areas
-              </p>
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-                {RESOURCE_FOCUS_OPTIONS.map((option) => {
-                  const isSelected = selected.has(option.id);
-                  return (
-                    <button
-                      key={option.id}
-                      type="button"
-                      onClick={() => toggleOption(option.id)}
-                      disabled={loading}
-                      className={`flex flex-col items-center rounded-xl border p-4 text-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background disabled:opacity-50 ${
-                        isSelected
-                          ? "border-primary bg-primary/15 text-primary shadow-lg shadow-primary/10"
-                          : "border-border bg-card/85 text-foreground hover:border-primary/40 hover:bg-card-hover"
-                      }`}
-                    >
-                      <span
-                        className={`flex h-12 w-12 items-center justify-center rounded-xl mb-3 transition-colors overflow-hidden ${
-                          isSelected ? "bg-primary/25 text-primary" : "bg-white/5 text-foreground/80"
-                        }`}
-                      >
-                        {option.id === "Server Setup" ? (
-                          <ERLCLogo size={48} className="object-contain" />
-                        ) : (
-                          <Icon name={option.icon} className="text-2xl" />
-                        )}
-                      </span>
-                      <span className="font-semibold text-sm">{option.title}</span>
-                      <span className="mt-0.5 text-xs opacity-80">{option.subtitle}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {error && (
-              <p className="text-sm text-red-400" role="alert">
-                {error}
-              </p>
-            )}
-
-            <div className="flex flex-wrap gap-3">
-              <button
-                type="button"
-                onClick={submit}
-                disabled={!canSubmit || loading}
-                className="btn-primary disabled:opacity-50 disabled:pointer-events-none"
-              >
-                {loading ? (
-                  <>
-                    <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                    Finding resources…
-                  </>
-                ) : (
-                  <>
-                    Get suggestions
-                    <Icon name="arrow-right" className="text-base" />
-                  </>
-                )}
-              </button>
-            </div>
+        <div className="space-y-6 animate-in-fade">
+          <div>
+            <h2 className="text-xl font-semibold text-foreground">What do you want to work on?</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Choose a goal and we’ll show you the right resources.
+            </p>
           </div>
-        ) : (
-          <div className="animate-in-fade">
-            <AssistantResults
-              grouped={result.grouped}
-              reasons={result.reasons}
-              onRefine={handleRefine}
-              onRestart={handleRestart}
-            />
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {PRESET_GOALS.map((goal) => {
+              const isActive = selectedGoal === goal.id;
+              return (
+                <button
+                  key={goal.id}
+                  type="button"
+                  onClick={() => handleGoalSelect(goal.id)}
+                  className={`group rounded-xl border p-4 text-left transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background ${
+                    isActive
+                      ? "border-primary bg-primary/10 shadow-md shadow-primary/20"
+                      : "border-border bg-card/85 hover:border-primary/40 hover:bg-card-hover"
+                  }`}
+                  aria-pressed={isActive}
+                >
+                  <span
+                    className={`mb-3 inline-flex h-10 w-10 items-center justify-center rounded-lg transition-colors ${
+                      isActive
+                        ? "bg-primary/20 text-primary"
+                        : "bg-white/5 text-muted-foreground group-hover:text-foreground"
+                    }`}
+                  >
+                    <Icon name={goal.icon} className="text-lg" />
+                  </span>
+                  <p className="text-sm font-semibold text-foreground">{goal.title}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{goal.subtitle}</p>
+                </button>
+              );
+            })}
           </div>
-        )}
+        </div>
 
-        <div className="mt-16 border-t border-border/70 pt-12">
+        <div ref={resultsRef} className="mt-16 border-t border-border/70 pt-12 transition-all duration-300">
           <div className="mb-8">
             <h2 className="text-2xl font-semibold text-foreground">Browse all resources</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Videos are shown with previews and organized separately from website tools.
+              {activePreset
+                ? `Showing resources for: ${activePreset.title}`
+                : "Videos are shown with previews and organized separately from website tools."}
             </p>
             <div className="mt-4 inline-flex rounded-xl border border-border bg-card/40 p-1">
               <button
@@ -254,9 +229,9 @@ export default function ResourcesPage() {
                   </span>
                 </div>
                 <div className="grid gap-5 sm:grid-cols-2">
-                  {youtubeResources.map((resource) => (
+                  {youtubeResources.length > 0 ? youtubeResources.map((resource) => (
                     <YouTubeResourceCard key={resource.id} resource={resource} />
-                  ))}
+                  )) : <p className="text-sm text-muted-foreground">No YouTube resources match this goal yet.</p>}
                 </div>
               </section>
 
@@ -271,33 +246,48 @@ export default function ResourcesPage() {
                   </span>
                 </div>
                 <div className="grid gap-5 sm:grid-cols-2">
-                  {websiteResources.map((resource) => (
+                  {websiteResources.length > 0 ? websiteResources.map((resource) => (
                     <WebsiteResourceCard key={resource.id} resource={resource} />
-                  ))}
+                  )) : <p className="text-sm text-muted-foreground">No website resources match this goal yet.</p>}
                 </div>
               </section>
             </>
           ) : (
-            <section aria-labelledby="new-resources-heading">
-              <div className="mb-5 flex items-center gap-2">
-                <Icon name="sparkles" className="text-xl text-primary" />
-                <h3 id="new-resources-heading" className="text-xl font-semibold text-foreground">
-                  NEW resources
-                </h3>
-                <span className="rounded-md bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
-                  {newResources.length}
-                </span>
-              </div>
-              <div className="grid gap-5 sm:grid-cols-2">
-                {newResources.map((resource) =>
-                  resource.section === "youtube" ? (
+            <>
+              <section aria-labelledby="new-youtube-resources-heading" className="mb-12">
+                <div className="mb-5 flex items-center gap-2">
+                  <Icon name="youtube" className="text-xl text-primary" />
+                  <h3 id="new-youtube-resources-heading" className="text-xl font-semibold text-foreground">
+                    NEW YouTube videos
+                  </h3>
+                  <span className="rounded-md bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
+                    {newYoutubeResources.length}
+                  </span>
+                </div>
+                <div className="grid gap-5 sm:grid-cols-2">
+                  {newYoutubeResources.length > 0 ? newYoutubeResources.map((resource) => (
                     <YouTubeResourceCard key={resource.id} resource={resource} />
-                  ) : (
+                  )) : <p className="text-sm text-muted-foreground">No new YouTube resources match this goal yet.</p>}
+                </div>
+              </section>
+
+              <section aria-labelledby="new-website-resources-heading">
+                <div className="mb-5 flex items-center gap-2">
+                  <Icon name="globe" className="text-xl text-primary" />
+                  <h3 id="new-website-resources-heading" className="text-xl font-semibold text-foreground">
+                    NEW website resources
+                  </h3>
+                  <span className="rounded-md bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
+                    {newWebsiteResources.length}
+                  </span>
+                </div>
+                <div className="grid gap-5 sm:grid-cols-2">
+                  {newWebsiteResources.length > 0 ? newWebsiteResources.map((resource) => (
                     <WebsiteResourceCard key={resource.id} resource={resource} />
-                  )
-                )}
-              </div>
-            </section>
+                  )) : <p className="text-sm text-muted-foreground">No new website resources match this goal yet.</p>}
+                </div>
+              </section>
+            </>
           )}
         </div>
       </div>

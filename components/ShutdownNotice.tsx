@@ -1,35 +1,75 @@
 import Image from "next/image";
+import Icon from "@/components/Icon";
 
 export default function ShutdownNotice() {
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center px-4">
-      <div className="max-w-md w-full text-center space-y-6">
-        <Image
-          src="/UnityLogo.svg"
-          alt="Unity Vault"
-          width={120}
-          height={120}
-          className="mx-auto opacity-90"
-          priority
-        />
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-          Website Temporarily Unavailable
-        </h1>
-        <p className="text-foreground/70 leading-relaxed">
-          Unity Vault is currently shut down while internal maintenance and improvements are in progress.
-          The website will remain unavailable until further notice.
-        </p>
-        <p className="text-sm">
-          <a
-            href="https://unityvaultstatus.betteruptime.com/maintenance/822811"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-primary hover:text-accent font-medium transition-colors"
-          >
-            View status and updates
-            <span aria-hidden>→</span>
-          </a>
-        </p>
+    <div className="relative min-h-screen overflow-hidden bg-background px-4 text-foreground">
+      <div
+        className="pointer-events-none absolute inset-0 opacity-70"
+        aria-hidden
+        style={{
+          background:
+            "radial-gradient(ellipse 70% 44% at 50% -10%, rgba(79,124,255,0.26), transparent 70%)",
+        }}
+      />
+      <div className="mx-auto flex min-h-screen w-full max-w-2xl items-center justify-center py-14">
+        <div className="relative w-full rounded-3xl border border-border/70 bg-card/92 p-8 shadow-2xl sm:p-10">
+          <div
+            className="pointer-events-none absolute inset-0 -z-10 opacity-60"
+            aria-hidden
+            style={{
+              background:
+                "radial-gradient(ellipse 60% 40% at 50% 0%, rgba(79,124,255,0.2), transparent 65%)",
+            }}
+          />
+          <div className="text-center">
+            <span className="inline-flex items-center rounded-full border border-primary/35 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+              Scheduled maintenance
+            </span>
+            <Image
+              src="/UnityLogo.svg"
+              alt="Unity Vault"
+              width={86}
+              height={86}
+              className="mx-auto mt-5 opacity-95"
+              priority
+            />
+            <h1 className="mt-5 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+              Website Temporarily Unavailable
+            </h1>
+            <p className="mx-auto mt-3 max-w-xl leading-relaxed text-muted-foreground">
+              Unity Vault is temporarily offline while scheduled maintenance and platform improvements are completed.
+              Access will be restored as soon as updates are finalized.
+            </p>
+          </div>
+
+          <div className="mt-7 rounded-2xl border border-border/70 bg-background/55 p-4 text-center">
+            <p className="text-sm text-muted-foreground">
+              For live maintenance progress and announcements, use the links below.
+            </p>
+          </div>
+
+          <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <a
+              href="https://discord.gg/3qpVpCBwj"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary w-full sm:w-auto"
+            >
+              <Icon name="discord" className="text-base" />
+              Join Discord
+            </a>
+            <a
+              href="https://unityvaultstatus.betteruptime.com/maintenance"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-secondary w-full sm:w-auto"
+            >
+              View status
+              <Icon name="up-right-from-square" className="text-sm" />
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -21,7 +21,7 @@ export default function Home() {
               <ERLCLogo size={52} className="opacity-95" />
             </div>
             <span className="inline-flex items-center rounded-full border border-border/70 bg-card/70 px-3 py-1 text-xs font-medium text-muted-foreground">
-              Built for serious ERLC teams
+              Helping ERLC communities grow smarter.
             </span>
             <h1 className="mt-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
               The premium operating layer for ERLC resources

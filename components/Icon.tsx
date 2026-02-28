@@ -1,5 +1,66 @@
 "use client";
 
+import {
+  ArrowRight,
+  Book,
+  Bot,
+  Check,
+  CheckSquare,
+  Clock,
+  Compass,
+  ExternalLink,
+  File,
+  FileText,
+  Folder,
+  Globe,
+  Grid3X3,
+  Home,
+  Info,
+  Layers,
+  LayoutGrid,
+  Library,
+  Lightbulb,
+  Menu,
+  MessageSquare,
+  Monitor,
+  Navigation,
+  Palette,
+  Search,
+  Settings,
+  Shield,
+  Sparkles,
+  TrendingUp,
+  Type,
+  User,
+  Users,
+  Video,
+  Wrench,
+  X,
+  type LucideIcon,
+} from "lucide-react";
+import type { IconType } from "react-icons";
+import {
+  FaBehance,
+  FaDiscord,
+  FaDribbble,
+  FaFacebook,
+  FaFigma,
+  FaGithub,
+  FaIcons,
+  FaInstagram,
+  FaLinkedin,
+  FaPinterest,
+  FaRedditAlien,
+  FaSpotify,
+  FaTelegram,
+  FaTiktok,
+  FaTwitch,
+  FaVimeoV,
+  FaWhatsapp,
+  FaYoutube,
+  FaXTwitter,
+} from "react-icons/fa6";
+
 export type IconName =
   | "home"
   | "book"
@@ -66,79 +127,75 @@ interface IconProps {
   "aria-hidden"?: boolean;
 }
 
-const iconClassMap: Record<IconName, string> = {
-  home: "fi-br-home",
-  book: "fi-br-book",
-  books: "fi-br-books",
-  file: "fi-br-file",
-  document: "fi-br-document",
-  info: "fi-br-info",
-  "menu-burger": "fi-br-menu-burger",
-  cross: "fi-br-cross",
-  search: "fi-br-search",
-  user: "fi-br-user",
-  users: "fi-br-users",
-  "users-alt": "fi-br-users-alt",
-  bulb: "fi-br-bulb",
-  check: "fi-br-check",
-  checkbox: "fi-br-checkbox",
-  "arrow-right": "fi-br-arrow-right",
-  layers: "fi-br-layers",
-  palette: "fi-br-palette",
-  "message-sms": "fi-br-message-sms",
-  "arrow-trend-up": "fi-br-arrow-trend-up",
-  settings: "fi-br-settings",
-  chatbot: "fi-br-chatbot",
-  grid: "fi-br-grid",
-  apps: "fi-br-apps",
-  computer: "fi-br-computer",
-  globe: "fi-br-globe",
-  wrench: "fi-br-wrench",
-  "up-right-from-square": "fi-br-up-right-from-square",
-  sparkles: "fi-br-sparkles",
-  compass: "fi-br-drafting-compass",
-  navigation: "fi-br-navigation",
-  clock: "fi-br-clock",
-  "video-camera": "fi-br-video-camera",
-  vault: "fi-br-vault",
-  resources: "fi-br-resources",
-  text: "fi-br-text",
+const iconMap: Record<IconName, LucideIcon> = {
+  home: Home,
+  book: Book,
+  books: Library,
+  file: File,
+  document: FileText,
+  info: Info,
+  "menu-burger": Menu,
+  cross: X,
+  search: Search,
+  user: User,
+  users: Users,
+  "users-alt": Users,
+  bulb: Lightbulb,
+  check: Check,
+  checkbox: CheckSquare,
+  "arrow-right": ArrowRight,
+  layers: Layers,
+  palette: Palette,
+  "message-sms": MessageSquare,
+  "arrow-trend-up": TrendingUp,
+  settings: Settings,
+  chatbot: Bot,
+  grid: Grid3X3,
+  apps: LayoutGrid,
+  computer: Monitor,
+  globe: Globe,
+  wrench: Wrench,
+  "up-right-from-square": ExternalLink,
+  sparkles: Sparkles,
+  compass: Compass,
+  navigation: Navigation,
+  clock: Clock,
+  "video-camera": Video,
+  vault: Shield,
+  resources: Folder,
+  text: Type,
 };
 
-const brandIconClassMap: Record<BrandIconName, string> = {
-  discord: "fi-brands-discord",
-  youtube: "fi-brands-youtube",
-  behance: "fi-brands-behance",
-  flaticon: "fi-brands-flaticon",
-  github: "fi-brands-github",
-  twitter: "fi-brands-twitter",
-  instagram: "fi-brands-instagram",
-  facebook: "fi-brands-facebook",
-  linkedin: "fi-brands-linkedin",
-  twitch: "fi-brands-twitch",
-  tiktok: "fi-brands-tik-tok",
-  spotify: "fi-brands-spotify",
-  reddit: "fi-brands-reddit",
-  whatsapp: "fi-brands-whatsapp",
-  telegram: "fi-brands-telegram",
-  vimeo: "fi-brands-vimeo",
-  figma: "fi-brands-figma",
-  dribbble: "fi-brands-dribbble",
-  pinterest: "fi-brands-pinterest",
+const brandIconMap: Record<BrandIconName, IconType> = {
+  discord: FaDiscord,
+  youtube: FaYoutube,
+  behance: FaBehance,
+  flaticon: FaIcons,
+  github: FaGithub,
+  twitter: FaXTwitter,
+  instagram: FaInstagram,
+  facebook: FaFacebook,
+  linkedin: FaLinkedin,
+  twitch: FaTwitch,
+  tiktok: FaTiktok,
+  spotify: FaSpotify,
+  reddit: FaRedditAlien,
+  whatsapp: FaWhatsapp,
+  telegram: FaTelegram,
+  vimeo: FaVimeoV,
+  figma: FaFigma,
+  dribbble: FaDribbble,
+  pinterest: FaPinterest,
 };
 
-const brandNames = new Set<BrandIconName>(Object.keys(brandIconClassMap) as BrandIconName[]);
+const brandNames = new Set<BrandIconName>(Object.keys(brandIconMap) as BrandIconName[]);
 
 export default function Icon({ name, className = "", "aria-hidden": ariaHidden = true }: IconProps) {
   const isBrand = brandNames.has(name as BrandIconName);
-  const fiClass = isBrand
-    ? (brandIconClassMap[name as BrandIconName] ?? "fi-brands-discord")
-    : (iconClassMap[name as IconName] ?? "fi-br-circle");
-  return (
-    <i
-      className={`fi ${fiClass} ${className}`.trim()}
-      aria-hidden={ariaHidden}
-      style={{ fontStyle: "normal" }}
-    />
-  );
+  if (isBrand) {
+    const BrandComponent = brandIconMap[name as BrandIconName] ?? FaDiscord;
+    return <BrandComponent className={className} aria-hidden={ariaHidden} />;
+  }
+  const LucideComponent = iconMap[name as IconName] ?? Info;
+  return <LucideComponent className={className} aria-hidden={ariaHidden} strokeWidth={2.1} />;
 }
