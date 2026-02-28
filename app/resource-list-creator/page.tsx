@@ -135,6 +135,12 @@ export default function ResourceListCreatorPage() {
           </p>
         </div>
 
+        <div className="mb-8 rounded-2xl border border-border bg-card p-4 sm:p-5">
+          <p className="text-sm text-muted-foreground">
+            Warning: bugs may occur while using this feature. I am actively working on fixing this issue.
+          </p>
+        </div>
+
         <div className="mb-8 rounded-2xl border border-border bg-card/85 p-6 sm:p-7">
           <h2 className="text-lg font-semibold text-foreground">How this works</h2>
           <p className="mt-1 text-sm text-muted-foreground">

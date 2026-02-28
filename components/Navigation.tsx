@@ -139,6 +139,14 @@ export default function Navigation() {
                   >
                     Submit a Suggestion
                   </Link>
+                  <Link
+                    href={NAV.partners.href}
+                    className="block rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-white/15"
+                    role="menuitem"
+                    onClick={() => setCommunityOpen(false)}
+                  >
+                    Partners
+                  </Link>
                 </div>
               )}
             </div>
@@ -221,6 +229,13 @@ export default function Navigation() {
               onClick={() => setMobileOpen(false)}
             >
               Submit a Suggestion
+            </Link>
+            <Link
+              href={NAV.partners.href}
+              className="block rounded-lg px-4 py-3 text-base font-medium text-foreground hover:bg-white/5"
+              onClick={() => setMobileOpen(false)}
+            >
+              Partners
             </Link>
             {mainLinks.map((link) => (
               <Link

@@ -11,6 +11,7 @@ export const NAV = {
   support: { label: "Support", href: "/support" },
   status: { label: "Status", href: "/status" },
   staffApplication: { label: "Staff Application", href: "/staff-application" },
+  partners: { label: "Partners", href: "/partners" },
   about: { label: "About", href: "/about" },
 } as const;
 
