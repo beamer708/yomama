@@ -9,6 +9,7 @@ import { NAV } from "@/lib/site-structure";
 export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [resourcesOpen, setResourcesOpen] = useState(false);
+  const [communityOpen, setCommunityOpen] = useState(false);
   const isStaffApplicationOpen =
     process.env.NEXT_PUBLIC_STAFF_APPLICATION_OPEN === "true" ||
     process.env.NEXT_PUBLIC_STAFF_APPLICATION_OPEN === "1";
@@ -16,7 +17,6 @@ export default function Navigation() {
   const mainLinks = [
     { ...NAV.support },
     { ...NAV.status },
-    ...(isStaffApplicationOpen ? [{ ...NAV.staffApplication }] : []),
     { ...NAV.about },
   ];
 
@@ -44,7 +44,10 @@ export default function Navigation() {
             <div className="relative">
               <button
                 type="button"
-                onClick={() => setResourcesOpen((open) => !open)}
+                onClick={() => {
+                  setResourcesOpen((open) => !open);
+                  setCommunityOpen(false);
+                }}
                 className="btn-ghost rounded-lg py-2"
                 aria-expanded={resourcesOpen}
                 aria-haspopup="menu"
@@ -75,6 +78,65 @@ export default function Navigation() {
                     onClick={() => setResourcesOpen(false)}
                   >
                     Helpful Guides
+                  </Link>
+                </div>
+              )}
+            </div>
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => {
+                  setCommunityOpen((open) => !open);
+                  setResourcesOpen(false);
+                }}
+                className="btn-ghost rounded-lg py-2"
+                aria-expanded={communityOpen}
+                aria-haspopup="menu"
+              >
+                Community
+                <Icon
+                  name="arrow-right"
+                  className={`text-xs transition-transform ${communityOpen ? "rotate-90" : ""}`}
+                />
+              </button>
+              {communityOpen && (
+                <div
+                  className="absolute left-0 top-full mt-3 w-60 rounded-xl border border-primary/30 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.06))] p-2 shadow-2xl backdrop-blur-2xl supports-[backdrop-filter]:bg-card/90"
+                  role="menu"
+                >
+                  {isStaffApplicationOpen && (
+                    <Link
+                      href={NAV.staffApplication.href}
+                      className="block rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-white/15"
+                      role="menuitem"
+                      onClick={() => setCommunityOpen(false)}
+                    >
+                      Staff Application
+                    </Link>
+                  )}
+                  <Link
+                    href="/resource-list-creator"
+                    className="block rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-white/15"
+                    role="menuitem"
+                    onClick={() => setCommunityOpen(false)}
+                  >
+                    Create Resource List
+                  </Link>
+                  <Link
+                    href="/resource-list-creator#open-shared"
+                    className="block rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-white/15"
+                    role="menuitem"
+                    onClick={() => setCommunityOpen(false)}
+                  >
+                    Open Shared List
+                  </Link>
+                  <Link
+                    href="/resource-suggestion"
+                    className="block rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-white/15"
+                    role="menuitem"
+                    onClick={() => setCommunityOpen(false)}
+                  >
+                    Submit a Suggestion
                   </Link>
                 </div>
               )}
@@ -128,6 +190,36 @@ export default function Navigation() {
               onClick={() => setMobileOpen(false)}
             >
               Helpful Guides
+            </Link>
+            {isStaffApplicationOpen && (
+              <Link
+                href={NAV.staffApplication.href}
+                className="block rounded-lg px-4 py-3 text-base font-medium text-foreground hover:bg-white/5"
+                onClick={() => setMobileOpen(false)}
+              >
+                Staff Application
+              </Link>
+            )}
+            <Link
+              href="/resource-list-creator"
+              className="block rounded-lg px-4 py-3 text-base font-medium text-foreground hover:bg-white/5"
+              onClick={() => setMobileOpen(false)}
+            >
+              Create Resource List
+            </Link>
+            <Link
+              href="/resource-list-creator#open-shared"
+              className="block rounded-lg px-4 py-3 text-base font-medium text-foreground hover:bg-white/5"
+              onClick={() => setMobileOpen(false)}
+            >
+              Open Shared List
+            </Link>
+            <Link
+              href="/resource-suggestion"
+              className="block rounded-lg px-4 py-3 text-base font-medium text-foreground hover:bg-white/5"
+              onClick={() => setMobileOpen(false)}
+            >
+              Submit a Suggestion
             </Link>
             {mainLinks.map((link) => (
               <Link

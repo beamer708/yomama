@@ -1,118 +1,59 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import Link from "next/link";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Icon from "@/components/Icon";
 import ERLCLogo from "@/components/ERLCLogo";
 import YouTubeResourceCard from "@/components/YouTubeResourceCard";
 import WebsiteResourceCard from "@/components/WebsiteResourceCard";
-import { getFocusAreasForCategory, type FocusArea } from "@/lib/resource-list-mapping";
 import { resources } from "@/lib/resources";
 
 const newResources = resources.filter((resource) => resource.isNew);
-
-type PresetGoal = {
-  id: string;
-  title: string;
-  subtitle: string;
-  icon: Parameters<typeof Icon>[0]["name"];
-  focusAreas: FocusArea[];
-};
-
-const PRESET_GOALS: PresetGoal[] = [
-  {
-    id: "logo-design",
-    title: "I want to design a logo",
-    subtitle: "Identity, mark, and visual direction",
-    icon: "palette",
-    focusAreas: ["Graphic Design", "Branding"],
-  },
-  {
-    id: "emoji-design",
-    title: "I want to design emojis",
-    subtitle: "Clean iconography for Discord use",
-    icon: "sparkles",
-    focusAreas: ["Graphic Design", "Branding"],
-  },
-  {
-    id: "roleplay-logo",
-    title: "I want to design a roleplay logo",
-    subtitle: "Roleplay-oriented identity assets",
-    icon: "compass",
-    focusAreas: ["Graphic Design", "Branding"],
-  },
-  {
-    id: "icon-logo",
-    title: "I want to design an icon logo",
-    subtitle: "Simple icon-focused brand marks",
-    icon: "apps",
-    focusAreas: ["Graphic Design", "Branding"],
-  },
-  {
-    id: "server-visuals",
-    title: "I want to improve my Discord server visuals",
-    subtitle: "Channels, roles, and layout clarity",
-    icon: "wrench",
-    focusAreas: ["Server Setup", "Branding"],
-  },
-  {
-    id: "server-growth",
-    title: "I want to grow my server",
-    subtitle: "Promotion and growth systems",
-    icon: "arrow-trend-up",
-    focusAreas: ["Marketing & Growth"],
-  },
-  {
-    id: "staff-organization",
-    title: "I want to organize my staff team",
-    subtitle: "Staff structure and workflows",
-    icon: "users",
-    focusAreas: ["Staff & Management", "Documentation / SOPs"],
-  },
-  {
-    id: "better-branding",
-    title: "I want better branding for my server",
-    subtitle: "Consistency and stronger identity",
-    icon: "layers",
-    focusAreas: ["Branding", "Graphic Design"],
-  },
-  {
-    id: "roleplay-structure",
-    title: "I want to improve roleplay structure",
-    subtitle: "Systems and docs for roleplay quality",
-    icon: "document",
-    focusAreas: ["Staff & Management", "Documentation / SOPs"],
-  },
-];
+const CUSTOM_LIST_STORAGE_KEY = "unityvault.customListIds.v1";
 
 export default function ResourcesPage() {
-  const [selectedGoal, setSelectedGoal] = useState<string | null>(null);
   const [browseTab, setBrowseTab] = useState<"all" | "new">("all");
+  const [listMode, setListMode] = useState(false);
+  const [customListIds, setCustomListIds] = useState<Set<string>>(new Set());
   const resultsRef = useRef<HTMLDivElement | null>(null);
 
-  const activePreset = useMemo(
-    () => PRESET_GOALS.find((goal) => goal.id === selectedGoal) ?? null,
-    [selectedGoal]
-  );
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem(CUSTOM_LIST_STORAGE_KEY);
+      if (!raw) return;
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) return;
+      const validIds = parsed.filter(
+        (id): id is string => typeof id === "string" && resources.some((resource) => resource.id === id)
+      );
+      if (validIds.length > 0) {
+        setCustomListIds(new Set(validIds));
+        setListMode(true);
+      }
+    } catch {
+      // Ignore invalid local data and continue with empty selection
+    }
+  }, []);
 
-  const goalFilteredResources = useMemo(() => {
-    if (!activePreset) return resources;
-    const focusSet = new Set<FocusArea>(activePreset.focusAreas);
-    return resources.filter((resource) =>
-      getFocusAreasForCategory(resource.category).some((area) => focusSet.has(area))
-    );
-  }, [activePreset]);
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(CUSTOM_LIST_STORAGE_KEY, JSON.stringify(Array.from(customListIds)));
+    } catch {
+      // Ignore storage write failures
+    }
+  }, [customListIds]);
 
   const youtubeResources = useMemo(
-    () => goalFilteredResources.filter((resource) => resource.section === "youtube"),
-    [goalFilteredResources]
+    () => resources.filter((resource) => resource.section === "youtube"),
+    []
   );
   const websiteResources = useMemo(
-    () => goalFilteredResources.filter((resource) => resource.section === "website"),
-    [goalFilteredResources]
+    () => resources.filter((resource) => resource.section === "website"),
+    []
   );
   const goalFilteredNewResources = useMemo(
-    () => newResources.filter((resource) => goalFilteredResources.some((r) => r.id === resource.id)),
-    [goalFilteredResources]
+    () => newResources,
+    []
   );
   const newYoutubeResources = useMemo(
     () => goalFilteredNewResources.filter((resource) => resource.section === "youtube"),
@@ -122,12 +63,18 @@ export default function ResourcesPage() {
     () => goalFilteredNewResources.filter((resource) => resource.section === "website"),
     [goalFilteredNewResources]
   );
+  const customListResources = useMemo(
+    () => resources.filter((resource) => customListIds.has(resource.id)),
+    [customListIds]
+  );
 
-  const handleGoalSelect = (goalId: string) => {
-    setSelectedGoal((prev) => (prev === goalId ? null : goalId));
-    setTimeout(() => {
-      resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 80);
+  const toggleResourceInList = (resourceId: string) => {
+    setCustomListIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(resourceId)) next.delete(resourceId);
+      else next.add(resourceId);
+      return next;
+    });
   };
 
   return (
@@ -143,52 +90,80 @@ export default function ResourcesPage() {
           </p>
         </div>
 
-        <div className="space-y-6 animate-in-fade">
-          <div>
-            <h2 className="text-xl font-semibold text-foreground">What do you want to work on?</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Choose a goal and we’ll show you the right resources.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {PRESET_GOALS.map((goal) => {
-              const isActive = selectedGoal === goal.id;
-              return (
-                <button
-                  key={goal.id}
-                  type="button"
-                  onClick={() => handleGoalSelect(goal.id)}
-                  className={`group rounded-xl border p-4 text-left transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background ${
-                    isActive
-                      ? "border-primary bg-primary/10 shadow-md shadow-primary/20"
-                      : "border-border bg-card/85 hover:border-primary/40 hover:bg-card-hover"
-                  }`}
-                  aria-pressed={isActive}
-                >
-                  <span
-                    className={`mb-3 inline-flex h-10 w-10 items-center justify-center rounded-lg transition-colors ${
-                      isActive
-                        ? "bg-primary/20 text-primary"
-                        : "bg-white/5 text-muted-foreground group-hover:text-foreground"
-                    }`}
-                  >
-                    <Icon name={goal.icon} className="text-lg" />
-                  </span>
-                  <p className="text-sm font-semibold text-foreground">{goal.title}</p>
-                  <p className="mt-1 text-xs text-muted-foreground">{goal.subtitle}</p>
-                </button>
-              );
-            })}
-          </div>
+        <div className="mb-8 flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setListMode((on) => !on)}
+            className={`inline-flex items-center gap-2 rounded-lg border px-3 py-1.5 text-xs font-semibold transition-colors ${
+              listMode
+                ? "border-primary/40 bg-primary/15 text-primary"
+                : "border-border bg-card/60 text-muted-foreground hover:bg-card-hover hover:text-foreground"
+            }`}
+          >
+            <span className={`h-2.5 w-2.5 rounded-full ${listMode ? "bg-primary" : "bg-muted-foreground/60"}`} />
+            List Mode: {listMode ? "ON" : "OFF"}
+          </button>
+          <span className="text-xs text-muted-foreground">
+            Turn on to show “Add to list” on every resource card.
+          </span>
         </div>
+
+        {listMode && (
+          <div className="mt-8 rounded-2xl border border-border bg-card/80 p-5">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <h3 className="text-sm font-semibold text-foreground">
+                My custom list ({customListResources.length})
+              </h3>
+              {customListResources.length > 0 ? (
+                <button
+                  type="button"
+                  onClick={() => setCustomListIds(new Set())}
+                  className="text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  Clear list
+                </button>
+              ) : null}
+            </div>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {customListResources.length > 0 ? customListResources.map((resource) => (
+                <span key={resource.id} className="inline-flex items-center gap-1.5 rounded-md bg-white/5 px-2.5 py-1 text-xs text-muted-foreground">
+                  {resource.title}
+                  <button
+                    type="button"
+                    onClick={() => toggleResourceInList(resource.id)}
+                    className="text-muted-foreground transition-colors hover:text-foreground"
+                    aria-label={`Remove ${resource.title} from custom list`}
+                  >
+                    <Icon name="cross" className="text-xs" />
+                  </button>
+                </span>
+              )) : (
+                <p className="text-xs text-muted-foreground">
+                  Your list is empty. Use “Add to list” on any resource.
+                </p>
+              )}
+            </div>
+            <div className="mt-4">
+              <Link
+                href="/resource-list-creator"
+                className={`inline-flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold transition-colors ${
+                  customListResources.length > 0
+                    ? "bg-primary text-white hover:bg-primary-hover"
+                    : "cursor-not-allowed bg-white/10 text-muted-foreground pointer-events-none"
+                }`}
+              >
+                Review list and create code
+                <Icon name="arrow-right" className="text-sm" />
+              </Link>
+            </div>
+          </div>
+        )}
 
         <div ref={resultsRef} className="mt-16 border-t border-border/70 pt-12 transition-all duration-300">
           <div className="mb-8">
             <h2 className="text-2xl font-semibold text-foreground">Browse all resources</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              {activePreset
-                ? `Showing resources for: ${activePreset.title}`
-                : "Videos are shown with previews and organized separately from website tools."}
+              Videos are shown with previews and organized separately from website tools.
             </p>
             <div className="mt-4 inline-flex rounded-xl border border-border bg-card/40 p-1">
               <button
@@ -230,8 +205,14 @@ export default function ResourcesPage() {
                 </div>
                 <div className="grid gap-5 sm:grid-cols-2">
                   {youtubeResources.length > 0 ? youtubeResources.map((resource) => (
-                    <YouTubeResourceCard key={resource.id} resource={resource} />
-                  )) : <p className="text-sm text-muted-foreground">No YouTube resources match this goal yet.</p>}
+                    <YouTubeResourceCard
+                      key={resource.id}
+                      resource={resource}
+                      showListActions={listMode}
+                      isInList={customListIds.has(resource.id)}
+                      onToggleList={toggleResourceInList}
+                    />
+                  )) : <p className="text-sm text-muted-foreground">No YouTube resources available yet.</p>}
                 </div>
               </section>
 
@@ -247,8 +228,14 @@ export default function ResourcesPage() {
                 </div>
                 <div className="grid gap-5 sm:grid-cols-2">
                   {websiteResources.length > 0 ? websiteResources.map((resource) => (
-                    <WebsiteResourceCard key={resource.id} resource={resource} />
-                  )) : <p className="text-sm text-muted-foreground">No website resources match this goal yet.</p>}
+                    <WebsiteResourceCard
+                      key={resource.id}
+                      resource={resource}
+                      showListActions={listMode}
+                      isInList={customListIds.has(resource.id)}
+                      onToggleList={toggleResourceInList}
+                    />
+                  )) : <p className="text-sm text-muted-foreground">No website resources available yet.</p>}
                 </div>
               </section>
             </>
@@ -266,8 +253,14 @@ export default function ResourcesPage() {
                 </div>
                 <div className="grid gap-5 sm:grid-cols-2">
                   {newYoutubeResources.length > 0 ? newYoutubeResources.map((resource) => (
-                    <YouTubeResourceCard key={resource.id} resource={resource} />
-                  )) : <p className="text-sm text-muted-foreground">No new YouTube resources match this goal yet.</p>}
+                    <YouTubeResourceCard
+                      key={resource.id}
+                      resource={resource}
+                      showListActions={listMode}
+                      isInList={customListIds.has(resource.id)}
+                      onToggleList={toggleResourceInList}
+                    />
+                  )) : <p className="text-sm text-muted-foreground">No new YouTube resources available yet.</p>}
                 </div>
               </section>
 
@@ -283,8 +276,14 @@ export default function ResourcesPage() {
                 </div>
                 <div className="grid gap-5 sm:grid-cols-2">
                   {newWebsiteResources.length > 0 ? newWebsiteResources.map((resource) => (
-                    <WebsiteResourceCard key={resource.id} resource={resource} />
-                  )) : <p className="text-sm text-muted-foreground">No new website resources match this goal yet.</p>}
+                    <WebsiteResourceCard
+                      key={resource.id}
+                      resource={resource}
+                      showListActions={listMode}
+                      isInList={customListIds.has(resource.id)}
+                      onToggleList={toggleResourceInList}
+                    />
+                  )) : <p className="text-sm text-muted-foreground">No new website resources available yet.</p>}
                 </div>
               </section>
             </>

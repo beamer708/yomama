@@ -4,9 +4,17 @@ import { getYouTubeThumbnail } from "@/lib/resources";
 
 interface YouTubeResourceCardProps {
   resource: Resource;
+  showListActions?: boolean;
+  isInList?: boolean;
+  onToggleList?: (resourceId: string) => void;
 }
 
-export default function YouTubeResourceCard({ resource }: YouTubeResourceCardProps) {
+export default function YouTubeResourceCard({
+  resource,
+  showListActions = false,
+  isInList = false,
+  onToggleList,
+}: YouTubeResourceCardProps) {
   const thumbnailUrl = resource.thumbnailUrl || getYouTubeThumbnail(resource.url);
 
   return (
@@ -73,7 +81,7 @@ export default function YouTubeResourceCard({ resource }: YouTubeResourceCardPro
         <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
           {resource.description}
         </p>
-        <div className="flex items-center justify-between border-t border-border/50 pt-4">
+        <div className="flex items-center justify-between gap-3 border-t border-border/50 pt-4">
           <div className="text-xs text-muted-foreground">
             {resource.creatorUrl ? (
               <a
@@ -88,15 +96,31 @@ export default function YouTubeResourceCard({ resource }: YouTubeResourceCardPro
               <span>{resource.creator}</span>
             )}
           </div>
-          <a
-            href={resource.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-primary group-hover:text-primary-hover transition-colors"
-          >
-            Watch Video
-            <Icon name="up-right-from-square" className="text-sm" />
-          </a>
+          <div className="flex items-center gap-2">
+            {showListActions ? (
+              <button
+                type="button"
+                onClick={() => onToggleList?.(resource.id)}
+                className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors ${
+                  isInList
+                    ? "bg-primary/20 text-primary hover:bg-primary/30"
+                    : "bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground"
+                }`}
+              >
+                <Icon name={isInList ? "check" : "book"} className="text-xs" />
+                {isInList ? "Added" : "Add to list"}
+              </button>
+            ) : null}
+            <a
+              href={resource.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-primary group-hover:text-primary-hover transition-colors"
+            >
+              Watch Video
+              <Icon name="up-right-from-square" className="text-sm" />
+            </a>
+          </div>
         </div>
       </div>
     </article>

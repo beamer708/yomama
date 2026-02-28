@@ -3,6 +3,9 @@ import Icon, { IconName, BrandIconName } from "@/components/Icon";
 
 interface WebsiteResourceCardProps {
   resource: Resource;
+  showListActions?: boolean;
+  isInList?: boolean;
+  onToggleList?: (resourceId: string) => void;
 }
 
 const typeLabels: Record<Resource["type"], { label: string; icon: IconName | BrandIconName }> = {
@@ -16,7 +19,12 @@ const typeLabels: Record<Resource["type"], { label: string; icon: IconName | Bra
   inspiration: { label: "Inspiration", icon: "sparkles" },
 };
 
-export default function WebsiteResourceCard({ resource }: WebsiteResourceCardProps) {
+export default function WebsiteResourceCard({
+  resource,
+  showListActions = false,
+  isInList = false,
+  onToggleList,
+}: WebsiteResourceCardProps) {
   const typeInfo = typeLabels[resource.type];
 
   return (
@@ -52,7 +60,7 @@ export default function WebsiteResourceCard({ resource }: WebsiteResourceCardPro
       </p>
 
       {/* Footer */}
-      <div className="flex items-center justify-between border-t border-border/50 pt-4">
+      <div className="flex items-center justify-between gap-3 border-t border-border/50 pt-4">
         <div className="text-xs text-muted-foreground">
           {resource.creatorUrl ? (
             <a
@@ -67,15 +75,31 @@ export default function WebsiteResourceCard({ resource }: WebsiteResourceCardPro
             <span>{resource.creator}</span>
           )}
         </div>
-        <a
-          href={resource.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-primary group-hover:text-primary-hover transition-colors"
-        >
-          Visit Site
-          <Icon name="up-right-from-square" className="text-sm" />
-        </a>
+        <div className="flex items-center gap-2">
+          {showListActions ? (
+            <button
+              type="button"
+              onClick={() => onToggleList?.(resource.id)}
+              className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors ${
+                isInList
+                  ? "bg-primary/20 text-primary hover:bg-primary/30"
+                  : "bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground"
+              }`}
+            >
+              <Icon name={isInList ? "check" : "book"} className="text-xs" />
+              {isInList ? "Added" : "Add to list"}
+            </button>
+          ) : null}
+          <a
+            href={resource.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-primary group-hover:text-primary-hover transition-colors"
+          >
+            Visit Site
+            <Icon name="up-right-from-square" className="text-sm" />
+          </a>
+        </div>
       </div>
     </article>
   );

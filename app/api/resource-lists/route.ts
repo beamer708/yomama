@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { generateResourceList } from "@/lib/resource-list-engine";
+import { randomBytes } from "crypto";
 
-function slug(): string {
-  return Math.random().toString(36).slice(2, 10);
+function createSlug(): string {
+  return randomBytes(6).toString("hex");
 }
 
 export async function POST(request: Request) {
@@ -38,9 +39,14 @@ export async function POST(request: Request) {
       description: plan.description ?? undefined,
     });
 
-    let uniqueSlug = slug();
+    let uniqueSlug = createSlug();
+    let attempts = 0;
     while (await prisma.savedList.findUnique({ where: { slug: uniqueSlug } })) {
-      uniqueSlug = slug();
+      uniqueSlug = createSlug();
+      attempts += 1;
+      if (attempts > 10) {
+        throw new Error("Unable to generate a unique share code");
+      }
     }
 
     const savedList = await prisma.savedList.create({
