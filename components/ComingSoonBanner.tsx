@@ -3,7 +3,7 @@ import Icon from "@/components/Icon";
 
 export default function ComingSoonBanner() {
   return (
-    <div className="border-b border-primary/20 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent py-3">
+    <div className="border-b border-border bg-card py-3">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-center">
           <span className="inline-flex items-center gap-2 text-sm font-medium text-foreground/90">

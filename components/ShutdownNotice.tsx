@@ -1,33 +1,18 @@
 import Image from "next/image";
 import Icon from "@/components/Icon";
+import uLogo from "@/Media/ULogo.svg";
 
 export default function ShutdownNotice() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-background px-4 text-foreground">
-      <div
-        className="pointer-events-none absolute inset-0 opacity-70"
-        aria-hidden
-        style={{
-          background:
-            "radial-gradient(ellipse 70% 44% at 50% -10%, rgba(79,124,255,0.26), transparent 70%)",
-        }}
-      />
       <div className="mx-auto flex min-h-screen w-full max-w-2xl items-center justify-center py-14">
-        <div className="relative w-full rounded-3xl border border-border/70 bg-card/92 p-8 shadow-2xl sm:p-10">
-          <div
-            className="pointer-events-none absolute inset-0 -z-10 opacity-60"
-            aria-hidden
-            style={{
-              background:
-                "radial-gradient(ellipse 60% 40% at 50% 0%, rgba(79,124,255,0.2), transparent 65%)",
-            }}
-          />
+        <div className="relative w-full rounded-3xl border border-border bg-card p-8 sm:p-10">
           <div className="text-center">
             <span className="inline-flex items-center rounded-full border border-primary/35 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
               Scheduled maintenance
             </span>
             <Image
-              src="/UnityLogo.svg"
+              src={uLogo}
               alt="Unity Vault"
               width={86}
               height={86}

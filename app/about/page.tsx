@@ -9,7 +9,7 @@ export default function AboutPage() {
       <div className="page-container max-w-3xl">
         <div className="mb-12 rounded-3xl border border-border/70 bg-card/75 p-8 text-center sm:p-10">
           <div className="mx-auto mb-6 flex justify-center items-center gap-3">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-accent/10">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-card-hover">
               <Icon name="compass" className="text-3xl text-primary" />
             </div>
             <ERLCLogo size={48} />

@@ -20,7 +20,7 @@ function ResourceCard({ resource }: { resource: RecommendedResource }) {
             {resource.title}
           </h3>
           {resource.isNew && (
-            <span className="mb-2 inline-block rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-primary text-white">
+            <span className="mb-2 inline-block rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-primary text-background">
               New
             </span>
           )}

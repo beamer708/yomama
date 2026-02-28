@@ -1,12 +1,16 @@
 "use client";
 
 import {
+  AppWindow,
   ArrowRight,
-  Book,
+  BarChart3,
+  BookOpen,
   Bot,
+  Briefcase,
   Check,
   CheckSquare,
-  Clock,
+  CirclePlay,
+  Clock3,
   Compass,
   ExternalLink,
   File,
@@ -17,11 +21,9 @@ import {
   Home,
   Info,
   Layers,
-  LayoutGrid,
-  Library,
   Lightbulb,
   Menu,
-  MessageSquare,
+  MessageCircle,
   Monitor,
   Navigation,
   Palette,
@@ -29,37 +31,14 @@ import {
   Settings,
   Shield,
   Sparkles,
-  TrendingUp,
   Type,
   User,
   Users,
-  Video,
   Wrench,
   X,
   type LucideIcon,
 } from "lucide-react";
-import type { IconType } from "react-icons";
-import {
-  FaBehance,
-  FaDiscord,
-  FaDribbble,
-  FaFacebook,
-  FaFigma,
-  FaGithub,
-  FaIcons,
-  FaInstagram,
-  FaLinkedin,
-  FaPinterest,
-  FaRedditAlien,
-  FaSpotify,
-  FaTelegram,
-  FaTiktok,
-  FaTwitch,
-  FaVimeoV,
-  FaWhatsapp,
-  FaYoutube,
-  FaXTwitter,
-} from "react-icons/fa6";
+import { FaDiscord } from "react-icons/fa6";
 
 export type IconName =
   | "home"
@@ -99,7 +78,7 @@ export type IconName =
   | "resources"
   | "text";
 
-/** Flaticon brand icons (Discord, YouTube, etc.) */
+/** Brand icon aliases rendered with Lucide equivalents. */
 export type BrandIconName =
   | "discord"
   | "youtube"
@@ -129,8 +108,8 @@ interface IconProps {
 
 const iconMap: Record<IconName, LucideIcon> = {
   home: Home,
-  book: Book,
-  books: Library,
+  book: BookOpen,
+  books: BookOpen,
   file: File,
   document: FileText,
   info: Info,
@@ -146,12 +125,12 @@ const iconMap: Record<IconName, LucideIcon> = {
   "arrow-right": ArrowRight,
   layers: Layers,
   palette: Palette,
-  "message-sms": MessageSquare,
-  "arrow-trend-up": TrendingUp,
+  "message-sms": MessageCircle,
+  "arrow-trend-up": BarChart3,
   settings: Settings,
   chatbot: Bot,
   grid: Grid3X3,
-  apps: LayoutGrid,
+  apps: AppWindow,
   computer: Monitor,
   globe: Globe,
   wrench: Wrench,
@@ -159,43 +138,50 @@ const iconMap: Record<IconName, LucideIcon> = {
   sparkles: Sparkles,
   compass: Compass,
   navigation: Navigation,
-  clock: Clock,
-  "video-camera": Video,
+  clock: Clock3,
+  "video-camera": CirclePlay,
   vault: Shield,
   resources: Folder,
   text: Type,
 };
 
-const brandIconMap: Record<BrandIconName, IconType> = {
-  discord: FaDiscord,
-  youtube: FaYoutube,
-  behance: FaBehance,
-  flaticon: FaIcons,
-  github: FaGithub,
-  twitter: FaXTwitter,
-  instagram: FaInstagram,
-  facebook: FaFacebook,
-  linkedin: FaLinkedin,
-  twitch: FaTwitch,
-  tiktok: FaTiktok,
-  spotify: FaSpotify,
-  reddit: FaRedditAlien,
-  whatsapp: FaWhatsapp,
-  telegram: FaTelegram,
-  vimeo: FaVimeoV,
-  figma: FaFigma,
-  dribbble: FaDribbble,
-  pinterest: FaPinterest,
+const brandIconMap: Record<BrandIconName, LucideIcon> = {
+  discord: MessageCircle,
+  youtube: CirclePlay,
+  behance: Briefcase,
+  flaticon: Grid3X3,
+  github: Folder,
+  twitter: MessageCircle,
+  instagram: CirclePlay,
+  facebook: MessageCircle,
+  linkedin: Briefcase,
+  twitch: CirclePlay,
+  tiktok: CirclePlay,
+  spotify: CirclePlay,
+  reddit: MessageCircle,
+  whatsapp: MessageCircle,
+  telegram: MessageCircle,
+  vimeo: CirclePlay,
+  figma: Palette,
+  dribbble: CirclePlay,
+  pinterest: Palette,
 };
 
 const brandNames = new Set<BrandIconName>(Object.keys(brandIconMap) as BrandIconName[]);
 
 export default function Icon({ name, className = "", "aria-hidden": ariaHidden = true }: IconProps) {
-  const isBrand = brandNames.has(name as BrandIconName);
-  if (isBrand) {
-    const BrandComponent = brandIconMap[name as BrandIconName] ?? FaDiscord;
-    return <BrandComponent className={className} aria-hidden={ariaHidden} />;
+  if (name === "discord") {
+    return <FaDiscord className={`text-muted-foreground ${className}`.trim()} aria-hidden={ariaHidden} />;
   }
-  const LucideComponent = iconMap[name as IconName] ?? Info;
-  return <LucideComponent className={className} aria-hidden={ariaHidden} strokeWidth={2.1} />;
+  const isBrand = brandNames.has(name as BrandIconName);
+  const LucideComponent = isBrand
+    ? (brandIconMap[name as BrandIconName] ?? MessageCircle)
+    : (iconMap[name as IconName] ?? Info);
+  return (
+    <LucideComponent
+      className={`text-muted-foreground ${className}`.trim()}
+      aria-hidden={ariaHidden}
+      strokeWidth={1.8}
+    />
+  );
 }

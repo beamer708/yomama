@@ -1,13 +1,10 @@
-// Resource List Creator – Unity Vault
-// For production PostgreSQL: set provider = "postgresql" and url = env("DATABASE_URL")
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./resource-list.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Resource {

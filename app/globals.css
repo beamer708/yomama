@@ -3,49 +3,53 @@
 @tailwind utilities;
 
 :root {
-  --background: #060812;
-  --foreground: #f4f7ff;
-  --muted-foreground: #aeb8d6;
-  --primary: #4f7cff;
-  --primary-hover: #628bff;
-  --accent: #66e3ff;
-  --accent-hover: #82e9ff;
-  --border: #1a2138;
-  --card: #0b1123;
-  --card-hover: #121a30;
-  --surface-2: #0f1730;
-  --ring: rgba(102, 227, 255, 0.45);
-  --hero-glow: radial-gradient(ellipse 68% 44% at 50% -16%, rgba(79, 124, 255, 0.32), transparent 62%);
-  --grid-line: rgba(164, 181, 255, 0.08);
-  --shadow-elevated: 0 18px 60px rgba(3, 6, 17, 0.48);
-  --shadow-card: 0 10px 34px rgba(3, 6, 17, 0.42);
-  --gradient-card: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
-  --gradient-hero: linear-gradient(180deg, #091127 0%, #070d1e 44%, #060812 100%);
-  --gradient-cta: linear-gradient(135deg, #4f7cff 0%, #66e3ff 100%);
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --background: #0d0d0d;
+  --foreground: #f5f4f2;
+  --muted-foreground: #b8b8b8;
+  --secondary-text: #b8b8b8;
+  --muted-text: #8a8a8a;
+  --primary: #f5f4f2;
+  --primary-hover: #f5f4f2;
+  --accent: #f5f4f2;
+  --accent-hover: #f5f4f2;
+  --border: #262626;
+  --card: #111111;
+  --card-hover: #1a1a1a;
+  --surface-2: #1c1c1c;
+  --ring: rgba(245, 244, 242, 0.28);
+  --hero-glow: none;
+  --grid-line: transparent;
+  --shadow-elevated: none;
+  --shadow-card: none;
+  --gradient-card: none;
+  --gradient-hero: none;
+  --gradient-cta: none;
+  --font-sans: "Satoshi", "Satoshi Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 /* Dark theme class kept for compatibility. */
 .dark {
-  --background: #060812;
-  --foreground: #f4f7ff;
-  --muted-foreground: #aeb8d6;
-  --primary: #4f7cff;
-  --primary-hover: #628bff;
-  --accent: #66e3ff;
-  --accent-hover: #82e9ff;
-  --border: #1a2138;
-  --card: #0b1123;
-  --card-hover: #121a30;
-  --surface-2: #0f1730;
-  --ring: rgba(102, 227, 255, 0.45);
-  --hero-glow: radial-gradient(ellipse 68% 44% at 50% -16%, rgba(79, 124, 255, 0.32), transparent 62%);
-  --grid-line: rgba(164, 181, 255, 0.08);
-  --shadow-elevated: 0 18px 60px rgba(3, 6, 17, 0.48);
-  --shadow-card: 0 10px 34px rgba(3, 6, 17, 0.42);
-  --gradient-card: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
-  --gradient-hero: linear-gradient(180deg, #091127 0%, #070d1e 44%, #060812 100%);
-  --gradient-cta: linear-gradient(135deg, #4f7cff 0%, #66e3ff 100%);
+  --background: #0d0d0d;
+  --foreground: #f5f4f2;
+  --muted-foreground: #b8b8b8;
+  --secondary-text: #b8b8b8;
+  --muted-text: #8a8a8a;
+  --primary: #f5f4f2;
+  --primary-hover: #f5f4f2;
+  --accent: #f5f4f2;
+  --accent-hover: #f5f4f2;
+  --border: #262626;
+  --card: #111111;
+  --card-hover: #1a1a1a;
+  --surface-2: #1c1c1c;
+  --ring: rgba(245, 244, 242, 0.28);
+  --hero-glow: none;
+  --grid-line: transparent;
+  --shadow-elevated: none;
+  --shadow-card: none;
+  --gradient-card: none;
+  --gradient-hero: none;
+  --gradient-cta: none;
 }
 
 * {
@@ -65,17 +69,24 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: radial-gradient(circle at 10% 0%, rgba(102, 227, 255, 0.07), transparent 30%);
+  background-image: none;
 }
 
 @layer base {
   h1, h2, h3, h4, h5, h6 {
     letter-spacing: -0.02em;
-    font-weight: 700;
+    font-weight: 600;
+    line-height: 1.15;
   }
 
   a {
-    transition: color 0.15s ease;
+    transition: opacity 0.15s ease;
+    text-decoration: none;
+  }
+
+  a:hover {
+    opacity: 0.8;
+    text-decoration: underline;
   }
 
   button {
@@ -85,16 +96,12 @@ body {
 
 @layer components {
   .gradient-bg-hero {
-    background: var(--gradient-hero);
+    background: var(--background);
     position: relative;
   }
 
   .gradient-bg-hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: var(--hero-glow);
-    pointer-events: none;
+    display: none;
   }
 
   .section-grid-overlay {
@@ -102,87 +109,73 @@ body {
   }
 
   .section-grid-overlay::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-    background-size: 42px 42px;
-    mask-image: linear-gradient(180deg, transparent, black 12%, black 88%, transparent);
-    pointer-events: none;
-    opacity: 0.3;
+    display: none;
   }
 
   .gradient-border {
-    position: relative;
     background: var(--card);
-    border-radius: 1rem;
+    border-radius: 8px;
     border: 1px solid var(--border);
-    box-shadow: var(--shadow-card);
+    box-shadow: none;
   }
   .gradient-border::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    padding: 1px;
-    border-radius: inherit;
-    background: linear-gradient(150deg, rgba(102, 227, 255, 0.18), rgba(79, 124, 255, 0.22), rgba(102, 227, 255, 0.02));
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
+    display: none;
   }
 
   .gradient-card {
-    background: var(--gradient-card), var(--card);
+    background: var(--card);
   }
 
   .card-hover-lift {
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
   }
   .card-hover-lift:hover {
-    transform: translateY(-3px);
-    border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
-    box-shadow: var(--shadow-elevated);
+    background: var(--card-hover);
+    border-color: var(--border);
   }
 
   .surface-panel {
-    border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0)), var(--card);
-    box-shadow: var(--shadow-card);
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    box-shadow: none;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background;
-    background: var(--gradient-cta);
-    box-shadow: 0 8px 28px rgba(79, 124, 255, 0.35);
-    border: 1px solid rgba(137, 192, 255, 0.35);
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-medium text-background transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: var(--primary);
+    box-shadow: none;
+    border: 1px solid var(--primary);
   }
   .btn-primary:hover {
-    filter: brightness(1.03);
-    box-shadow: 0 10px 32px rgba(79, 124, 255, 0.44);
+    background: var(--primary);
+    opacity: 0.9;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background;
-    color: color-mix(in srgb, var(--foreground) 84%, transparent);
-    border: 1px solid transparent;
+    @apply inline-flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--foreground);
+    border: 1px solid var(--border);
+    background: transparent;
   }
   .btn-ghost:hover {
-    color: var(--foreground);
-    background: rgba(255, 255, 255, 0.03);
-    border-color: color-mix(in srgb, var(--border) 78%, transparent);
+    background: var(--card-hover);
+    border-color: var(--border);
   }
 
   .btn-secondary {
-    @apply inline-flex items-center gap-2 rounded-xl border px-5 py-2.5 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background;
-    border-color: color-mix(in srgb, var(--border) 88%, transparent);
-    background: color-mix(in srgb, var(--card) 88%, transparent);
+    @apply inline-flex items-center gap-2 rounded-lg border px-5 py-2.5 text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-color: var(--border);
+    background: transparent;
     color: var(--foreground);
   }
   .btn-secondary:hover {
-    border-color: color-mix(in srgb, var(--primary) 42%, var(--border));
+    border-color: var(--border);
     background: var(--card-hover);
   }
 
@@ -191,7 +184,7 @@ body {
   }
 
   .section-subheading {
-    @apply mt-3 text-lg max-w-2xl leading-relaxed;
+    @apply mt-3 text-base max-w-2xl leading-relaxed;
     color: var(--muted-foreground);
   }
 
@@ -200,8 +193,20 @@ body {
   }
 
   .section-spacing {
-    @apply py-16 sm:py-20 lg:py-24;
+    @apply py-20 sm:py-24 lg:py-28;
   }
+}
+
+/* Keep rounding constrained to 6-8px across legacy classes. */
+.rounded-3xl,
+.rounded-2xl,
+.rounded-xl {
+  border-radius: 8px !important;
+}
+
+.rounded-lg,
+.rounded-md {
+  border-radius: 6px !important;
 }
 
 @layer utilities {

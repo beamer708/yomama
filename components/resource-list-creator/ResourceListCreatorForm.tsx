@@ -111,7 +111,7 @@ export function ResourceListCreatorForm({
             onClick={() => setStep(i)}
             className={`rounded-xl px-4 py-2 text-sm font-medium transition-colors ${
               step === i
-                ? "bg-primary text-white"
+                ? "bg-primary text-background"
                 : "bg-white/5 text-muted-foreground hover:text-foreground"
             }`}
           >
@@ -215,7 +215,7 @@ export function ResourceListCreatorForm({
                 onClick={() => toggleFocus(area)}
                 className={`rounded-xl px-4 py-2.5 text-sm font-medium transition-all ${
                   form.focusAreas.includes(area)
-                    ? "bg-primary text-white"
+                    ? "bg-primary text-background"
                     : "bg-white/5 text-muted-foreground hover:bg-white/10"
                 }`}
               >

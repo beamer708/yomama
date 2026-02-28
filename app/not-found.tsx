@@ -5,7 +5,7 @@ export default function NotFound() {
   return (
     <div className="flex min-h-[70vh] flex-col items-center justify-center px-4">
       <div className="text-center">
-        <div className="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-accent/10">
+        <div className="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-card-hover">
           <Icon name="navigation" className="text-4xl text-primary" />
         </div>
         <h1 className="text-6xl font-bold tracking-tight text-foreground mb-2">404</h1>

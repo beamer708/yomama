@@ -18,7 +18,7 @@ export default function YouTubeResourceCard({
   const thumbnailUrl = resource.thumbnailUrl || getYouTubeThumbnail(resource.url);
 
   return (
-    <article className="group block overflow-hidden rounded-2xl border border-border bg-card/90 transition-all hover:-translate-y-0.5 hover:border-primary/35 hover:bg-card-hover">
+    <article className="group block overflow-hidden rounded-2xl border border-border bg-card transition-colors hover:bg-card-hover">
       {/* Thumbnail */}
       <div className="relative aspect-video w-full overflow-hidden bg-border">
         {thumbnailUrl ? (
@@ -34,28 +34,28 @@ export default function YouTubeResourceCard({
                 if (placeholder) placeholder.style.display = "flex";
               }}
             />
-            <div className="absolute inset-0 hidden h-full w-full items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5">
+            <div className="absolute inset-0 hidden h-full w-full items-center justify-center bg-card-hover">
               <Icon name="youtube" className="text-4xl text-primary/50" />
             </div>
           </>
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5">
+          <div className="flex h-full w-full items-center justify-center bg-card-hover">
             <Icon name="youtube" className="text-4xl text-primary/50" />
           </div>
         )}
         {/* NEW sticker */}
         {resource.isNew && (
           <div className="absolute top-2 left-2 z-10">
-            <span className="rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-primary text-white">
+            <span className="rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-primary text-background">
               New
             </span>
           </div>
         )}
         {/* YouTube overlay icon */}
         <div className="absolute top-2 right-2">
-          <div className="bg-black/70 backdrop-blur-sm rounded px-2 py-1 flex items-center gap-1.5">
-            <Icon name="youtube" className="text-xs text-white" />
-            <span className="text-xs text-white font-medium">YouTube</span>
+          <div className="rounded border border-border bg-background px-2 py-1 flex items-center gap-1.5">
+            <Icon name="youtube" className="text-xs" />
+            <span className="text-xs text-foreground font-medium">YouTube</span>
           </div>
         </div>
       </div>

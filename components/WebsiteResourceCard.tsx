@@ -30,7 +30,7 @@ export default function WebsiteResourceCard({
   return (
     <article className="group relative block rounded-2xl border border-border bg-card/90 p-6 transition-all hover:-translate-y-0.5 hover:border-primary/35 hover:bg-card-hover">
       {resource.isNew && (
-        <span className="absolute top-3 right-3 rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-primary text-white">
+        <span className="absolute top-3 right-3 rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-primary text-background">
           New
         </span>
       )}

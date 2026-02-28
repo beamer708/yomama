@@ -3,6 +3,7 @@ import Image from "next/image";
 import Icon from "@/components/Icon";
 import ERLCLogo from "@/components/ERLCLogo";
 import { NAV } from "@/lib/site-structure";
+import uLogo from "@/Media/ULogo.svg";
 
 export default function Home() {
   return (
@@ -12,7 +13,7 @@ export default function Home() {
           <div className="mx-auto max-w-4xl text-center">
             <div className="mb-8 flex items-center justify-center gap-4">
               <Image
-                src="/UnityLogo.svg"
+                src={uLogo}
                 alt=""
                 width={64}
                 height={64}
@@ -174,7 +175,7 @@ export default function Home() {
       <section className="section-spacing">
         <div className="page-container">
           <div className="relative overflow-hidden rounded-3xl border border-border/70 bg-card p-10 text-center sm:p-16">
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(102,227,255,0.14),transparent_55%)]" aria-hidden />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(243,236,226,0.14),transparent_55%)]" aria-hidden />
             <h2 className="relative text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
               Ready to build your community?
             </h2>

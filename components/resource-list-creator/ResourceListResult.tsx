@@ -75,7 +75,7 @@ function ResourceCardRow({
             </div>
           )}
           {resource.isNew && (
-            <span className="mt-2 inline-block rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-primary text-white">
+            <span className="mt-2 inline-block rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-primary text-background">
               New
             </span>
           )}

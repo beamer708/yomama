@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import Icon from "@/components/Icon";
 import { NAV } from "@/lib/site-structure";
+import uLogo from "@/Media/ULogo.svg";
 
 export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -21,7 +22,7 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/70">
+    <nav className="sticky top-0 z-50 border-b border-border bg-background">
       <div className="page-container">
         <div className="flex h-20 items-center justify-between">
           <Link
@@ -29,13 +30,13 @@ export default function Navigation() {
             className="flex items-center gap-3 transition-opacity hover:opacity-90"
           >
             <Image
-              src="/UnityLogo.svg"
+              src={uLogo}
               alt=""
               width={34}
               height={34}
               className="shrink-0"
             />
-            <span className="text-lg font-semibold tracking-tight text-foreground">
+            <span className="text-lg font-medium tracking-[0.14em] text-foreground uppercase">
               Unity Vault
             </span>
           </Link>
@@ -60,7 +61,7 @@ export default function Navigation() {
               </button>
               {resourcesOpen && (
                 <div
-                  className="absolute left-0 top-full mt-3 w-60 rounded-xl border border-primary/30 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.06))] p-2 shadow-2xl backdrop-blur-2xl supports-[backdrop-filter]:bg-card/90"
+                  className="absolute left-0 top-full mt-3 w-60 rounded-lg border border-border bg-card p-2"
                   role="menu"
                 >
                   <Link
@@ -101,7 +102,7 @@ export default function Navigation() {
               </button>
               {communityOpen && (
                 <div
-                  className="absolute left-0 top-full mt-3 w-60 rounded-xl border border-primary/30 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.06))] p-2 shadow-2xl backdrop-blur-2xl supports-[backdrop-filter]:bg-card/90"
+                  className="absolute left-0 top-full mt-3 w-60 rounded-lg border border-border bg-card p-2"
                   role="menu"
                 >
                   {isStaffApplicationOpen && (
@@ -175,7 +176,7 @@ export default function Navigation() {
       </div>
 
       {mobileOpen && (
-        <div className="lg:hidden border-t border-border/60 bg-background/90 backdrop-blur-xl supports-[backdrop-filter]:bg-background/85 animate-in-fade">
+        <div className="lg:hidden border-t border-border bg-background animate-in-fade">
           <div className="page-container space-y-1 py-5">
             <Link
               href="/resources"
@@ -233,7 +234,7 @@ export default function Navigation() {
             ))}
             <Link
               href={NAV.resources.href}
-              className="mt-2 block rounded-xl border border-primary/50 bg-gradient-to-r from-primary to-accent px-4 py-3 text-center text-base font-semibold text-white shadow-lg"
+              className="mt-2 block rounded-lg border border-border bg-primary px-4 py-3 text-center text-base font-medium text-background"
               onClick={() => setMobileOpen(false)}
             >
               Explore Resources

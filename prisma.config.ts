@@ -3,11 +3,10 @@
 import "dotenv/config";
 import { defineConfig } from "prisma/config";
 
-// Use DATABASE_URL in production (e.g. Vercel); fallback for build/generate when env is not set
-const databaseUrl =
-  typeof process.env["DATABASE_URL"] === "string" && process.env["DATABASE_URL"].trim()
-    ? process.env["DATABASE_URL"]
-    : "file:./resource-list.db";
+const databaseUrl = process.env["DATABASE_URL"];
+if (!databaseUrl || !databaseUrl.trim()) {
+  throw new Error("DATABASE_URL is required for Prisma configuration.");
+}
 
 export default defineConfig({
   schema: "prisma/schema.prisma",

@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Icon from "@/components/Icon";
 import { NAV, STATUS_URL } from "@/lib/site-structure";
+import uLogo from "@/Media/ULogo.svg";
 
 export default function Footer() {
   return (
@@ -9,8 +10,8 @@ export default function Footer() {
       <div className="page-container py-10">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <Link href="/" className="inline-flex items-center gap-2">
-            <Image src="/UnityLogo.svg" alt="" width={24} height={24} />
-            <span className="text-base font-semibold text-foreground">Unity Vault</span>
+            <Image src={uLogo} alt="" width={24} height={24} />
+            <span className="text-base font-medium tracking-[0.14em] text-foreground uppercase">Unity Vault</span>
           </Link>
 
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">

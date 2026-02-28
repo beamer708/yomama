@@ -148,7 +148,7 @@ export default function ResourcesPage() {
                 href="/resource-list-creator"
                 className={`inline-flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold transition-colors ${
                   customListResources.length > 0
-                    ? "bg-primary text-white hover:bg-primary-hover"
+                    ? "bg-primary text-background hover:bg-primary-hover"
                     : "cursor-not-allowed bg-white/10 text-muted-foreground pointer-events-none"
                 }`}
               >
@@ -171,7 +171,7 @@ export default function ResourcesPage() {
                 onClick={() => setBrowseTab("all")}
                 className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
                   browseTab === "all"
-                    ? "bg-primary text-white"
+                    ? "bg-primary text-background"
                     : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
                 }`}
               >
@@ -182,7 +182,7 @@ export default function ResourcesPage() {
                 onClick={() => setBrowseTab("new")}
                 className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
                   browseTab === "new"
-                    ? "bg-primary text-white"
+                    ? "bg-primary text-background"
                     : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
                 }`}
               >

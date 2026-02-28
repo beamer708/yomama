@@ -1,17 +1,19 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
 import MainLayout from "@/components/MainLayout";
 import ShutdownNotice from "@/components/ShutdownNotice";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
-
 export const metadata: Metadata = {
   title: "Unity Vault | ERLC Community Resource Vault",
   description: "A curated vault of knowledge for building successful ERLC communities. Resources, frameworks, and guidance organized for growth.",
   keywords: ["ERLC", "Roblox", "roleplay", "community", "resources", "guides"],
+  icons: {
+    icon: "/ULogo.svg",
+    shortcut: "/ULogo.svg",
+    apple: "/ULogo.svg",
+  },
   openGraph: {
     title: "Unity Vault | ERLC Community Resource Vault",
     description: "A curated vault of knowledge for building successful ERLC communities.",
@@ -28,7 +30,7 @@ export default function RootLayout({
 
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.variable} antialiased`}>
+      <body className="antialiased">
         {isShutdown ? <ShutdownNotice /> : <MainLayout>{children}</MainLayout>}
         {!isShutdown ? (
           <Suspense fallback={null}>
