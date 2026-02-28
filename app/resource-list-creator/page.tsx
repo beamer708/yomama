@@ -72,7 +72,13 @@ export default function ResourceListCreatorPage() {
       });
       const data = await response.json().catch(() => ({}));
       if (!response.ok) {
-        throw new Error(typeof data.error === "string" ? data.error : "Failed to create share code");
+        const message =
+          typeof data.detail === "string" && data.detail.trim().length > 0
+            ? `${typeof data.error === "string" ? data.error : "Failed to create share code"}: ${data.detail}`
+            : typeof data.error === "string"
+              ? data.error
+              : "Failed to create share code";
+        throw new Error(message);
       }
       const relativeUrl = typeof data.shareUrl === "string" ? data.shareUrl : "";
       if (!relativeUrl) throw new Error("Missing share URL from server");

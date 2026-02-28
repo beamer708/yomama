@@ -2,6 +2,7 @@ import { randomBytes } from "crypto";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { resources } from "@/lib/resources";
+import { getFocusAreasForCategory } from "@/lib/resource-list-mapping";
 
 function createSlug(): string {
   return randomBytes(6).toString("hex");
@@ -28,6 +29,7 @@ export async function POST(request: Request) {
     }
 
     for (const resource of selectedResources) {
+      const focusAreas = getFocusAreasForCategory(resource.category);
       await prisma.resource.upsert({
         where: { id: resource.id },
         update: {
@@ -39,6 +41,9 @@ export async function POST(request: Request) {
           creator: resource.creator,
           creatorUrl: resource.creatorUrl ?? null,
           section: resource.section,
+          difficultyLevel: "intermediate",
+          priorityDefault: "recommended",
+          focusAreaTags: JSON.stringify(focusAreas),
         },
         create: {
           id: resource.id,
@@ -50,6 +55,9 @@ export async function POST(request: Request) {
           creator: resource.creator,
           creatorUrl: resource.creatorUrl ?? null,
           section: resource.section,
+          difficultyLevel: "intermediate",
+          priorityDefault: "recommended",
+          focusAreaTags: JSON.stringify(focusAreas),
         },
       });
     }
@@ -110,7 +118,11 @@ export async function POST(request: Request) {
       itemCount: savedList.items.length,
     });
   } catch (error) {
+    const detail = error instanceof Error ? error.message : "Unknown error";
     console.error("resource-lists manual POST", error);
-    return NextResponse.json({ error: "Failed to create custom resource list" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to create custom resource list", detail },
+      { status: 500 }
+    );
   }
 }
