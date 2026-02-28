@@ -20,19 +20,19 @@ const SECTIONS: Array<{
   {
     key: "recommended",
     label: "Recommended",
-    color: "from-amber-500/20 to-orange-600/10 border-amber-500/30",
+    color: "border-primary/35 bg-card/95",
     defaultOpen: true,
   },
   {
     key: "helpfulTools",
     label: "Helpful",
-    color: "from-primary/20 to-primary/5 border-primary/30",
+    color: "border-border bg-card/90",
     defaultOpen: true,
   },
   {
     key: "optional",
     label: "Optional",
-    color: "from-foreground/10 to-transparent border-border",
+    color: "border-border/80 bg-card/80",
     defaultOpen: false,
   },
 ];
@@ -50,7 +50,7 @@ function ResourceCard({
   const thumbnailUrl = isYouTube ? getYouTubeThumbnail(resource.url) : "";
 
   return (
-    <div className="group rounded-xl border border-border bg-card/50 p-4 transition-all hover:border-primary/30 hover:bg-card">
+    <div className="group rounded-xl border border-border/80 bg-card/85 p-4 transition-all hover:border-primary/35 hover:bg-card">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div className="min-w-0 flex-1">
           <a
@@ -77,8 +77,8 @@ function ResourceCard({
               New
             </span>
           )}
-          <p className="mt-1 text-sm text-foreground/70 line-clamp-2">{reason}</p>
-          <span className="mt-2 inline-block rounded-md bg-white/5 px-2 py-0.5 text-xs text-foreground/70">
+          <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{reason}</p>
+          <span className="mt-2 inline-block rounded-md bg-white/5 px-2 py-0.5 text-xs text-muted-foreground">
             {resource.category}
           </span>
         </div>
@@ -115,12 +115,12 @@ function SectionBlock({
 
   return (
     <div
-      className={`rounded-2xl border bg-gradient-to-br ${section.color} overflow-hidden`}
+      className={`overflow-hidden rounded-2xl ${section.color}`}
     >
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="flex w-full items-center justify-between px-5 py-4 text-left font-semibold text-foreground"
+        className="flex w-full items-center justify-between border-b border-border/60 px-5 py-4 text-left font-semibold text-foreground"
       >
         <span>
           {section.label} ({visible.length})
@@ -131,7 +131,7 @@ function SectionBlock({
         />
       </button>
       {open && (
-        <div className="space-y-3 px-4 pb-4">
+        <div className="space-y-3 px-4 pb-4 pt-4">
           {visible.map((r) => (
             <ResourceCard
               key={r.resourceId}

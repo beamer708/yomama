@@ -80,7 +80,7 @@ export default function ResourceListCreatorPage() {
   return (
     <div className="py-12 sm:py-16">
       <div className="page-container max-w-3xl">
-        <div className="mb-10 text-center">
+        <div className="mb-10 rounded-3xl border border-border/70 bg-card/75 p-7 text-center sm:p-9">
           <h1 className="section-heading">Resource Assistant</h1>
           <p className="section-subheading mx-auto">
             Describe what you want to build or improve. We’ll suggest relevant resources from the vault.
@@ -94,7 +94,7 @@ export default function ResourceListCreatorPage() {
                 e.preventDefault();
                 submit(query);
               }}
-              className="gradient-border rounded-2xl p-6 sm:p-8"
+              className="gradient-border gradient-card rounded-2xl p-6 sm:p-8"
             >
               <label htmlFor="assistant-query" className="block text-sm font-medium text-foreground mb-3">
                 What are you trying to build or improve?
@@ -108,7 +108,7 @@ export default function ResourceListCreatorPage() {
                 className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground placeholder:text-foreground/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 resize-y"
                 disabled={loading}
               />
-              <p className="mt-2 text-xs text-foreground/60">
+              <p className="mt-2 text-xs text-muted-foreground">
                 One sentence is enough. No forms or settings.
               </p>
               {error && (
@@ -138,7 +138,7 @@ export default function ResourceListCreatorPage() {
             </form>
 
             {!showRefine && (
-              <p className="mt-4 text-center text-sm text-foreground/60">
+              <p className="mt-4 text-center text-sm text-muted-foreground">
                 Examples: “I need branding and graphics for my server”, “I want to improve staff management”, “I want to redesign my existing server”
               </p>
             )}
@@ -148,7 +148,7 @@ export default function ResourceListCreatorPage() {
         {loading && !showPrompt && (
           <div className="flex flex-col items-center justify-center py-16">
             <span className="inline-block h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-            <p className="mt-4 text-foreground/70">Finding resources…</p>
+            <p className="mt-4 text-muted-foreground">Finding resources…</p>
           </div>
         )}
 

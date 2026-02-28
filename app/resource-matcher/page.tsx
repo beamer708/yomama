@@ -13,7 +13,7 @@ import {
 
 function ResourceCard({ resource }: { resource: RecommendedResource }) {
   return (
-    <div className="rounded-lg border border-border bg-card p-5 hover:border-primary/30 hover:bg-card-hover transition-all">
+    <div className="rounded-xl border border-border bg-card/85 p-5 transition-all hover:border-primary/30 hover:bg-card-hover">
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
           <h3 className="text-base font-semibold text-foreground mb-2 line-clamp-2">
@@ -24,7 +24,7 @@ function ResourceCard({ resource }: { resource: RecommendedResource }) {
               New
             </span>
           )}
-          <p className="text-sm text-foreground/70 line-clamp-2 leading-relaxed">
+          <p className="line-clamp-2 text-sm leading-relaxed text-muted-foreground">
             {resource.description}
           </p>
         </div>
@@ -40,7 +40,7 @@ function ResourceCard({ resource }: { resource: RecommendedResource }) {
           </a>
         )}
       </div>
-      <span className="inline-block mt-3 text-xs text-foreground/50">
+      <span className="mt-3 inline-block text-xs text-muted-foreground">
         {resource.type}
       </span>
     </div>
@@ -73,9 +73,9 @@ export default function ResourceMatcherPage() {
 
   return (
     <div className="py-16 sm:py-20">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <div className="page-container max-w-3xl">
         {/* Coming Soon Banner */}
-        <div className="mb-10 rounded-lg border border-primary/30 bg-primary/5 px-4 py-3">
+        <div className="mb-10 rounded-lg border border-primary/30 bg-primary/10 px-4 py-3">
           <p className="text-sm font-medium text-primary flex items-center gap-2">
             <Icon name="sparkles" className="text-base" />
             This feature is coming soon. Early access preview only.
@@ -87,7 +87,7 @@ export default function ResourceMatcherPage() {
           <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-2">
             Resource Matcher
           </h1>
-          <p className="text-lg text-foreground/70">
+          <p className="text-lg text-muted-foreground">
             Tell us about your server and goals. We&apos;ll recommend the best resources from the vault.
           </p>
         </div>
@@ -142,7 +142,7 @@ export default function ResourceMatcherPage() {
 
           <button
             type="submit"
-            className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-white hover:text-primary-hover transition-colors"
+            className="btn-primary"
           >
             <Icon name="search" className="text-base" />
             Get Recommendations
@@ -158,7 +158,7 @@ export default function ResourceMatcherPage() {
             <h2 className="text-2xl font-semibold text-foreground mb-2">
               Recommended Resources
             </h2>
-            <p className="text-foreground/70 mb-6">
+            <p className="mb-6 text-muted-foreground">
               Based on <strong>{serverType}</strong> and goal: <strong>{serverGoal}</strong>
             </p>
 
@@ -169,8 +169,8 @@ export default function ResourceMatcherPage() {
                 ))}
               </div>
             ) : (
-              <div className="rounded-lg border border-border bg-card/50 p-8 text-center">
-                <p className="text-foreground/70">
+              <div className="rounded-lg border border-border bg-card/85 p-8 text-center">
+                <p className="text-muted-foreground">
                   No recommendations found. Try a different combination.
                 </p>
               </div>

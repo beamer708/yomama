@@ -106,7 +106,7 @@ export default function ResourcesPage() {
   return (
     <div className="py-12 sm:py-16">
       <div className="page-container max-w-4xl">
-        <div className="mb-10 text-center">
+        <div className="mb-10 rounded-3xl border border-border/70 bg-card/75 p-7 text-center sm:p-9">
           <div className="flex justify-center mb-4">
             <ERLCLogo size={40} />
           </div>
@@ -119,7 +119,7 @@ export default function ResourcesPage() {
         {!result ? (
           <div className="space-y-8 animate-in-fade">
             <div className="gradient-border rounded-2xl p-6 sm:p-8">
-              <label htmlFor="resources-query" className="block text-sm font-medium text-foreground mb-3">
+              <label htmlFor="resources-query" className="mb-3 block text-sm font-medium text-foreground">
                 What are you working on?
               </label>
               <textarea
@@ -134,7 +134,7 @@ export default function ResourcesPage() {
             </div>
 
             <div>
-              <p className="text-sm font-medium text-foreground mb-3">
+              <p className="mb-3 text-sm font-medium text-foreground">
                 Or select one or more areas
               </p>
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
@@ -149,7 +149,7 @@ export default function ResourcesPage() {
                       className={`flex flex-col items-center rounded-xl border p-4 text-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background disabled:opacity-50 ${
                         isSelected
                           ? "border-primary bg-primary/15 text-primary shadow-lg shadow-primary/10"
-                          : "border-border bg-card/60 hover:border-primary/40 hover:bg-card-hover text-foreground"
+                          : "border-border bg-card/85 text-foreground hover:border-primary/40 hover:bg-card-hover"
                       }`}
                     >
                       <span
@@ -212,7 +212,7 @@ export default function ResourcesPage() {
         <div className="mt-16 border-t border-border/70 pt-12">
           <div className="mb-8">
             <h2 className="text-2xl font-semibold text-foreground">Browse all resources</h2>
-            <p className="mt-2 text-sm text-foreground/70">
+            <p className="mt-2 text-sm text-muted-foreground">
               Videos are shown with previews and organized separately from website tools.
             </p>
             <div className="mt-4 inline-flex rounded-xl border border-border bg-card/40 p-1">
@@ -222,7 +222,7 @@ export default function ResourcesPage() {
                 className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
                   browseTab === "all"
                     ? "bg-primary text-white"
-                    : "text-foreground/80 hover:bg-white/5 hover:text-foreground"
+                    : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
                 }`}
               >
                 All resources
@@ -233,7 +233,7 @@ export default function ResourcesPage() {
                 className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
                   browseTab === "new"
                     ? "bg-primary text-white"
-                    : "text-foreground/80 hover:bg-white/5 hover:text-foreground"
+                    : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
                 }`}
               >
                 NEW

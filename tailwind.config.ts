@@ -12,6 +12,9 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        muted: {
+          foreground: "var(--muted-foreground)",
+        },
         primary: {
           DEFAULT: "var(--primary)",
           hover: "var(--primary-hover)",
@@ -25,6 +28,10 @@ const config: Config = {
           DEFAULT: "var(--card)",
           hover: "var(--card-hover)",
         },
+        surface: {
+          2: "var(--surface-2)",
+        },
+        ring: "var(--ring)",
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],

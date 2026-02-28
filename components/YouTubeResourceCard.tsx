@@ -10,20 +10,15 @@ export default function YouTubeResourceCard({ resource }: YouTubeResourceCardPro
   const thumbnailUrl = resource.thumbnailUrl || getYouTubeThumbnail(resource.url);
 
   return (
-    <a
-      href={resource.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group block rounded-lg bg-card border border-border overflow-hidden hover:border-primary/30 hover:bg-card-hover transition-all"
-    >
+    <article className="group block overflow-hidden rounded-2xl border border-border bg-card/90 transition-all hover:-translate-y-0.5 hover:border-primary/35 hover:bg-card-hover">
       {/* Thumbnail */}
-      <div className="relative w-full aspect-video bg-border overflow-hidden">
+      <div className="relative aspect-video w-full overflow-hidden bg-border">
         {thumbnailUrl ? (
           <>
             <img
               src={thumbnailUrl}
               alt={resource.title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
               onError={(e) => {
                 // Hide image and show placeholder if thumbnail fails
                 e.currentTarget.style.display = "none";
@@ -31,12 +26,12 @@ export default function YouTubeResourceCard({ resource }: YouTubeResourceCardPro
                 if (placeholder) placeholder.style.display = "flex";
               }}
             />
-            <div className="hidden w-full h-full items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5 absolute inset-0">
+            <div className="absolute inset-0 hidden h-full w-full items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5">
               <Icon name="youtube" className="text-4xl text-primary/50" />
             </div>
           </>
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5">
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5">
             <Icon name="youtube" className="text-4xl text-primary/50" />
           </div>
         )}
@@ -60,25 +55,32 @@ export default function YouTubeResourceCard({ resource }: YouTubeResourceCardPro
       {/* Content */}
       <div className="p-5">
         <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-2">
-          {resource.title}
+          <a
+            href={resource.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1"
+          >
+            {resource.title}
+            <Icon name="up-right-from-square" className="text-xs" />
+          </a>
         </h3>
         {resource.channelName && (
-          <p className="text-sm text-foreground/70 mb-3">
+          <p className="mb-3 text-sm text-muted-foreground">
             {resource.channelName}
           </p>
         )}
-        <p className="text-sm text-foreground/70 mb-4 line-clamp-2 leading-relaxed">
+        <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
           {resource.description}
         </p>
-        <div className="flex items-center justify-between pt-4 border-t border-border/50">
-          <div className="text-xs text-foreground/60">
+        <div className="flex items-center justify-between border-t border-border/50 pt-4">
+          <div className="text-xs text-muted-foreground">
             {resource.creatorUrl ? (
               <a
                 href={resource.creatorUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="hover:text-foreground transition-colors"
+                className="transition-colors hover:text-foreground"
               >
                 {resource.creator}
               </a>
@@ -86,12 +88,17 @@ export default function YouTubeResourceCard({ resource }: YouTubeResourceCardPro
               <span>{resource.creator}</span>
             )}
           </div>
-          <div className="inline-flex items-center gap-1.5 text-sm font-medium text-primary group-hover:text-primary-hover transition-colors">
+          <a
+            href={resource.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-primary group-hover:text-primary-hover transition-colors"
+          >
             Watch Video
             <Icon name="up-right-from-square" className="text-sm" />
-          </div>
+          </a>
         </div>
       </div>
-    </a>
+    </article>
   );
 }

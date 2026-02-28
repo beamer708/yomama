@@ -28,42 +28,42 @@ export default function EmojiGuidePage() {
   return (
     <div className="py-12 sm:py-16">
       <div className="page-container max-w-4xl">
-        <div className="mb-10 rounded-3xl border border-border bg-gradient-to-br from-primary/15 via-primary/5 to-transparent p-6 sm:p-8">
+        <div className="mb-10 rounded-3xl border border-border/70 bg-card/75 p-6 sm:p-8">
           <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/20 text-primary">
             <Icon name="sparkles" className="text-2xl" />
           </div>
           <h1 className="section-heading">Guide: Create Discord Emojis</h1>
-          <p className="mt-3 text-base text-foreground/80 sm:text-lg">
+          <p className="mt-3 text-base text-muted-foreground sm:text-lg">
             Build sharp custom Discord emojis from icon sites in a few steps: choose icon, download SVG,
             recolor in an editor, set to 32x32, and upload.
           </p>
         </div>
 
         <div className="mb-8 grid gap-3 sm:grid-cols-3">
-          <div className="rounded-2xl border border-border bg-card/50 p-4">
+          <div className="rounded-2xl border border-border bg-card/85 p-4">
             <div className="mb-2 inline-flex h-9 w-9 items-center justify-center rounded-xl bg-primary/15 text-primary">
               <Icon name="file" className="text-base" />
             </div>
             <h2 className="text-sm font-semibold text-foreground">1. Pick an icon</h2>
-            <p className="mt-1 text-xs text-foreground/70">Select a clean icon and download SVG format.</p>
+            <p className="mt-1 text-xs text-muted-foreground">Select a clean icon and download SVG format.</p>
           </div>
-          <div className="rounded-2xl border border-border bg-card/50 p-4">
+          <div className="rounded-2xl border border-border bg-card/85 p-4">
             <div className="mb-2 inline-flex h-9 w-9 items-center justify-center rounded-xl bg-primary/15 text-primary">
               <Icon name="palette" className="text-base" />
             </div>
             <h2 className="text-sm font-semibold text-foreground">2. Style it</h2>
-            <p className="mt-1 text-xs text-foreground/70">Recolor and fit canvas/artboard to 32x32.</p>
+            <p className="mt-1 text-xs text-muted-foreground">Recolor and fit canvas/artboard to 32x32.</p>
           </div>
-          <div className="rounded-2xl border border-border bg-card/50 p-4">
+          <div className="rounded-2xl border border-border bg-card/85 p-4">
             <div className="mb-2 inline-flex h-9 w-9 items-center justify-center rounded-xl bg-primary/15 text-primary">
               <Icon name="discord" className="text-base" />
             </div>
             <h2 className="text-sm font-semibold text-foreground">3. Upload to Discord</h2>
-            <p className="mt-1 text-xs text-foreground/70">Add emoji in server settings and test readability.</p>
+            <p className="mt-1 text-xs text-muted-foreground">Add emoji in server settings and test readability.</p>
           </div>
         </div>
 
-        <div className="mb-8 rounded-2xl border border-border bg-card/50 p-6 sm:p-8">
+        <div className="mb-8 rounded-2xl border border-border bg-card/85 p-6 sm:p-8">
           <h2 className="text-lg font-semibold text-foreground">Icon sites from Resources</h2>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {ICON_SITES.map((site) => (
@@ -78,15 +78,15 @@ export default function EmojiGuidePage() {
                   {site.title}
                   <Icon name="up-right-from-square" className="text-xs" />
                 </p>
-                <p className="mt-1 text-xs text-foreground/70">{site.note}</p>
+                <p className="mt-1 text-xs text-muted-foreground">{site.note}</p>
               </a>
             ))}
           </div>
         </div>
 
-        <div className="rounded-2xl border border-border bg-card/50 p-6 sm:p-8">
+        <div className="rounded-2xl border border-border bg-card/85 p-6 sm:p-8">
           <h2 className="text-lg font-semibold text-foreground">Emoji workflow (detailed)</h2>
-          <ol className="mt-4 space-y-4 text-sm text-foreground/80">
+          <ol className="mt-4 space-y-4 text-sm text-muted-foreground">
             <li>
               <span className="font-semibold text-foreground">1) Choose your icon style.</span> Pick icons with bold
               shapes so they remain visible at small sizes.

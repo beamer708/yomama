@@ -13,7 +13,7 @@ export default function StatusPage() {
           </p>
         </div>
 
-        <div className="rounded-2xl border border-border bg-card/50 overflow-hidden">
+        <div className="overflow-hidden rounded-2xl border border-border bg-card/85">
           <div className="p-6 sm:p-8">
             <div className="flex items-start gap-4">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
@@ -21,7 +21,7 @@ export default function StatusPage() {
               </div>
               <div>
                 <h2 className="font-semibold text-foreground">Live status</h2>
-                <p className="mt-1 text-sm text-foreground/70">
+                <p className="mt-1 text-sm text-muted-foreground">
                   Our status page shows real-time uptime and incident history for Unity Vault services.
                 </p>
                 <a
@@ -38,9 +38,9 @@ export default function StatusPage() {
           </div>
         </div>
 
-        <div className="mt-10 rounded-2xl border border-border/60 bg-card/30 p-6 sm:p-8">
+        <div className="mt-10 rounded-2xl border border-border/60 bg-card/80 p-6 sm:p-8">
           <h3 className="font-semibold text-foreground">Updates</h3>
-          <p className="mt-2 text-sm text-foreground/70">
+          <p className="mt-2 text-sm text-muted-foreground">
             Major product updates and announcements are shared in our Discord and on the homepage. For technical status and downtime, use the status page above.
           </p>
           <Link

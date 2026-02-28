@@ -20,7 +20,7 @@ export default function ResourceCard({ resource }: ResourceCardProps) {
   const typeInfo = typeLabels[resource.type];
 
   return (
-    <div className="group gradient-border card-hover-lift flex flex-col p-6">
+    <div className="group gradient-border gradient-card card-hover-lift flex flex-col p-6">
       <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
         <span className="inline-flex items-center gap-1.5 rounded-lg bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">
           <Icon name={typeInfo.icon} className="text-[10px]" />
@@ -35,17 +35,17 @@ export default function ResourceCard({ resource }: ResourceCardProps) {
       <h3 className="text-lg font-semibold text-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors">
         {resource.title}
       </h3>
-      <p className="text-sm text-foreground/70 mb-4 line-clamp-2 flex-1">
+      <p className="mb-4 flex-1 line-clamp-2 text-sm text-muted-foreground">
         {resource.description}
       </p>
       <div className="flex items-center justify-between gap-3 pt-2 border-t border-border/50">
-        <span className="text-xs text-foreground/60 truncate">
+        <span className="truncate text-xs text-muted-foreground">
           {resource.creatorUrl ? (
             <a
               href={resource.creatorUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-foreground transition-colors"
+              className="transition-colors hover:text-foreground"
             >
               {resource.creator}
             </a>

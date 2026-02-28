@@ -21,9 +21,9 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-background/35 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/25">
+    <nav className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/70">
       <div className="page-container">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-20 items-center justify-between">
           <Link
             href="/"
             className="flex items-center gap-3 transition-opacity hover:opacity-90"
@@ -31,8 +31,8 @@ export default function Navigation() {
             <Image
               src="/UnityLogo.svg"
               alt=""
-              width={32}
-              height={32}
+              width={34}
+              height={34}
               className="shrink-0"
             />
             <span className="text-lg font-semibold tracking-tight text-foreground">
@@ -40,7 +40,7 @@ export default function Navigation() {
             </span>
           </Link>
 
-          <div className="hidden lg:flex lg:items-center lg:gap-1">
+          <div className="hidden lg:flex lg:items-center lg:gap-1.5">
             <div className="relative">
               <button
                 type="button"
@@ -57,12 +57,12 @@ export default function Navigation() {
               </button>
               {resourcesOpen && (
                 <div
-                  className="absolute left-0 top-full mt-2 w-56 rounded-xl border border-border bg-card p-2 shadow-xl"
+                  className="absolute left-0 top-full mt-3 w-60 rounded-xl border border-primary/30 bg-[linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.06))] p-2 shadow-2xl backdrop-blur-2xl supports-[backdrop-filter]:bg-card/90"
                   role="menu"
                 >
                   <Link
                     href="/resources"
-                    className="block rounded-lg px-3 py-2 text-sm text-foreground hover:bg-card-hover"
+                    className="block rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-white/15"
                     role="menuitem"
                     onClick={() => setResourcesOpen(false)}
                   >
@@ -70,7 +70,7 @@ export default function Navigation() {
                   </Link>
                   <Link
                     href="/community-guides"
-                    className="block rounded-lg px-3 py-2 text-sm text-foreground hover:bg-card-hover"
+                    className="block rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-white/15"
                     role="menuitem"
                     onClick={() => setResourcesOpen(false)}
                   >
@@ -90,7 +90,7 @@ export default function Navigation() {
             ))}
             <Link
               href={NAV.resources.href}
-              className="ml-2 rounded-xl bg-gradient-to-r from-primary to-accent px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
+              className="ml-2 btn-primary px-5 py-2.5"
             >
               Explore Resources
             </Link>
@@ -98,7 +98,7 @@ export default function Navigation() {
 
           <button
             type="button"
-            className="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg text-foreground hover:bg-white/5 transition-colors"
+            className="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg border border-border/60 text-foreground hover:bg-white/5 transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
@@ -113,8 +113,8 @@ export default function Navigation() {
       </div>
 
       {mobileOpen && (
-        <div className="lg:hidden bg-background/55 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/45 animate-in-fade">
-          <div className="page-container space-y-1 py-4">
+        <div className="lg:hidden border-t border-border/60 bg-background/90 backdrop-blur-xl supports-[backdrop-filter]:bg-background/85 animate-in-fade">
+          <div className="page-container space-y-1 py-5">
             <Link
               href="/resources"
               className="block rounded-lg px-4 py-3 text-base font-medium text-foreground hover:bg-white/5"
@@ -141,7 +141,7 @@ export default function Navigation() {
             ))}
             <Link
               href={NAV.resources.href}
-              className="mt-2 block rounded-xl bg-gradient-to-r from-primary to-accent px-4 py-3 text-center text-base font-semibold text-white"
+              className="mt-2 block rounded-xl border border-primary/50 bg-gradient-to-r from-primary to-accent px-4 py-3 text-center text-base font-semibold text-white shadow-lg"
               onClick={() => setMobileOpen(false)}
             >
               Explore Resources

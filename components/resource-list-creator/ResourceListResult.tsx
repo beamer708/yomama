@@ -22,17 +22,17 @@ const SECTION_CONFIG: Record<
 > = {
   required: {
     label: "Required",
-    color: "from-amber-500/20 to-orange-600/10 border-amber-500/30",
+    color: "border-primary/35 bg-card/95",
     defaultOpen: true,
   },
   recommended: {
     label: "Recommended",
-    color: "from-primary/20 to-primary/5 border-primary/30",
+    color: "border-border bg-card/90",
     defaultOpen: true,
   },
   optional: {
     label: "Optional",
-    color: "from-foreground/10 to-transparent border-border",
+    color: "border-border/80 bg-card/80",
     defaultOpen: false,
   },
 };
@@ -52,7 +52,7 @@ function ResourceCardRow({
   const isYouTube = resource.section === "youtube" || resource.type.toLowerCase() === "video";
   const thumbnailUrl = isYouTube ? getYouTubeThumbnail(resource.url) : "";
   return (
-    <div className="group rounded-xl border border-border bg-card/50 p-4 transition-all hover:border-primary/30 hover:bg-card">
+    <div className="group rounded-xl border border-border/80 bg-card/85 p-4 transition-all hover:border-primary/35 hover:bg-card">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div className="min-w-0 flex-1">
           <a
@@ -79,14 +79,14 @@ function ResourceCardRow({
               New
             </span>
           )}
-          <p className="mt-1 text-sm text-foreground/70 line-clamp-2">
+          <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
             {resource.description}
           </p>
           <div className="mt-2 flex flex-wrap gap-2 text-xs">
-            <span className="rounded-md bg-white/5 px-2 py-0.5 text-foreground/70">
+            <span className="rounded-md bg-white/5 px-2 py-0.5 text-muted-foreground">
               {resource.category}
             </span>
-            <span className="rounded-md bg-white/5 px-2 py-0.5 text-foreground/70 capitalize">
+            <span className="rounded-md bg-white/5 px-2 py-0.5 text-muted-foreground capitalize">
               {resource.difficultyLevel}
             </span>
           </div>
@@ -113,7 +113,7 @@ function ResourceCardRow({
         </div>
       </div>
       {expanded && (
-        <div className="mt-3 border-t border-border pt-3 text-sm text-foreground/70">
+        <div className="mt-3 border-t border-border pt-3 text-sm text-muted-foreground">
           <p>{resource.description}</p>
           {resource.creator && (
             <p className="mt-1">
@@ -166,13 +166,11 @@ function SectionBlock({
   if (visible.length === 0) return null;
 
   return (
-    <div
-      className={`rounded-2xl border bg-gradient-to-br ${config.color} overflow-hidden`}
-    >
+    <div className={`overflow-hidden rounded-2xl ${config.color}`}>
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="flex w-full items-center justify-between px-5 py-4 text-left font-semibold text-foreground"
+        className="flex w-full items-center justify-between border-b border-border/60 px-5 py-4 text-left font-semibold text-foreground"
       >
         <span>
           {config.label} ({visible.length})
@@ -183,7 +181,7 @@ function SectionBlock({
         />
       </button>
       {open && (
-        <div className="space-y-3 px-4 pb-4">
+        <div className="space-y-3 px-4 pb-4 pt-4">
           {visible.map((r) => (
             <ResourceCardRow
               key={r.resourceId}

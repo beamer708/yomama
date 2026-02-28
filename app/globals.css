@@ -6,35 +6,49 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #0a0a0a;
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --accent: #3b82f6;
-  --accent-hover: #2563eb;
-  --border: #e5e7eb;
-  --card: #ffffff;
-  --card-hover: #f9fafb;
+  --background: #060812;
+  --foreground: #f4f7ff;
+  --muted-foreground: #aeb8d6;
+  --primary: #4f7cff;
+  --primary-hover: #628bff;
+  --accent: #66e3ff;
+  --accent-hover: #82e9ff;
+  --border: #1a2138;
+  --card: #0b1123;
+  --card-hover: #121a30;
+  --surface-2: #0f1730;
+  --ring: rgba(102, 227, 255, 0.45);
+  --hero-glow: radial-gradient(ellipse 68% 44% at 50% -16%, rgba(79, 124, 255, 0.32), transparent 62%);
+  --grid-line: rgba(164, 181, 255, 0.08);
+  --shadow-elevated: 0 18px 60px rgba(3, 6, 17, 0.48);
+  --shadow-card: 0 10px 34px rgba(3, 6, 17, 0.42);
+  --gradient-card: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+  --gradient-hero: linear-gradient(180deg, #091127 0%, #070d1e 44%, #060812 100%);
+  --gradient-cta: linear-gradient(135deg, #4f7cff 0%, #66e3ff 100%);
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-/* Dark theme – default for Unity Vault */
+/* Dark theme class kept for compatibility. */
 .dark {
-  --background: #050508;
-  --foreground: #fafafa;
-  --primary: #3b82f6;
-  --primary-hover: #2563eb;
-  --accent: #60a5fa;
-  --accent-hover: #3b82f6;
-  --border: #1f1f24;
-  --card: #0c0c10;
-  --card-hover: #12121a;
-  --gradient-start: #1e3a5f;
-  --gradient-mid: #1e293b;
-  --gradient-end: #0f172a;
-  --gradient-card: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0.02) 100%);
-  --gradient-hero: linear-gradient(180deg, var(--gradient-start) 0%, var(--gradient-mid) 45%, var(--background) 100%);
-  --gradient-cta: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  --background: #060812;
+  --foreground: #f4f7ff;
+  --muted-foreground: #aeb8d6;
+  --primary: #4f7cff;
+  --primary-hover: #628bff;
+  --accent: #66e3ff;
+  --accent-hover: #82e9ff;
+  --border: #1a2138;
+  --card: #0b1123;
+  --card-hover: #121a30;
+  --surface-2: #0f1730;
+  --ring: rgba(102, 227, 255, 0.45);
+  --hero-glow: radial-gradient(ellipse 68% 44% at 50% -16%, rgba(79, 124, 255, 0.32), transparent 62%);
+  --grid-line: rgba(164, 181, 255, 0.08);
+  --shadow-elevated: 0 18px 60px rgba(3, 6, 17, 0.48);
+  --shadow-card: 0 10px 34px rgba(3, 6, 17, 0.42);
+  --gradient-card: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+  --gradient-hero: linear-gradient(180deg, #091127 0%, #070d1e 44%, #060812 100%);
+  --gradient-cta: linear-gradient(135deg, #4f7cff 0%, #66e3ff 100%);
 }
 
 * {
@@ -54,6 +68,7 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: radial-gradient(circle at 10% 0%, rgba(102, 227, 255, 0.07), transparent 30%);
 }
 
 @layer base {
@@ -71,7 +86,7 @@ body {
 
   h1, h2, h3, h4, h5, h6 {
     letter-spacing: -0.02em;
-    font-weight: 600;
+    font-weight: 700;
   }
 
   a {
@@ -85,13 +100,40 @@ body {
 
 @layer components {
   .gradient-bg-hero {
-    background: var(--gradient-hero, linear-gradient(180deg, #1e3a5f 0%, #1e293b 40%, var(--background) 100%));
+    background: var(--gradient-hero);
+    position: relative;
+  }
+
+  .gradient-bg-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--hero-glow);
+    pointer-events: none;
+  }
+
+  .section-grid-overlay {
+    position: relative;
+  }
+
+  .section-grid-overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: linear-gradient(180deg, transparent, black 12%, black 88%, transparent);
+    pointer-events: none;
+    opacity: 0.3;
   }
 
   .gradient-border {
     position: relative;
     background: var(--card);
     border-radius: 1rem;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-card);
   }
   .gradient-border::before {
     content: "";
@@ -99,7 +141,7 @@ body {
     inset: 0;
     padding: 1px;
     border-radius: inherit;
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(59, 130, 246, 0.05));
+    background: linear-gradient(150deg, rgba(102, 227, 255, 0.18), rgba(79, 124, 255, 0.22), rgba(102, 227, 255, 0.02));
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
@@ -108,55 +150,72 @@ body {
   }
 
   .gradient-card {
-    background: var(--gradient-card, linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0.02) 100%));
+    background: var(--gradient-card), var(--card);
   }
 
   .card-hover-lift {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   }
   .card-hover-lift:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+    box-shadow: var(--shadow-elevated);
+  }
+
+  .surface-panel {
+    border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0)), var(--card);
+    box-shadow: var(--shadow-card);
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background;
-    background: var(--gradient-cta, linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%));
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background;
+    background: var(--gradient-cta);
+    box-shadow: 0 8px 28px rgba(79, 124, 255, 0.35);
+    border: 1px solid rgba(137, 192, 255, 0.35);
   }
   .btn-primary:hover {
-    filter: brightness(1.05);
+    filter: brightness(1.03);
+    box-shadow: 0 10px 32px rgba(79, 124, 255, 0.44);
   }
 
   .btn-ghost {
-    @apply inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-medium transition-all duration-200 hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background;
-    color: color-mix(in srgb, var(--foreground) 80%, transparent);
+    @apply inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background;
+    color: color-mix(in srgb, var(--foreground) 84%, transparent);
+    border: 1px solid transparent;
   }
   .btn-ghost:hover {
     color: var(--foreground);
+    background: rgba(255, 255, 255, 0.03);
+    border-color: color-mix(in srgb, var(--border) 78%, transparent);
   }
 
   .btn-secondary {
-    @apply inline-flex items-center gap-2 rounded-xl border border-border bg-card px-5 py-2.5 text-sm font-medium transition-all duration-200 hover:bg-card-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background;
+    @apply inline-flex items-center gap-2 rounded-xl border px-5 py-2.5 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background;
+    border-color: color-mix(in srgb, var(--border) 88%, transparent);
+    background: color-mix(in srgb, var(--card) 88%, transparent);
     color: var(--foreground);
   }
   .btn-secondary:hover {
-    border-color: color-mix(in srgb, var(--primary) 30%, transparent);
+    border-color: color-mix(in srgb, var(--primary) 42%, var(--border));
+    background: var(--card-hover);
   }
 
   .section-heading {
-    @apply text-3xl font-bold tracking-tight text-foreground sm:text-4xl;
+    @apply text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-[2.6rem];
   }
 
   .section-subheading {
-    @apply mt-3 text-lg max-w-2xl;
-    color: color-mix(in srgb, var(--foreground) 70%, transparent);
+    @apply mt-3 text-lg max-w-2xl leading-relaxed;
+    color: var(--muted-foreground);
   }
 
   .page-container {
-    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+    @apply mx-auto max-w-[76rem] px-4 sm:px-6 lg:px-8;
   }
 
   .section-spacing {
-    @apply py-16 sm:py-24 lg:py-28;
+    @apply py-16 sm:py-20 lg:py-24;
   }
 }
 

@@ -30,14 +30,14 @@ export default async function SharedListPage({ params }: PageProps) {
   };
 
   const sections = [
-    { key: "required" as const, label: "Required", color: "from-amber-500/20 to-orange-600/10 border-amber-500/30" },
-    { key: "recommended" as const, label: "Recommended", color: "from-primary/20 to-primary/5 border-primary/30" },
-    { key: "optional" as const, label: "Optional", color: "from-foreground/10 to-transparent border-border" },
+    { key: "required" as const, label: "Required", color: "border-primary/35 bg-card/95" },
+    { key: "recommended" as const, label: "Recommended", color: "border-border bg-card/90" },
+    { key: "optional" as const, label: "Optional", color: "border-border/80 bg-card/80" },
   ];
 
   return (
     <div className="py-12 sm:py-16">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div className="page-container max-w-4xl">
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
           <div>
             <h1 className="section-heading">{list.projectPlan.name}</h1>
@@ -59,18 +59,15 @@ export default async function SharedListPage({ params }: PageProps) {
             const items = byPriority[key];
             if (items.length === 0) return null;
             return (
-              <div
-                key={key}
-                className={`rounded-2xl border bg-gradient-to-br ${color} overflow-hidden`}
-              >
-                <div className="px-5 py-4 font-semibold text-foreground">
+              <div key={key} className={`overflow-hidden rounded-2xl ${color}`}>
+                <div className="border-b border-border/60 px-5 py-4 font-semibold text-foreground">
                   {label} ({items.length})
                 </div>
-                <div className="space-y-3 px-4 pb-4">
+                <div className="space-y-3 px-4 pb-4 pt-4">
                   {items.map((item) => (
                     <div
                       key={item.id}
-                      className="rounded-xl border border-border bg-card/50 p-4"
+                      className="rounded-xl border border-border bg-card/85 p-4"
                     >
                       <a
                         href={item.resource.url}
@@ -81,14 +78,14 @@ export default async function SharedListPage({ params }: PageProps) {
                         {item.resource.title}
                         <Icon name="up-right-from-square" className="text-xs" />
                       </a>
-                      <p className="mt-1 text-sm text-foreground/70">
+                      <p className="mt-1 text-sm text-muted-foreground">
                         {item.resource.description}
                       </p>
                       <div className="mt-2 flex flex-wrap gap-2 text-xs">
-                        <span className="rounded-md bg-white/5 px-2 py-0.5 text-foreground/70">
+                        <span className="rounded-md bg-white/5 px-2 py-0.5 text-muted-foreground">
                           {item.resource.category}
                         </span>
-                        <span className="rounded-md bg-white/5 px-2 py-0.5 text-foreground/70 capitalize">
+                        <span className="rounded-md bg-white/5 px-2 py-0.5 text-muted-foreground capitalize">
                           {item.resource.difficultyLevel}
                         </span>
                       </div>

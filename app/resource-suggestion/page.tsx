@@ -83,29 +83,29 @@ export default function ResourceSuggestionPage() {
   return (
     <div className="py-12 sm:py-16">
       <div className="page-container max-w-3xl">
-        <div className="mb-10 rounded-3xl border border-border bg-gradient-to-br from-primary/15 via-primary/5 to-transparent p-6 sm:p-8">
+        <div className="mb-10 rounded-3xl border border-border/70 bg-card/75 p-6 sm:p-8">
           <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/20 text-primary">
             <Icon name="sparkles" className="text-2xl" />
           </div>
           <h1 className="section-heading">Suggest a Resource</h1>
-          <p className="mt-3 text-base text-foreground/80 sm:text-lg">
+          <p className="mt-3 text-base text-muted-foreground sm:text-lg">
             Share a useful resource for Unity Vault. Your suggestion is sent to our Discord review
             channel for discussion and approval.
           </p>
           <div className="mt-5 flex flex-wrap gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/5 px-3 py-1 text-xs text-foreground/80">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/5 px-3 py-1 text-xs text-muted-foreground">
               <Icon name="discord" className="text-xs" />
               Discord review process
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/5 px-3 py-1 text-xs text-foreground/80">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/5 px-3 py-1 text-xs text-muted-foreground">
               <Icon name="clock" className="text-xs" />
               Quick submission
             </span>
           </div>
         </div>
 
-        <div className="mb-8 rounded-2xl border border-border bg-card/50 p-6">
-          <p className="text-sm text-foreground/80">
+        <div className="mb-8 rounded-2xl border border-border bg-card/85 p-6">
+          <p className="text-sm text-muted-foreground">
             <span className="font-semibold text-foreground">Important:</span> Join the Discord server
             to follow the result of your suggestion. Approval updates are posted there.
           </p>
@@ -121,7 +121,7 @@ export default function ResourceSuggestionPage() {
           </a>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6 rounded-3xl border border-border bg-card/50 p-6 sm:p-8">
+        <form onSubmit={handleSubmit} className="space-y-6 rounded-3xl border border-border bg-card/85 p-6 sm:p-8">
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
               <label htmlFor="discord-username" className="mb-2 block text-sm font-medium text-foreground">

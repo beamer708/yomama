@@ -102,7 +102,7 @@ export function ResourceListCreatorForm({
   };
 
   return (
-    <div className="gradient-border rounded-2xl p-8 sm:p-10">
+    <div className="gradient-border gradient-card rounded-2xl p-8 sm:p-10">
       <div className="mb-8 flex gap-2">
         {STEPS.map((label, i) => (
           <button
@@ -112,7 +112,7 @@ export function ResourceListCreatorForm({
             className={`rounded-xl px-4 py-2 text-sm font-medium transition-colors ${
               step === i
                 ? "bg-primary text-white"
-                : "bg-white/5 text-foreground/70 hover:text-foreground"
+                : "bg-white/5 text-muted-foreground hover:text-foreground"
             }`}
           >
             {i + 1}. {label}
@@ -204,7 +204,7 @@ export function ResourceListCreatorForm({
 
       {step === 1 && (
         <div className="animate-in-fade">
-          <p className="text-sm text-foreground/70 mb-4">
+          <p className="mb-4 text-sm text-muted-foreground">
             Select all areas that apply to your project.
           </p>
           <div className="flex flex-wrap gap-2">
@@ -216,7 +216,7 @@ export function ResourceListCreatorForm({
                 className={`rounded-xl px-4 py-2.5 text-sm font-medium transition-all ${
                   form.focusAreas.includes(area)
                     ? "bg-primary text-white"
-                    : "bg-white/5 text-foreground/80 hover:bg-white/10"
+                    : "bg-white/5 text-muted-foreground hover:bg-white/10"
                 }`}
               >
                 {area}

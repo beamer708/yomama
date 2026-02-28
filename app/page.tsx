@@ -7,80 +7,86 @@ import { NAV } from "@/lib/site-structure";
 export default function Home() {
   return (
     <div className="flex flex-col">
-      {/* Hero */}
-      <section className="relative overflow-hidden gradient-bg-hero pt-20 pb-28 sm:pt-28 sm:pb-36 lg:pt-32 lg:pb-40">
-        <div
-          className="absolute inset-0 pointer-events-none"
-          aria-hidden
-          style={{
-            background: "radial-gradient(ellipse 80% 50% at 50% -10%, rgba(59, 130, 246, 0.18), transparent 55%)",
-          }}
-        />
+      <section className="relative overflow-hidden gradient-bg-hero section-grid-overlay pt-24 pb-24 sm:pt-28 sm:pb-28 lg:pt-32 lg:pb-32">
         <div className="page-container relative">
-          <div className="mx-auto max-w-3xl text-center">
-            <div className="mb-8 flex justify-center gap-4 items-center">
+          <div className="mx-auto max-w-4xl text-center">
+            <div className="mb-8 flex items-center justify-center gap-4">
               <Image
                 src="/UnityLogo.svg"
                 alt=""
-                width={72}
-                height={72}
-                className="opacity-95 drop-shadow-lg"
+                width={64}
+                height={64}
+                className="opacity-95"
               />
-              <ERLCLogo size={56} className="opacity-95 drop-shadow-lg" />
+              <ERLCLogo size={52} className="opacity-95" />
             </div>
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-              The ERLC resource platform
+            <span className="inline-flex items-center rounded-full border border-border/70 bg-card/70 px-3 py-1 text-xs font-medium text-muted-foreground">
+              Built for serious ERLC teams
+            </span>
+            <h1 className="mt-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+              The premium operating layer for ERLC resources
             </h1>
-            <p className="mt-6 text-lg leading-8 text-white/85 sm:text-xl max-w-2xl mx-auto">
-              Curated resources, tools, and guidance for building successful ERLC communities. One place to find what you need. No fluff.
+            <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-muted-foreground sm:text-xl">
+              Unity Vault organizes high-signal resources, tools, and guidance into a single workflow so your team can build faster, execute cleaner, and grow with confidence.
             </p>
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
               <Link href={NAV.resources.href} className="btn-primary">
                 <Icon name="book" className="text-lg" />
                 Explore resources
               </Link>
               <Link
                 href={NAV.resources.href}
-                className="btn-secondary text-white border-white/30 hover:bg-white/10 hover:border-white/50"
+                className="btn-secondary"
               >
                 Get resource suggestions
                 <Icon name="arrow-right" className="text-base" />
               </Link>
             </div>
+            <div className="mx-auto mt-12 grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-3">
+              {[
+                ["Curated Library", "Tools, guides, and references in one place"],
+                ["Fast Discovery", "Find the right resource stack in minutes"],
+                ["Execution Focused", "Built for owners and management teams"],
+              ].map((item) => (
+                <div key={item[0]} className="surface-panel rounded-xl px-4 py-3 text-left">
+                  <p className="text-sm font-semibold text-foreground">{item[0]}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{item[1]}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* What we offer */}
       <section className="section-spacing">
         <div className="page-container">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="section-heading">What we offer</h2>
+            <h2 className="section-heading">A cleaner way to run your resource stack</h2>
             <p className="section-subheading mx-auto">
-              Unity Vault curates the best existing resources. We organize them so you can learn faster and build with confidence.
+              Most communities waste time switching between links, docs, and half-finished notes. Unity Vault gives your team one structured place to discover and execute.
             </p>
           </div>
-          <div className="mx-auto mt-16 grid max-w-5xl gap-6 sm:grid-cols-3">
+          <div className="mx-auto mt-14 grid max-w-5xl gap-5 sm:grid-cols-3">
             {[
               {
-                title: "Curated resources",
-                description: "Server setup, graphic design, branding, and tools, organized by category. All credit to original creators.",
+                title: "Curated Intelligence",
+                description: "Server setup, branding, management, and growth resources sorted by real operational needs.",
                 icon: "book" as const,
               },
               {
-                title: "Resource Assistant",
-                description: "Describe your project and get a tailored list of resources. Save, share, and export your plan.",
+                title: "Assistant Workflow",
+                description: "Describe your target outcome and get a tailored stack of resources you can use immediately.",
                 icon: "sparkles" as const,
               },
               {
-                title: "Community first",
-                description: "Built for ERLC server owners and creators. Clear structure, no overlap. Everything has its place.",
+                title: "Team-Ready Structure",
+                description: "Built for owners, staff, and creators with a structure that reduces guesswork and overlap.",
                 icon: "users" as const,
               },
             ].map((card, i) => (
               <div
                 key={card.title}
-                className="gradient-border card-hover-lift p-8 rounded-2xl animate-in-fade"
+                className="gradient-border gradient-card card-hover-lift rounded-2xl p-8 animate-in-fade"
                 style={{ animationDelay: `${i * 80}ms` }}
               >
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/15 text-primary">
@@ -98,63 +104,48 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Resources CTA */}
-      <section className="relative section-spacing bg-card/30">
-        <div
-          className="absolute inset-0 pointer-events-none opacity-60"
-          aria-hidden
-          style={{
-            background: "linear-gradient(180deg, transparent 0%, rgba(59, 130, 246, 0.04) 50%, transparent 100%)",
-          }}
-        />
+      <section className="section-spacing">
         <div className="page-container relative">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="section-heading">Find what you need</h2>
-            <p className="section-subheading mx-auto">
-              Tell us what you&apos;re working on and get tailored resource suggestions. One page, no forms.
-            </p>
-          </div>
-          <div className="mt-10 text-center">
-            <Link href={NAV.resources.href} className="btn-primary">
-              <Icon name="sparkles" className="text-lg" />
-              Go to Resources
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Unity Vault */}
-      <section className="section-spacing bg-card/20">
-        <div className="page-container">
-          <div className="mx-auto max-w-3xl text-center">
-            <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/15 mb-6">
-              <Icon name="bulb" className="text-2xl text-primary" />
+          <div className="surface-panel mx-auto max-w-5xl rounded-3xl px-8 py-10 sm:px-12 sm:py-14">
+            <div className="grid gap-10 lg:grid-cols-[1.3fr,1fr] lg:items-center">
+              <div>
+                <h2 className="section-heading">What big communities do differently</h2>
+                <p className="section-subheading">
+                  They do not rely on hidden secrets. They rely on systems. Unity Vault helps you apply the same public resources through a cleaner execution model.
+                </p>
+                <Link
+                  href={NAV.resources.href}
+                  className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-hover transition-colors"
+                >
+                  Start exploring
+                  <Icon name="arrow-right" className="text-base" />
+                </Link>
+              </div>
+              <div className="grid gap-3">
+                {[
+                  "One source of truth for your team",
+                  "Reduced decision fatigue and duplicate effort",
+                  "Faster onboarding for staff and creators",
+                ].map((line) => (
+                  <div key={line} className="rounded-xl border border-border/70 bg-background/60 px-4 py-3 text-sm text-muted-foreground">
+                    {line}
+                  </div>
+                ))}
+              </div>
             </div>
-            <h2 className="section-heading">Why big servers aren’t different</h2>
-            <p className="section-subheading mx-auto mt-4">
-              Many ERLC owners assume large servers have secret playbooks. The reality: they learned from the same public resources everyone else can use. Success comes from organization, consistency, and execution. Unity Vault puts those resources in one place.
-            </p>
-            <Link
-              href={NAV.resources.href}
-              className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-hover transition-colors"
-            >
-              Start exploring
-              <Icon name="arrow-right" className="text-base" />
-            </Link>
           </div>
         </div>
       </section>
 
-      {/* Support & Status strip */}
       <section className="section-spacing">
         <div className="page-container">
-          <div className="rounded-2xl border border-border/60 bg-gradient-to-br from-primary/10 to-transparent p-8 sm:p-12">
-            <div className="flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
+          <div className="mx-auto max-w-6xl rounded-3xl border border-border/70 bg-card/75 p-8 sm:p-12">
+            <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
               <div>
                 <h2 className="text-xl font-bold text-foreground sm:text-2xl">
                   Support and status
                 </h2>
-                <p className="mt-2 text-foreground/70 max-w-md">
+                <p className="mt-2 max-w-md text-muted-foreground">
                   Join our Discord for help, check status and updates, or read community guides.
                 </p>
               </div>
@@ -180,15 +171,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Final CTA */}
       <section className="section-spacing">
         <div className="page-container">
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary/20 via-primary/10 to-transparent p-10 sm:p-16 text-center">
-            <div className="absolute inset-0 border border-primary/20 rounded-3xl pointer-events-none" aria-hidden />
+          <div className="relative overflow-hidden rounded-3xl border border-border/70 bg-card p-10 text-center sm:p-16">
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(102,227,255,0.14),transparent_55%)]" aria-hidden />
             <h2 className="relative text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
               Ready to build your community?
             </h2>
-            <p className="relative mt-3 text-foreground/80 max-w-xl mx-auto">
+            <p className="relative mx-auto mt-3 max-w-xl text-muted-foreground">
               Explore the vault and get the resources that help successful ERLC servers grow.
             </p>
             <div className="relative mt-8">
