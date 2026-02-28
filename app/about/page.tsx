@@ -1,7 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import Icon from "@/components/Icon";
-import ERLCLogo from "@/components/ERLCLogo";
 import { NAV } from "@/lib/site-structure";
+import uLogo from "@/Media/ULogo.svg";
 
 export default function AboutPage() {
   return (
@@ -12,7 +13,7 @@ export default function AboutPage() {
             <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-card-hover">
               <Icon name="compass" className="text-3xl text-primary" />
             </div>
-            <ERLCLogo size={48} />
+            <Image src={uLogo} alt="" width={48} height={48} />
           </div>
           <h1 className="section-heading">About Unity Vault</h1>
           <p className="section-subheading mt-3 mx-auto">

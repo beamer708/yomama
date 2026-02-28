@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Icon from "@/components/Icon";
-import ERLCLogo from "@/components/ERLCLogo";
 import YouTubeResourceCard from "@/components/YouTubeResourceCard";
 import WebsiteResourceCard from "@/components/WebsiteResourceCard";
 import { resources } from "@/lib/resources";
+import uLogo from "@/Media/ULogo.svg";
 
 const newResources = resources.filter((resource) => resource.isNew);
 const CUSTOM_LIST_STORAGE_KEY = "unityvault.customListIds.v1";
@@ -82,7 +83,7 @@ export default function ResourcesPage() {
       <div className="page-container max-w-4xl">
         <div className="mb-10 rounded-3xl border border-border/70 bg-card/75 p-7 text-center sm:p-9">
           <div className="flex justify-center mb-4">
-            <ERLCLogo size={40} />
+            <Image src={uLogo} alt="" width={40} height={40} />
           </div>
           <h1 className="section-heading">Resources</h1>
           <p className="section-subheading mx-auto">

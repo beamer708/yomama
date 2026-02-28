@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import Icon from "@/components/Icon";
-import ERLCLogo from "@/components/ERLCLogo";
 import { NAV } from "@/lib/site-structure";
 import uLogo from "@/Media/ULogo.svg";
 
@@ -19,7 +18,6 @@ export default function Home() {
                 height={64}
                 className="opacity-95"
               />
-              <ERLCLogo size={52} className="opacity-95" />
             </div>
             <span className="inline-flex items-center rounded-full border border-border/70 bg-card/70 px-3 py-1 text-xs font-medium text-muted-foreground">
               Helping ERLC communities grow smarter.
