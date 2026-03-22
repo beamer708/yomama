@@ -116,22 +116,6 @@ export default function Navigation() {
                     </Link>
                   )}
                   <Link
-                    href="/resource-list-creator"
-                    className="block rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-white/15"
-                    role="menuitem"
-                    onClick={() => setCommunityOpen(false)}
-                  >
-                    Create Resource List
-                  </Link>
-                  <Link
-                    href="/resource-list-creator#open-shared"
-                    className="block rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-white/15"
-                    role="menuitem"
-                    onClick={() => setCommunityOpen(false)}
-                  >
-                    Open Shared List
-                  </Link>
-                  <Link
                     href="/resource-suggestion"
                     className="block rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-white/15"
                     role="menuitem"
@@ -209,20 +193,6 @@ export default function Navigation() {
                 Staff Application
               </Link>
             )}
-            <Link
-              href="/resource-list-creator"
-              className="block rounded-lg px-4 py-3 text-base font-medium text-foreground hover:bg-white/5"
-              onClick={() => setMobileOpen(false)}
-            >
-              Create Resource List
-            </Link>
-            <Link
-              href="/resource-list-creator#open-shared"
-              className="block rounded-lg px-4 py-3 text-base font-medium text-foreground hover:bg-white/5"
-              onClick={() => setMobileOpen(false)}
-            >
-              Open Shared List
-            </Link>
             <Link
               href="/resource-suggestion"
               className="block rounded-lg px-4 py-3 text-base font-medium text-foreground hover:bg-white/5"

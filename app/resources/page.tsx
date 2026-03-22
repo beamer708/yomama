@@ -1,295 +1,191 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
-import Icon from "@/components/Icon";
+import { useMemo, useState } from "react";
+import { Search, X } from "lucide-react";
+import { resources } from "@/lib/resources";
 import YouTubeResourceCard from "@/components/YouTubeResourceCard";
 import WebsiteResourceCard from "@/components/WebsiteResourceCard";
-import { resources } from "@/lib/resources";
-import uLogo from "@/Media/ULogo.svg";
+import DiscordCommunityCard from "@/components/DiscordCommunityCard";
 
-const newResources = resources.filter((resource) => resource.isNew);
-const CUSTOM_LIST_STORAGE_KEY = "unityvault.customListIds.v1";
+// Pre-computed sections
+const youtubeResources = resources.filter((r) => r.section === "youtube");
+const websiteResources = resources.filter((r) => r.section === "website");
+const discordResources = resources.filter((r) => r.section === "discord");
+
+function SectionHeader({ label }: { label: string }) {
+  return (
+    <div className="mb-8 flex items-center gap-4" aria-hidden="false">
+      <span className="section-rule-label">{label}</span>
+      <div className="h-px flex-1 bg-border/60" />
+    </div>
+  );
+}
+
+function EmptyState({ message }: { message: string }) {
+  return (
+    <p className="py-6 text-sm text-muted-foreground">{message}</p>
+  );
+}
+
+function matchesQuery(query: string, ...fields: (string | undefined)[]): boolean {
+  if (!query) return true;
+  const q = query.toLowerCase();
+  return fields.some((f) => f && f.toLowerCase().includes(q));
+}
 
 export default function ResourcesPage() {
-  const [browseTab, setBrowseTab] = useState<"all" | "new">("all");
-  const [listMode, setListMode] = useState(false);
-  const [customListIds, setCustomListIds] = useState<Set<string>>(new Set());
-  const resultsRef = useRef<HTMLDivElement | null>(null);
+  const [query, setQuery] = useState("");
 
-  useEffect(() => {
-    try {
-      const raw = window.localStorage.getItem(CUSTOM_LIST_STORAGE_KEY);
-      if (!raw) return;
-      const parsed = JSON.parse(raw);
-      if (!Array.isArray(parsed)) return;
-      const validIds = parsed.filter(
-        (id): id is string => typeof id === "string" && resources.some((resource) => resource.id === id)
-      );
-      if (validIds.length > 0) {
-        setCustomListIds(new Set(validIds));
-        setListMode(true);
-      }
-    } catch {
-      // Ignore invalid local data and continue with empty selection
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      window.localStorage.setItem(CUSTOM_LIST_STORAGE_KEY, JSON.stringify(Array.from(customListIds)));
-    } catch {
-      // Ignore storage write failures
-    }
-  }, [customListIds]);
-
-  const youtubeResources = useMemo(
-    () => resources.filter((resource) => resource.section === "youtube"),
-    []
-  );
-  const websiteResources = useMemo(
-    () => resources.filter((resource) => resource.section === "website"),
-    []
-  );
-  const goalFilteredNewResources = useMemo(
-    () => newResources,
-    []
-  );
-  const newYoutubeResources = useMemo(
-    () => goalFilteredNewResources.filter((resource) => resource.section === "youtube"),
-    [goalFilteredNewResources]
-  );
-  const newWebsiteResources = useMemo(
-    () => goalFilteredNewResources.filter((resource) => resource.section === "website"),
-    [goalFilteredNewResources]
-  );
-  const customListResources = useMemo(
-    () => resources.filter((resource) => customListIds.has(resource.id)),
-    [customListIds]
+  const filteredYoutube = useMemo(
+    () =>
+      youtubeResources.filter((r) =>
+        matchesQuery(query, r.title, r.description, r.category, r.channelName)
+      ),
+    [query]
   );
 
-  const toggleResourceInList = (resourceId: string) => {
-    setCustomListIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(resourceId)) next.delete(resourceId);
-      else next.add(resourceId);
-      return next;
-    });
-  };
+  const filteredWebsite = useMemo(
+    () =>
+      websiteResources.filter((r) =>
+        matchesQuery(query, r.title, r.description, r.category, r.creator)
+      ),
+    [query]
+  );
+
+  const filteredDiscord = useMemo(
+    () =>
+      discordResources.filter((r) =>
+        matchesQuery(query, r.title, r.description, r.category, r.creator)
+      ),
+    [query]
+  );
+
+  const totalFiltered = filteredYoutube.length + filteredWebsite.length + filteredDiscord.length;
+  const isFiltering = query.trim().length > 0;
 
   return (
-    <div className="py-12 sm:py-16">
-      <div className="page-container max-w-4xl">
-        <div className="mb-10 rounded-3xl border border-border/70 bg-card/75 p-7 text-center sm:p-9">
-          <div className="flex justify-center mb-4">
-            <Image src={uLogo} alt="" width={40} height={40} />
-          </div>
-          <h1 className="section-heading">Resources</h1>
-          <p className="section-subheading mx-auto">
-            A structured vault of ERLC resources organized by practical goals.
+    <div className="py-16 sm:py-20">
+      <div className="page-container max-w-[1200px]">
+
+        {/* Page header */}
+        <div className="mb-14 max-w-2xl">
+          <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+            Resource Vault
+          </h1>
+          <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+            A structured collection of ERLC resources, tools, and community references organized by type.
           </p>
         </div>
 
-        <div className="mb-8 flex items-center gap-3">
-          <button
-            type="button"
-            onClick={() => setListMode((on) => !on)}
-            className={`inline-flex items-center gap-2 rounded-lg border px-3 py-1.5 text-xs font-semibold transition-colors ${
-              listMode
-                ? "border-primary/40 bg-primary/15 text-primary"
-                : "border-border bg-card/60 text-muted-foreground hover:bg-card-hover hover:text-foreground"
-            }`}
-          >
-            <span className={`h-2.5 w-2.5 rounded-full ${listMode ? "bg-primary" : "bg-muted-foreground/60"}`} />
-            List Mode: {listMode ? "ON" : "OFF"}
-          </button>
-          <span className="text-xs text-muted-foreground">
-            Turn on to show “Add to list” on every resource card.
-          </span>
+        {/* Search / filter bar */}
+        <div className="mb-14 flex items-center gap-3">
+          <div className="relative flex-1 max-w-md">
+            <Search
+              className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none"
+              aria-hidden
+              strokeWidth={1.8}
+            />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search all resources..."
+              className="w-full rounded-lg border border-border bg-card py-2.5 pl-10 pr-10 text-sm text-foreground placeholder:text-muted-foreground focus:border-border focus:outline-none focus:ring-2 focus:ring-accent/25 transition-colors"
+              aria-label="Search all resources"
+            />
+            {query && (
+              <button
+                type="button"
+                onClick={() => setQuery("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 rounded p-0.5 text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-accent/30"
+                aria-label="Clear search"
+              >
+                <X className="h-3.5 w-3.5" aria-hidden strokeWidth={1.8} />
+              </button>
+            )}
+          </div>
+          {isFiltering && (
+            <span className="shrink-0 text-xs text-muted-foreground">
+              {totalFiltered} result{totalFiltered !== 1 ? "s" : ""}
+            </span>
+          )}
         </div>
 
-        {listMode && (
-          <div className="mt-8 rounded-2xl border border-border bg-card/80 p-5">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <h3 className="text-sm font-semibold text-foreground">
-                My custom list ({customListResources.length})
-              </h3>
-              {customListResources.length > 0 ? (
-                <button
-                  type="button"
-                  onClick={() => setCustomListIds(new Set())}
-                  className="text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  Clear list
-                </button>
-              ) : null}
-            </div>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {customListResources.length > 0 ? customListResources.map((resource) => (
-                <span key={resource.id} className="inline-flex items-center gap-1.5 rounded-md bg-white/5 px-2.5 py-1 text-xs text-muted-foreground">
-                  {resource.title}
-                  <button
-                    type="button"
-                    onClick={() => toggleResourceInList(resource.id)}
-                    className="text-muted-foreground transition-colors hover:text-foreground"
-                    aria-label={`Remove ${resource.title} from custom list`}
-                  >
-                    <Icon name="cross" className="text-xs" />
-                  </button>
-                </span>
-              )) : (
-                <p className="text-xs text-muted-foreground">
-                  Your list is empty. Use “Add to list” on any resource.
-                </p>
-              )}
-            </div>
-            <div className="mt-4">
-              <Link
-                href="/resource-list-creator"
-                className={`inline-flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold transition-colors ${
-                  customListResources.length > 0
-                    ? "bg-primary text-background hover:bg-primary-hover"
-                    : "cursor-not-allowed bg-white/10 text-muted-foreground pointer-events-none"
-                }`}
-              >
-                Review list and create code
-                <Icon name="arrow-right" className="text-sm" />
-              </Link>
-            </div>
+        {/* No results message */}
+        {isFiltering && totalFiltered === 0 && (
+          <div className="py-12 text-center">
+            <p className="text-base text-muted-foreground">
+              No resources matched{" "}
+              <span className="text-foreground">&ldquo;{query}&rdquo;</span>.
+            </p>
+            <button
+              type="button"
+              onClick={() => setQuery("")}
+              className="mt-3 text-sm text-accent hover:text-accent-hover transition-colors focus:outline-none focus:ring-2 focus:ring-accent/30 rounded"
+            >
+              Clear search
+            </button>
           </div>
         )}
 
-        <div ref={resultsRef} className="mt-16 border-t border-border/70 pt-12 transition-all duration-300">
-          <div className="mb-8">
-            <h2 className="text-2xl font-semibold text-foreground">Browse all resources</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Videos are shown with previews and organized separately from website tools.
-            </p>
-            <div className="mt-4 inline-flex rounded-xl border border-border bg-card/40 p-1">
-              <button
-                type="button"
-                onClick={() => setBrowseTab("all")}
-                className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
-                  browseTab === "all"
-                    ? "bg-primary text-background"
-                    : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
-                }`}
-              >
-                All resources
-              </button>
-              <button
-                type="button"
-                onClick={() => setBrowseTab("new")}
-                className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
-                  browseTab === "new"
-                    ? "bg-primary text-background"
-                    : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
-                }`}
-              >
-                NEW
-              </button>
+        {/* SECTION 1: Video Resources */}
+        {(!isFiltering || filteredYoutube.length > 0) && (
+          <section aria-labelledby="section-video" className="mb-20">
+            <SectionHeader label="Video Resources" />
+            <div
+              id="section-video"
+              className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+            >
+              {filteredYoutube.length > 0 ? (
+                filteredYoutube.map((resource) => (
+                  <YouTubeResourceCard key={resource.id} resource={resource} />
+                ))
+              ) : (
+                <EmptyState message="No video resources match your search." />
+              )}
             </div>
-          </div>
+          </section>
+        )}
 
-          {browseTab === "all" ? (
-            <>
-              <section aria-labelledby="youtube-resources-heading" className="mb-12">
-                <div className="mb-5 flex items-center gap-2">
-                  <Icon name="youtube" className="text-xl text-primary" />
-                  <h3 id="youtube-resources-heading" className="text-xl font-semibold text-foreground">
-                    YouTube videos
-                  </h3>
-                  <span className="rounded-md bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
-                    {youtubeResources.length}
-                  </span>
-                </div>
-                <div className="grid gap-5 sm:grid-cols-2">
-                  {youtubeResources.length > 0 ? youtubeResources.map((resource) => (
-                    <YouTubeResourceCard
-                      key={resource.id}
-                      resource={resource}
-                      showListActions={listMode}
-                      isInList={customListIds.has(resource.id)}
-                      onToggleList={toggleResourceInList}
-                    />
-                  )) : <p className="text-sm text-muted-foreground">No YouTube resources available yet.</p>}
-                </div>
-              </section>
+        {/* SECTION 2: Websites & Tools */}
+        {(!isFiltering || filteredWebsite.length > 0) && (
+          <section aria-labelledby="section-websites" className="mb-20">
+            <SectionHeader label="Websites & Tools" />
+            <div
+              id="section-websites"
+              className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+            >
+              {filteredWebsite.length > 0 ? (
+                filteredWebsite.map((resource) => (
+                  <WebsiteResourceCard key={resource.id} resource={resource} />
+                ))
+              ) : (
+                <EmptyState message="No website resources match your search." />
+              )}
+            </div>
+          </section>
+        )}
 
-              <section aria-labelledby="website-resources-heading">
-                <div className="mb-5 flex items-center gap-2">
-                  <Icon name="globe" className="text-xl text-primary" />
-                  <h3 id="website-resources-heading" className="text-xl font-semibold text-foreground">
-                    Website resources
-                  </h3>
-                  <span className="rounded-md bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
-                    {websiteResources.length}
-                  </span>
+        {/* SECTION 3: Discord Communities */}
+        {(!isFiltering || filteredDiscord.length > 0) && (
+          <section aria-labelledby="section-discord" className="mb-12">
+            <SectionHeader label="Discord Communities" />
+            <div
+              id="section-discord"
+              className="rounded-lg border border-border bg-card px-6"
+            >
+              {filteredDiscord.length > 0 ? (
+                filteredDiscord.map((resource) => (
+                  <DiscordCommunityCard key={resource.id} resource={resource} />
+                ))
+              ) : (
+                <div className="py-6">
+                  <EmptyState message="No Discord communities match your search." />
                 </div>
-                <div className="grid gap-5 sm:grid-cols-2">
-                  {websiteResources.length > 0 ? websiteResources.map((resource) => (
-                    <WebsiteResourceCard
-                      key={resource.id}
-                      resource={resource}
-                      showListActions={listMode}
-                      isInList={customListIds.has(resource.id)}
-                      onToggleList={toggleResourceInList}
-                    />
-                  )) : <p className="text-sm text-muted-foreground">No website resources available yet.</p>}
-                </div>
-              </section>
-            </>
-          ) : (
-            <>
-              <section aria-labelledby="new-youtube-resources-heading" className="mb-12">
-                <div className="mb-5 flex items-center gap-2">
-                  <Icon name="youtube" className="text-xl text-primary" />
-                  <h3 id="new-youtube-resources-heading" className="text-xl font-semibold text-foreground">
-                    NEW YouTube videos
-                  </h3>
-                  <span className="rounded-md bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
-                    {newYoutubeResources.length}
-                  </span>
-                </div>
-                <div className="grid gap-5 sm:grid-cols-2">
-                  {newYoutubeResources.length > 0 ? newYoutubeResources.map((resource) => (
-                    <YouTubeResourceCard
-                      key={resource.id}
-                      resource={resource}
-                      showListActions={listMode}
-                      isInList={customListIds.has(resource.id)}
-                      onToggleList={toggleResourceInList}
-                    />
-                  )) : <p className="text-sm text-muted-foreground">No new YouTube resources available yet.</p>}
-                </div>
-              </section>
-
-              <section aria-labelledby="new-website-resources-heading">
-                <div className="mb-5 flex items-center gap-2">
-                  <Icon name="globe" className="text-xl text-primary" />
-                  <h3 id="new-website-resources-heading" className="text-xl font-semibold text-foreground">
-                    NEW website resources
-                  </h3>
-                  <span className="rounded-md bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
-                    {newWebsiteResources.length}
-                  </span>
-                </div>
-                <div className="grid gap-5 sm:grid-cols-2">
-                  {newWebsiteResources.length > 0 ? newWebsiteResources.map((resource) => (
-                    <WebsiteResourceCard
-                      key={resource.id}
-                      resource={resource}
-                      showListActions={listMode}
-                      isInList={customListIds.has(resource.id)}
-                      onToggleList={toggleResourceInList}
-                    />
-                  )) : <p className="text-sm text-muted-foreground">No new website resources available yet.</p>}
-                </div>
-              </section>
-            </>
-          )}
-        </div>
+              )}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );

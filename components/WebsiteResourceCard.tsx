@@ -1,67 +1,40 @@
 import { Resource } from "@/lib/resources";
-import Icon, { IconName, BrandIconName } from "@/components/Icon";
+import Icon from "@/components/Icon";
 
 interface WebsiteResourceCardProps {
   resource: Resource;
-  showListActions?: boolean;
-  isInList?: boolean;
-  onToggleList?: (resourceId: string) => void;
 }
 
-const typeLabels: Record<Resource["type"], { label: string; icon: IconName | BrandIconName }> = {
-  video: { label: "Video", icon: "youtube" },
-  guide: { label: "Guide", icon: "book" },
-  website: { label: "Website", icon: "globe" },
-  tool: { label: "Tool", icon: "wrench" },
-  document: { label: "Document", icon: "document" },
-  "font-library": { label: "Font Library", icon: "text" },
-  "color-tool": { label: "Color Tool", icon: "palette" },
-  inspiration: { label: "Inspiration", icon: "sparkles" },
-};
-
-export default function WebsiteResourceCard({
-  resource,
-  showListActions = false,
-  isInList = false,
-  onToggleList,
-}: WebsiteResourceCardProps) {
-  const typeInfo = typeLabels[resource.type];
-
+export default function WebsiteResourceCard({ resource }: WebsiteResourceCardProps) {
   return (
-    <article className="group relative block rounded-2xl border border-border bg-card/90 p-6 transition-all hover:-translate-y-0.5 hover:border-primary/35 hover:bg-card-hover">
+    <article className="resource-card group relative p-5">
       {resource.isNew && (
-        <span className="absolute top-3 right-3 rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-primary text-background">
-          New
-        </span>
+        <span className="resource-tag absolute top-4 right-4">New</span>
       )}
-      {/* Type Badge */}
-      <div className="mb-4 flex items-start justify-between">
-        <span className="inline-flex items-center gap-1.5 rounded-md bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">
-          <Icon name={typeInfo.icon} className="text-[10px]" />
-          {typeInfo.label}
-        </span>
-        <span className="text-xs text-muted-foreground">{resource.category}</span>
+
+      {/* Header */}
+      <div className="mb-3 flex items-start gap-3 pr-10">
+        <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-border/60 bg-background">
+          <Icon name="globe" className="text-sm text-muted-foreground" />
+        </div>
+        <div className="min-w-0">
+          <h3 className="text-sm font-semibold leading-snug text-foreground group-hover:text-accent transition-colors truncate">
+            {resource.title}
+          </h3>
+          <span className="mt-0.5 inline-block text-[11px] font-medium uppercase tracking-[0.08em] text-muted-foreground/70">
+            {resource.category}
+          </span>
+        </div>
       </div>
 
-      {/* Content */}
-      <h3 className="text-lg font-semibold text-foreground mb-3 group-hover:text-primary transition-colors">
-        <a
-          href={resource.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1"
-        >
-          {resource.title}
-          <Icon name="up-right-from-square" className="text-xs" />
-        </a>
-      </h3>
-      <p className="mb-5 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+      {/* Description */}
+      <p className="mb-4 line-clamp-2 text-xs leading-relaxed text-muted-foreground">
         {resource.description}
       </p>
 
       {/* Footer */}
-      <div className="flex items-center justify-between gap-3 border-t border-border/50 pt-4">
-        <div className="text-xs text-muted-foreground">
+      <div className="flex items-center justify-between gap-3 border-t border-border/40 pt-3">
+        <span className="text-xs text-muted-foreground truncate">
           {resource.creatorUrl ? (
             <a
               href={resource.creatorUrl}
@@ -72,34 +45,19 @@ export default function WebsiteResourceCard({
               {resource.creator}
             </a>
           ) : (
-            <span>{resource.creator}</span>
+            resource.creator
           )}
-        </div>
-        <div className="flex items-center gap-2">
-          {showListActions ? (
-            <button
-              type="button"
-              onClick={() => onToggleList?.(resource.id)}
-              className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors ${
-                isInList
-                  ? "bg-primary/20 text-primary hover:bg-primary/30"
-                  : "bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground"
-              }`}
-            >
-              <Icon name={isInList ? "check" : "book"} className="text-xs" />
-              {isInList ? "Added" : "Add to list"}
-            </button>
-          ) : null}
-          <a
-            href={resource.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-primary group-hover:text-primary-hover transition-colors"
-          >
-            Visit Site
-            <Icon name="up-right-from-square" className="text-sm" />
-          </a>
-        </div>
+        </span>
+        <a
+          href={resource.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex shrink-0 items-center gap-1 text-xs font-medium uppercase tracking-[0.06em] text-foreground hover:text-accent transition-colors"
+          aria-label={`Open ${resource.title}`}
+        >
+          Open
+          <Icon name="up-right-from-square" className="text-[10px] text-muted-foreground" />
+        </a>
       </div>
     </article>
   );

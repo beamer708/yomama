@@ -27,12 +27,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const isShutdown = process.env.NEXT_PUBLIC_SITE_SHUTDOWN === "true" || process.env.NEXT_PUBLIC_SITE_SHUTDOWN === "1";
+  const shouldTrackAnalytics = process.env.NODE_ENV === "production";
 
   return (
     <html lang="en" className="dark">
+      <head>
+        <link rel="preconnect" href="https://api.fontshare.com" />
+        <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" />
+      </head>
       <body className="antialiased">
         {isShutdown ? <ShutdownNotice /> : <MainLayout>{children}</MainLayout>}
-        {!isShutdown ? (
+        {!isShutdown && shouldTrackAnalytics ? (
           <Suspense fallback={null}>
             <AnalyticsTracker />
           </Suspense>

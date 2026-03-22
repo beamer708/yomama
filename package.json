@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -H 127.0.0.1",
-    "dev:clean": "rm -rf .next && next dev -H 127.0.0.1",
+    "dev": "rm -f .next/dev/lock && WATCHPACK_POLLING=true NODE_OPTIONS=--max-old-space-size=4096 next dev --webpack -H 127.0.0.1",
+    "dev:clean": "rm -rf .next && WATCHPACK_POLLING=true NODE_OPTIONS=--max-old-space-size=4096 next dev --webpack -H 127.0.0.1",
     "build": "next build",
     "start": "next start",
     "lint": "eslint app components lib proxy.ts next.config.js prisma.config.ts",

@@ -15,6 +15,10 @@ const MAX_BODY_BYTES = 2048;
 
 export async function POST(request: NextRequest) {
   try {
+    if (process.env.NODE_ENV !== "production") {
+      return new NextResponse(null, { status: 204 });
+    }
+
     const contentLengthHeader = request.headers.get("content-length");
     const contentLength = contentLengthHeader ? Number(contentLengthHeader) : 0;
     if (contentLength > MAX_BODY_BYTES) {

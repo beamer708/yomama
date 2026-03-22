@@ -1,5 +1,5 @@
 export type ResourceType = "video" | "guide" | "website" | "tool" | "document" | "font-library" | "color-tool" | "inspiration";
-export type ResourceSection = "youtube" | "website";
+export type ResourceSection = "youtube" | "website" | "discord";
 
 export interface Resource {
   id: string;
@@ -13,6 +13,7 @@ export interface Resource {
   section: ResourceSection;
   channelName?: string; // For YouTube videos
   thumbnailUrl?: string; // For YouTube videos
+  memberCount?: string; // For Discord communities
   isNew?: boolean;
 }
 
@@ -347,27 +348,7 @@ export const resources: Resource[] = [
     creatorUrl: "https://discord.gg/7KfgS5M4Jn",
     section: "website",
   },
-  {
-    id: "3",
-    title: "ER:LC Hub Discord Community",
-    description: "Discord community for ER:LC Hub featuring map customizations, ERLC stats, and community resources for roleplay structure and game information.",
-    type: "website",
-    url: "https://discord.gg/7KfgS5M4Jn",
-    category: "Discord Utilities",
-    creator: "Syce Gaming",
-    section: "website",
-  },
-  {
-    id: "unity-vault-discord",
-    title: "Northline Entertainment Discord",
-    description: "Northline Entertainment is a Discord server focused on producing trailers. Welcome to The Northline Group: discover who they are, what they do, and how to work with them. Explore channels for important info, updates, and resources to get started.",
-    type: "website",
-    url: "https://discord.gg/3qpVpCBwj",
-    category: "Discord Utilities",
-    creator: "Northline Entertainment",
-    creatorUrl: "https://discord.gg/3qpVpCBwj",
-    section: "website",
-  },
+
   {
     id: "12",
     title: "Melonly",
@@ -424,6 +405,18 @@ export const resources: Resource[] = [
     creatorUrl: "https://cursor.com",
     section: "website",
     isNew: true,
+  },
+  // Discord Community Resources
+  {
+    id: "discord-erlc-hub",
+    title: "ER:LC Hub Community",
+    description: "The official Discord server for ER:LC Hub. Covers map customizations, vehicle stats, spawn locations, and community resources for ERLC roleplay structure and game information.",
+    type: "website",
+    url: "https://discord.gg/7KfgS5M4Jn",
+    category: "ERLC Communities",
+    creator: "Syce Gaming",
+    creatorUrl: "https://discord.gg/7KfgS5M4Jn",
+    section: "discord",
   },
 ];
 

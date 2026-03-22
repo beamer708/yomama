@@ -10,6 +10,10 @@ function unauthorizedResponse(): NextResponse {
 }
 
 export function proxy(request: NextRequest) {
+  if (process.env.NODE_ENV !== "production") {
+    return NextResponse.next();
+  }
+
   const username = process.env.ADMIN_DASHBOARD_USERNAME;
   const password = process.env.ADMIN_DASHBOARD_PASSWORD;
 
