@@ -146,7 +146,7 @@ export default function Navigation() {
               href={NAV.resources.href}
               className="ml-2 btn-primary px-5 py-2.5"
             >
-              Explore Resources
+              Enter Vault
             </Link>
           </div>
 
@@ -221,7 +221,7 @@ export default function Navigation() {
               className="mt-2 block rounded-lg border border-border bg-primary px-4 py-3 text-center text-base font-medium text-background"
               onClick={() => setMobileOpen(false)}
             >
-              Explore Resources
+              Enter Vault
             </Link>
           </div>
         </div>

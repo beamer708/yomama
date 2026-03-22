@@ -35,7 +35,7 @@ export default function Home() {
             <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
               <Link href={NAV.resources.href} className="btn-primary">
                 <Icon name="book" className="text-lg" />
-                Explore resources
+                Enter Vault
               </Link>
               <Link
                 href={NAV.resources.href}
@@ -163,7 +163,7 @@ export default function Home() {
           <div className="mt-10 text-center">
             <Link href={NAV.resources.href} className="btn-primary animate-on-scroll">
               <Icon name="book" className="text-lg" />
-              Explore the Vault
+              Enter Vault
             </Link>
           </div>
         </div>
@@ -337,7 +337,7 @@ export default function Home() {
             <div className="relative mt-8">
               <Link href={NAV.resources.href} className="btn-primary animate-on-scroll">
                 <Icon name="book" className="text-lg" />
-                Explore resources
+                Enter Vault
               </Link>
             </div>
           </div>

@@ -39,7 +39,7 @@ export default function AboutPage() {
             <div className="flex flex-wrap gap-3">
               <Link href={NAV.resources.href} className="btn-primary">
                 <Icon name="book" className="text-base" />
-                Explore resources
+                Enter Vault
               </Link>
             </div>
           </div>
