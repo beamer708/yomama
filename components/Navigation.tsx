@@ -17,7 +17,6 @@ export default function Navigation() {
 
   const mainLinks = [
     { ...NAV.support },
-    { ...NAV.status },
     { ...NAV.about },
   ];
 
