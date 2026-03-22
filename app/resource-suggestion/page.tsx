@@ -5,10 +5,14 @@ import Link from "next/link";
 import Icon from "@/components/Icon";
 
 type ResourceType = "YouTube Video" | "Website Tool" | "Guide / Document" | "Other";
+type SuggestionCategory = "Website" | "Server" | "Community" | "Other";
+
+type FieldErrors = Partial<Record<"username" | "discordId" | "category" | "title" | "details", string>>;
 
 export default function ResourceSuggestionPage() {
   const [discordUsername, setDiscordUsername] = useState("");
   const [discordId, setDiscordId] = useState("");
+  const [category, setCategory] = useState<SuggestionCategory | "">("");
   const [resourceTitle, setResourceTitle] = useState("");
   const [resourceUrl, setResourceUrl] = useState("");
   const [resourceType, setResourceType] = useState<ResourceType>("YouTube Video");
@@ -16,65 +20,59 @@ export default function ResourceSuggestionPage() {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
-  const canSubmit =
-    discordUsername.trim().length > 0 &&
-    discordId.trim().length > 0 &&
-    resourceTitle.trim().length > 0 &&
-    resourceUrl.trim().length > 0 &&
-    reason.trim().length >= 10 &&
-    !submitting;
+  const validate = (): FieldErrors => {
+    const errors: FieldErrors = {};
+    if (!discordUsername.trim()) errors.username = "Discord username is required.";
+    if (!discordId.trim()) errors.discordId = "Discord user ID is required.";
+    if (!category) errors.category = "Please select a category.";
+    if (!resourceTitle.trim()) errors.title = "Suggestion title is required.";
+    if (!reason.trim()) errors.details = "Suggestion details are required.";
+    return errors;
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!canSubmit) return;
 
+    const errors = validate();
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      return;
+    }
+    setFieldErrors({});
     setSubmitting(true);
     setSuccess(null);
     setError(null);
 
     try {
-      const res = await fetch("/api/resource-suggestion", {
+      const res = await fetch("/api/suggestion", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          discordUsername: discordUsername.trim(),
+          username: discordUsername.trim(),
           discordId: discordId.trim(),
-          resourceTitle: resourceTitle.trim(),
-          resourceUrl: resourceUrl.trim(),
-          resourceType,
-          reason: reason.trim(),
+          category,
+          title: resourceTitle.trim(),
+          details: reason.trim(),
         }),
       });
 
-      const data = (await res.json().catch(() => ({}))) as {
-        success?: boolean;
-        message?: string;
-        error?: string;
-        errors?: string[];
-      };
-
-      if (!res.ok || !data.success) {
-        if (Array.isArray(data.errors) && data.errors.length > 0) {
-          setError(data.errors.join(" "));
-        } else {
-          setError(data.error || "We could not submit your suggestion. Try again.");
-        }
+      if (!res.ok) {
+        setError("Something went wrong. Please try again or contact support.");
         return;
       }
 
-      setSuccess(
-        data.message ||
-          "Suggestion submitted. It was sent to Discord for discussion and approval."
-      );
+      setSuccess("Your suggestion has been submitted. Thank you for helping improve Unity Vault.");
       setDiscordUsername("");
       setDiscordId("");
+      setCategory("");
       setResourceTitle("");
       setResourceUrl("");
       setResourceType("YouTube Video");
       setReason("");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Network error. Please try again.");
+    } catch {
+      setError("Something went wrong. Please try again or contact support.");
     } finally {
       setSubmitting(false);
     }
@@ -121,7 +119,7 @@ export default function ResourceSuggestionPage() {
           </a>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6 rounded-3xl border border-border bg-card/85 p-6 sm:p-8">
+        <form onSubmit={handleSubmit} noValidate className="space-y-6 rounded-3xl border border-border bg-card/85 p-6 sm:p-8">
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
               <label htmlFor="discord-username" className="mb-2 block text-sm font-medium text-foreground">
@@ -135,12 +133,14 @@ export default function ResourceSuggestionPage() {
                 placeholder="username or username#1234"
                 className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground placeholder:text-foreground/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                 maxLength={100}
-                required
               />
+              {fieldErrors.username && (
+                <p className="mt-1 text-xs text-red-400">{fieldErrors.username}</p>
+              )}
             </div>
             <div>
               <label htmlFor="discord-id" className="mb-2 block text-sm font-medium text-foreground">
-                Discord ID
+                Discord User ID
               </label>
               <input
                 id="discord-id"
@@ -149,14 +149,37 @@ export default function ResourceSuggestionPage() {
                 onChange={(e) => setDiscordId(e.target.value)}
                 placeholder="17-19 digit Discord ID"
                 className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground placeholder:text-foreground/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-                required
               />
+              {fieldErrors.discordId && (
+                <p className="mt-1 text-xs text-red-400">{fieldErrors.discordId}</p>
+              )}
             </div>
           </div>
 
           <div>
+            <label htmlFor="suggestion-category" className="mb-2 block text-sm font-medium text-foreground">
+              Suggestion Category
+            </label>
+            <select
+              id="suggestion-category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value as SuggestionCategory | "")}
+              className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+            >
+              <option value="">Select a category...</option>
+              <option value="Website">Website</option>
+              <option value="Server">Server</option>
+              <option value="Community">Community</option>
+              <option value="Other">Other</option>
+            </select>
+            {fieldErrors.category && (
+              <p className="mt-1 text-xs text-red-400">{fieldErrors.category}</p>
+            )}
+          </div>
+
+          <div>
             <label htmlFor="resource-title" className="mb-2 block text-sm font-medium text-foreground">
-              Resource Title
+              Suggestion Title
             </label>
             <input
               id="resource-title"
@@ -166,8 +189,10 @@ export default function ResourceSuggestionPage() {
               placeholder="e.g. ERLC Branding Tutorial"
               className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground placeholder:text-foreground/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
               maxLength={150}
-              required
             />
+            {fieldErrors.title && (
+              <p className="mt-1 text-xs text-red-400">{fieldErrors.title}</p>
+            )}
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
@@ -182,7 +207,6 @@ export default function ResourceSuggestionPage() {
                 onChange={(e) => setResourceUrl(e.target.value)}
                 placeholder="https://..."
                 className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground placeholder:text-foreground/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-                required
               />
             </div>
             <div>
@@ -205,7 +229,7 @@ export default function ResourceSuggestionPage() {
 
           <div>
             <label htmlFor="reason" className="mb-2 block text-sm font-medium text-foreground">
-              Why should we add this?
+              Suggestion Details
             </label>
             <textarea
               id="reason"
@@ -214,10 +238,11 @@ export default function ResourceSuggestionPage() {
               placeholder="Share why this is useful for ERLC communities."
               rows={5}
               className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground placeholder:text-foreground/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 resize-y"
-              minLength={10}
               maxLength={2000}
-              required
             />
+            {fieldErrors.details && (
+              <p className="mt-1 text-xs text-red-400">{fieldErrors.details}</p>
+            )}
           </div>
 
           {error && <p className="text-sm text-red-400">{error}</p>}
@@ -226,7 +251,7 @@ export default function ResourceSuggestionPage() {
           <div className="flex flex-wrap gap-3">
             <button
               type="submit"
-              disabled={!canSubmit}
+              disabled={submitting}
               className="btn-primary disabled:opacity-50 disabled:pointer-events-none"
             >
               {submitting ? "Submitting..." : "Submit suggestion"}
@@ -242,4 +267,3 @@ export default function ResourceSuggestionPage() {
     </div>
   );
 }
-

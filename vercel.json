@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "app/api/application/route.ts": {
+      "maxDuration": 10
+    },
+    "app/api/suggestion/route.ts": {
+      "maxDuration": 10
+    }
+  }
+}

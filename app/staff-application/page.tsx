@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useState } from "react";
 import Icon from "@/components/Icon";
 
 const staffApplicationOpen =
@@ -26,74 +26,75 @@ const IMPACT_POINTS = [
   },
 ];
 
+type FieldErrors = Partial<Record<"username" | "discordId" | "age" | "timezone" | "reason" | "roleApplying", string>>;
+
 export default function StaffApplicationPage() {
-  const [discordUsername, setDiscordUsername] = useState("");
+  const [username, setUsername] = useState("");
   const [discordId, setDiscordId] = useState("");
-  const [communityTeam, setCommunityTeam] = useState(false);
-  const [betaTester, setBetaTester] = useState(false);
-  const [pastExperience, setPastExperience] = useState("");
+  const [age, setAge] = useState("");
+  const [timezone, setTimezone] = useState("");
+  const [reason, setReason] = useState("");
+  const [experience, setExperience] = useState("");
+  const [roleApplying, setRoleApplying] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
-  const selectedRoles = useMemo(() => {
-    const roles: string[] = [];
-    if (communityTeam) roles.push("Community Team");
-    if (betaTester) roles.push("Beta Tester");
-    return roles;
-  }, [communityTeam, betaTester]);
-
-  const canSubmit =
-    discordUsername.trim().length > 0 &&
-    discordId.trim().length > 0 &&
-    selectedRoles.length > 0 &&
-    pastExperience.trim().length >= 10 &&
-    !submitting;
+  const validate = (): FieldErrors => {
+    const errors: FieldErrors = {};
+    if (!username.trim()) errors.username = "Username is required.";
+    if (!discordId.trim()) errors.discordId = "Discord ID is required.";
+    if (!age.trim()) errors.age = "Age is required.";
+    if (!timezone.trim()) errors.timezone = "Timezone is required.";
+    if (!reason.trim()) errors.reason = "Please tell us why you want to join.";
+    if (!roleApplying) errors.roleApplying = "Please select a role.";
+    return errors;
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!canSubmit) return;
 
+    const errors = validate();
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      return;
+    }
+    setFieldErrors({});
     setSubmitting(true);
     setSuccess(null);
     setError(null);
 
     try {
-      const res = await fetch("/api/staff-application", {
+      const res = await fetch("/api/application", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          discordUsername: discordUsername.trim(),
+          username: username.trim(),
           discordId: discordId.trim(),
-          applicationFor: selectedRoles,
-          pastExperience: pastExperience.trim(),
+          age: age.trim(),
+          timezone: timezone.trim(),
+          reason: reason.trim(),
+          experience: experience.trim(),
+          roleApplying,
         }),
       });
 
-      const data = (await res.json().catch(() => ({}))) as {
-        success?: boolean;
-        message?: string;
-        error?: string;
-        errors?: string[];
-      };
-
-      if (!res.ok || !data.success) {
-        if (Array.isArray(data.errors) && data.errors.length > 0) {
-          setError(data.errors.join(" "));
-        } else {
-          setError(data.error || "We could not submit your application. Try again.");
-        }
+      if (!res.ok) {
+        setError("Something went wrong. Please try again or contact support.");
         return;
       }
 
-      setSuccess(data.message || "Application submitted successfully.");
-      setDiscordUsername("");
+      setSuccess("Your application has been submitted. Check your Discord DMs for confirmation.");
+      setUsername("");
       setDiscordId("");
-      setCommunityTeam(false);
-      setBetaTester(false);
-      setPastExperience("");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Network error. Please try again.");
+      setAge("");
+      setTimezone("");
+      setReason("");
+      setExperience("");
+      setRoleApplying("");
+    } catch {
+      setError("Something went wrong. Please try again or contact support.");
     } finally {
       setSubmitting(false);
     }
@@ -194,31 +195,34 @@ export default function StaffApplicationPage() {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6 rounded-3xl border border-border bg-card/85 p-6 sm:p-8">
+        <form onSubmit={handleSubmit} noValidate className="space-y-6 rounded-3xl border border-border bg-card/85 p-6 sm:p-8">
           <div className="rounded-2xl border border-border/70 bg-card/75 p-4">
             <p className="text-xs text-muted-foreground">
-              <span className="font-semibold text-foreground">Simple process:</span> fill Discord details, select roles, share experience, submit.
+              <span className="font-semibold text-foreground">Simple process:</span> fill in your details, select a role, share your experience, submit.
             </p>
           </div>
+
           <div>
-            <label htmlFor="discord-username" className="mb-2 block text-sm font-medium text-foreground">
-              Discord Username
+            <label htmlFor="username" className="mb-2 block text-sm font-medium text-foreground">
+              Full Username
             </label>
             <input
-              id="discord-username"
+              id="username"
               type="text"
-              value={discordUsername}
-              onChange={(e) => setDiscordUsername(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               placeholder="username or username#1234"
               className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground placeholder:text-foreground/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
               maxLength={100}
-              required
             />
+            {fieldErrors.username && (
+              <p className="mt-1 text-xs text-red-400">{fieldErrors.username}</p>
+            )}
           </div>
 
           <div>
             <label htmlFor="discord-id" className="mb-2 block text-sm font-medium text-foreground">
-              Discord ID
+              Discord User ID
             </label>
             <input
               id="discord-id"
@@ -227,58 +231,100 @@ export default function StaffApplicationPage() {
               onChange={(e) => setDiscordId(e.target.value)}
               placeholder="17-19 digit Discord ID"
               className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground placeholder:text-foreground/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-              required
+            />
+            {fieldErrors.discordId && (
+              <p className="mt-1 text-xs text-red-400">{fieldErrors.discordId}</p>
+            )}
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label htmlFor="age" className="mb-2 block text-sm font-medium text-foreground">
+                Age
+              </label>
+              <input
+                id="age"
+                type="text"
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+                placeholder="e.g. 17"
+                className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground placeholder:text-foreground/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                maxLength={10}
+              />
+              {fieldErrors.age && (
+                <p className="mt-1 text-xs text-red-400">{fieldErrors.age}</p>
+              )}
+            </div>
+            <div>
+              <label htmlFor="timezone" className="mb-2 block text-sm font-medium text-foreground">
+                Timezone
+              </label>
+              <input
+                id="timezone"
+                type="text"
+                value={timezone}
+                onChange={(e) => setTimezone(e.target.value)}
+                placeholder="e.g. EST, GMT+1"
+                className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground placeholder:text-foreground/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                maxLength={50}
+              />
+              {fieldErrors.timezone && (
+                <p className="mt-1 text-xs text-red-400">{fieldErrors.timezone}</p>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="reason" className="mb-2 block text-sm font-medium text-foreground">
+              Why do you want to join the team?
+            </label>
+            <textarea
+              id="reason"
+              value={reason}
+              onChange={(e) => setReason(e.target.value)}
+              placeholder="Tell us what motivates you to apply and what you'd bring to the team."
+              rows={5}
+              className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground placeholder:text-foreground/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 resize-y"
+              maxLength={2000}
+            />
+            {fieldErrors.reason && (
+              <p className="mt-1 text-xs text-red-400">{fieldErrors.reason}</p>
+            )}
+          </div>
+
+          <div>
+            <label htmlFor="experience" className="mb-2 block text-sm font-medium text-foreground">
+              Previous Experience{" "}
+              <span className="text-muted-foreground font-normal">(optional)</span>
+            </label>
+            <textarea
+              id="experience"
+              value={experience}
+              onChange={(e) => setExperience(e.target.value)}
+              placeholder="Tell us about moderation, support, partnerships, testing, or community experience."
+              rows={5}
+              className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground placeholder:text-foreground/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 resize-y"
+              maxLength={2000}
             />
           </div>
 
-          <fieldset>
-            <legend className="mb-2 block text-sm font-medium text-foreground">Apply for</legend>
-            <div className="space-y-2">
-              <label className="flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground/90">
-                <span className="inline-flex items-center gap-2">
-                  <Icon name="users" className="text-sm text-primary" />
-                  Community Team
-                </span>
-                <input
-                  type="checkbox"
-                  checked={communityTeam}
-                  onChange={(e) => setCommunityTeam(e.target.checked)}
-                  className="h-4 w-4 rounded border-border bg-card text-primary focus:ring-primary/30"
-                />
-              </label>
-              <label className="flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground/90">
-                <span className="inline-flex items-center gap-2">
-                  <Icon name="computer" className="text-sm text-primary" />
-                  Beta Tester
-                </span>
-                <input
-                  type="checkbox"
-                  checked={betaTester}
-                  onChange={(e) => setBetaTester(e.target.checked)}
-                  className="h-4 w-4 rounded border-border bg-card text-primary focus:ring-primary/30"
-                />
-              </label>
-            </div>
-            <p className="mt-2 text-xs text-muted-foreground">
-              You can choose one or both roles.
-            </p>
-          </fieldset>
-
           <div>
-            <label htmlFor="past-experience" className="mb-2 block text-sm font-medium text-foreground">
-              Past Experience
+            <label htmlFor="role-applying" className="mb-2 block text-sm font-medium text-foreground">
+              Role Applying For
             </label>
-            <textarea
-              id="past-experience"
-              value={pastExperience}
-              onChange={(e) => setPastExperience(e.target.value)}
-              placeholder="Tell us about moderation, support, partnerships, testing, or community experience."
-              rows={6}
-              className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground placeholder:text-foreground/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 resize-y"
-              minLength={10}
-              maxLength={2000}
-              required
-            />
+            <select
+              id="role-applying"
+              value={roleApplying}
+              onChange={(e) => setRoleApplying(e.target.value)}
+              className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+            >
+              <option value="">Select a role...</option>
+              <option value="Community Team">Community Team</option>
+              <option value="Beta Tester">Beta Tester</option>
+            </select>
+            {fieldErrors.roleApplying && (
+              <p className="mt-1 text-xs text-red-400">{fieldErrors.roleApplying}</p>
+            )}
           </div>
 
           {error && <p className="text-sm text-red-400">{error}</p>}
@@ -287,7 +333,7 @@ export default function StaffApplicationPage() {
           <div className="flex flex-wrap gap-3">
             <button
               type="submit"
-              disabled={!canSubmit}
+              disabled={submitting}
               className="btn-primary disabled:opacity-50 disabled:pointer-events-none"
             >
               {submitting ? "Submitting..." : "Submit application"}
