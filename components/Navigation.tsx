@@ -80,6 +80,14 @@ export default function Navigation() {
                     Helpful Guides
                   </Link>
                   <Link
+                    href="/guides/logo-design"
+                    className="block rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-white/15"
+                    role="menuitem"
+                    onClick={() => setResourcesOpen(false)}
+                  >
+                    Logo Design Guide
+                  </Link>
+                  <Link
                     href="/templates"
                     className="block rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-white/15"
                     role="menuitem"
@@ -129,6 +137,14 @@ export default function Navigation() {
                     onClick={() => setCommunityOpen(false)}
                   >
                     Submit a Suggestion
+                  </Link>
+                  <Link
+                    href="/partnership"
+                    className="block rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-white/15"
+                    role="menuitem"
+                    onClick={() => setCommunityOpen(false)}
+                  >
+                    Partner With Us
                   </Link>
                   <Link
                     href={NAV.partners.href}
@@ -192,6 +208,13 @@ export default function Navigation() {
               Helpful Guides
             </Link>
             <Link
+              href="/guides/logo-design"
+              className="block rounded-lg px-4 py-3 text-base font-medium text-foreground hover:bg-white/5"
+              onClick={() => setMobileOpen(false)}
+            >
+              Logo Design Guide
+            </Link>
+            <Link
               href="/templates"
               className="block rounded-lg px-4 py-3 text-base font-medium text-foreground hover:bg-white/5"
               onClick={() => setMobileOpen(false)}
@@ -213,6 +236,13 @@ export default function Navigation() {
               onClick={() => setMobileOpen(false)}
             >
               Submit a Suggestion
+            </Link>
+            <Link
+              href="/partnership"
+              className="block rounded-lg px-4 py-3 text-base font-medium text-foreground hover:bg-white/5"
+              onClick={() => setMobileOpen(false)}
+            >
+              Partner With Us
             </Link>
             <Link
               href={NAV.partners.href}
