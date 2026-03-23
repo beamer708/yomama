@@ -25,6 +25,7 @@ export default function AnalyticsTracker() {
     if (typeof navigator !== "undefined" && typeof navigator.sendBeacon === "function") {
       const blob = new Blob([payload], { type: "application/json" });
       navigator.sendBeacon("/api/analytics/event", blob);
+      navigator.sendBeacon("/api/visit", new Blob(["{}"], { type: "application/json" }));
       return;
     }
 
@@ -32,6 +33,12 @@ export default function AnalyticsTracker() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: payload,
+      keepalive: true,
+    }).catch(() => undefined);
+
+    void fetch("/api/visit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       keepalive: true,
     }).catch(() => undefined);
   }, [pathname, searchParams]);
