@@ -89,7 +89,7 @@ export default function PartnershipPage() {
         {/* Section 1 — Header */}
         <div className="mb-10 rounded-3xl border border-border/70 bg-card/75 p-6 sm:p-8">
           <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/20 text-primary">
-            <Icon name="handshake" className="text-2xl" />
+            <Icon name="users" className="text-2xl" />
           </div>
           <h1 className="section-heading">Partner With Unity Vault</h1>
           <p className="mt-3 text-base text-muted-foreground sm:text-lg">
