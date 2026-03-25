@@ -35,6 +35,25 @@ export default function CommunityGuidesPage() {
             </span>
           </Link>
 
+          <Link
+            href="/guides/logo-design"
+            className="group rounded-2xl border border-border bg-card/85 p-6 transition-all hover:border-primary/40 hover:bg-card-hover"
+          >
+            <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary/15 text-primary">
+              <Icon name="palette" className="text-xl" />
+            </div>
+            <h2 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+              Logo Design Guide
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              A step-by-step guide to designing a logo for your ERLC server — from concept and typography to final export.
+            </p>
+            <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary">
+              Open guide
+              <Icon name="arrow-right" className="text-xs" />
+            </span>
+          </Link>
+
           <div className="rounded-2xl border border-border bg-card/80 p-6">
             <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-foreground/70">
               <Icon name="clock" className="text-xl" />

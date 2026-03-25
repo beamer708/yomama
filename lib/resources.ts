@@ -213,7 +213,6 @@ export const resources: Resource[] = [
     creator: "Asm Arif",
     section: "youtube",
     channelName: "Asm Arif",
-    isNew: true,
   },
   {
     id: "30",
@@ -225,7 +224,6 @@ export const resources: Resource[] = [
     creator: "Design Theory",
     section: "youtube",
     channelName: "Design Theory",
-    isNew: true,
   },
   {
     id: "31",
@@ -237,7 +235,6 @@ export const resources: Resource[] = [
     creator: "OMB Gaming",
     section: "youtube",
     channelName: "OMB Gaming",
-    isNew: true,
   },
   // Website Resources
   {
@@ -405,7 +402,6 @@ export const resources: Resource[] = [
     creator: "OpenAI",
     creatorUrl: "https://chatgpt.com/",
     section: "website",
-    isNew: true,
   },
   {
     id: "cursor",
@@ -417,7 +413,6 @@ export const resources: Resource[] = [
     creator: "Cursor",
     creatorUrl: "https://cursor.com",
     section: "website",
-    isNew: true,
   },
   {
     id: "32",
@@ -429,6 +424,7 @@ export const resources: Resource[] = [
     creator: "Designercize",
     creatorUrl: "https://designercize.com/",
     section: "website",
+    isNew: true,
   },
   {
     id: "33",
@@ -440,6 +436,7 @@ export const resources: Resource[] = [
     creator: "Font Joy",
     creatorUrl: "https://fontjoy.com/",
     section: "website",
+    isNew: true,
   },
   {
     id: "34",
@@ -451,6 +448,7 @@ export const resources: Resource[] = [
     creator: "Fonts In Use",
     creatorUrl: "https://fontsinuse.com/",
     section: "website",
+    isNew: true,
   },
   {
     id: "35",
@@ -462,6 +460,7 @@ export const resources: Resource[] = [
     creator: "Font Space",
     creatorUrl: "https://www.fontspace.com/",
     section: "website",
+    isNew: true,
   },
   {
     id: "36",
@@ -473,6 +472,7 @@ export const resources: Resource[] = [
     creator: "Logo Lab",
     creatorUrl: "https://logolab.app/",
     section: "website",
+    isNew: true,
   },
   // Discord Community Resources
   {

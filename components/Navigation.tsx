@@ -146,14 +146,6 @@ export default function Navigation() {
                   >
                     Partner With Us
                   </Link>
-                  <Link
-                    href={NAV.partners.href}
-                    className="block rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-white/15"
-                    role="menuitem"
-                    onClick={() => setCommunityOpen(false)}
-                  >
-                    Partners
-                  </Link>
                 </div>
               )}
             </div>
@@ -239,17 +231,10 @@ export default function Navigation() {
             </Link>
             <Link
               href="/partnership"
-              className="block rounded-lg px-4 py-3 text-base font-medium text-foreground hover:bg-white/5"
+              className="block rounded-lg px-4 py-3 text-base font-medium text-foreground hover:bg-white/15"
               onClick={() => setMobileOpen(false)}
             >
               Partner With Us
-            </Link>
-            <Link
-              href={NAV.partners.href}
-              className="block rounded-lg px-4 py-3 text-base font-medium text-foreground hover:bg-white/5"
-              onClick={() => setMobileOpen(false)}
-            >
-              Partners
             </Link>
             {mainLinks.map((link) => (
               <Link
