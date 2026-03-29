@@ -80,6 +80,14 @@ export default function Navigation() {
                     Helpful Guides
                   </Link>
                   <Link
+                    href="/tools"
+                    className="block rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-white/15"
+                    role="menuitem"
+                    onClick={() => setResourcesOpen(false)}
+                  >
+                    Tools
+                  </Link>
+                  <Link
                     href="/templates"
                     className="block rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-white/15"
                     role="menuitem"
@@ -182,6 +190,13 @@ export default function Navigation() {
               onClick={() => setMobileOpen(false)}
             >
               Helpful Guides
+            </Link>
+            <Link
+              href="/tools"
+              className="block rounded-lg px-4 py-3 text-base font-medium text-foreground hover:bg-white/5"
+              onClick={() => setMobileOpen(false)}
+            >
+              Tools
             </Link>
             <Link
               href="/templates"
